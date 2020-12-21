@@ -8,6 +8,8 @@ GitLab: https://gitlab.com/cabre94
 Description:
 */
 
+#include <map>
+#include <set>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -19,22 +21,32 @@ Description:
 #include <sstream>
 
 #include "Piece.cpp"
+#include "Position.cpp"
 
 
 class Board{
 public:
-    int matrix[5] = {1,2,3,4,5};
-    
-// public:
-    Board() {} ;	//Default constructor
+    Board() {};	//Default constructor
     ~Board() {};
     Board(const Board &) = default;	//Copy constructor
     Board &operator=(const Board &) = default;	//Copy assignment
     Board(Board &&) = default;	//Move constructor
     Board &operator=(Board &&) = default;	// Move assignment
 
-    virtual void print() = 0;
-private:
+    virtual void printBoard() = 0;
+    virtual void printPositions() = 0;
+    // virtual int* string2pos(std::string str) = 0;
+
+    virtual bool makeMove(std::string from, std::string to) = 0;
+
+    virtual std::set<std::string> getValidMoves(std::string from, PieceType T) = 0;
+
+protected:
+    std::map<std::string, Piece*> whitePieces;
+    std::map<std::string, Piece*> blackPieces;
+
+    bool whiteTurn;
+
 
 };
 
@@ -43,19 +55,36 @@ public:
     ChessBoard();
     ~ChessBoard();
 
-    void initializePieces();
+    void initializePieces();    //! privado
+    void clearBoard();          //! privado
 
-    void print();
+    // Funciones virtuales
+    void printBoard();
+    void printPositions();
+    // int* string2pos(std::string str);
+
+    bool makeMove(std::string from, std::string to);
 
 
-    // void print(){
-    //     for(int i=0; i < 5; ++i)
-    //         std::cout << matrix[i];
-    //     std::cout << std::endl;
-    // }
 
 private:
+
+    bool posInBoard(int i, int j);
+
+    std::string pos2string(int x, int y);
+    int string2row(std::string str);
+    int string2column(std::string str);
     // int SIZE = 8;
+    void updatePiecesPositions();
+
+    std::set<std::string> getValidMoves(std::string from, PieceType T);
+
+    std::set<std::string> getPawnMoves(std::string from);
+    std::set<std::string> getRookMoves(std::string from);
+    std::set<std::string> getKnightMoves(std::string from);
+    std::set<std::string> getBishopMoves(std::string from);
+    std::set<std::string> getQueenMoves(std::string from);
+    std::set<std::string> getKingMoves(std::string from);
 
     Piece* pieces[8][8];    //! No enteindo porque no puedo poner SIZE
 
@@ -66,6 +95,10 @@ ChessBoard::ChessBoard(){
 }
 
 ChessBoard::~ChessBoard(){
+    clearBoard();
+}
+
+void ChessBoard::clearBoard(){
     for(int i=0; i < 8; ++i){
         for(int j=0; j < 8; ++j){
             if(pieces[i][j] != nullptr){    // ? Seria mejor un metodo que me diga si hay pieza?
@@ -106,25 +139,14 @@ void ChessBoard::initializePieces(){
     pieces[7][6] = new Knight(BLACK);
     pieces[7][7] = new Rook(BLACK);
 
+    whiteTurn = true;
 
+    updatePiecesPositions();
+    updatePiecesPositions();
 }
 
-/*
-void ChessBoard::print(){
-    for(int i = 0; i < 8; ++i){
-        for(int j = 0; j < 8; ++j){
-            if(pieces[i][j] == nullptr)
-                std::cout << '-';
-            else
-                // std::cout << 'P';
-                pieces[i][j]->printPiece();
-        }
-        std::cout << std::endl;
-    }
-}
-*/
 
-void ChessBoard::print(){
+void ChessBoard::printBoard(){
     std::cout << "  ";
     for(char c = 'A'; c <= 'H'; ++c)
         std::cout << " " << c << "  ";
@@ -173,15 +195,195 @@ void ChessBoard::print(){
     std::cout << "\u2500\u2500\u2500\u2518" << std::endl;
 }
 
+std::string ChessBoard::pos2string(int x, int y){
+    std::string str;
+    str.resize(2);
+    str[0] = char(y +'A');
+    str[1] = char(x +'1');
+
+    return str;
+}
+
+int ChessBoard::string2row(std::string str){
+    return int(str[1] - '1');
+}
+
+int ChessBoard::string2column(std::string str){
+    return int(str[0] - 'A');
+}
+
+void ChessBoard::updatePiecesPositions(){
+    whitePieces.clear();
+    blackPieces.clear();
+
+    for(int i=0; i < 8; ++i){
+        for(int j=0; j < 8; ++j){
+            if(pieces[i][j] != nullptr){
+                PieceColour c = pieces[i][j]->getColour();
+                std::string str = pos2string(i,j);
+                if(c == WHITE)
+                    whitePieces[str] = pieces[i][j];
+                else
+                    blackPieces[str] = pieces[i][j];
+            }
+        }
+    }
+}
+
+void ChessBoard::printPositions(){
+
+    std::cout << "White pieces:" << std::endl;
+
+    for(auto it = whitePieces.begin(); it != whitePieces.end(); ++it)
+        std::cout << it->first << " " << it->second->getName() << " ";
+    
+    std::cout << std::endl << "Black pieces:" << std::endl;
+
+    for(auto it = blackPieces.begin(); it != blackPieces.end(); ++it)
+        std::cout << it->first << " " << it->second->getName() << " ";
+    
+    std::cout << std::endl << std::endl;
+
+}
+
+bool posInBoard(int i, int j){
+    if( i<0 || i>7 || j<0 || j>7 )
+        return false;
+    return true;
+}
 
 
+bool ChessBoard::makeMove(std::string from, std::string to){
+    // TODO - Deberia chequear que la pieza es correcta (color y que haya pieza)
+    // TODO - Dada la pieza, que el "to" este dentro de los lugares posibles
+    // TODO - hacer el movimiento
+    
+    int pieceExist;
+    // whitePieces.
+    if(whiteTurn)
+        pieceExist = whitePieces.count(from);
+    else
+        pieceExist = blackPieces.count(from);
+    
+    //! Esto deberia ser una excepcion
+    if(!pieceExist){
+        std::cout << "No piece in " << from << std::endl;
+        return false;
+    }
+    
+    int i = string2row(from);
+    int j = string2column(from);
+    int ni = string2row(to);
+    int nj = string2column(to);
 
+    // Piece* pieceFrom = pieces[i][j];
+    // Piece* pieceTo = pieces[ni][nj];
 
+    std::cout << from << std::endl;
+    std::cout << to << std::endl;
 
+    std::cout << i << std::endl;
+    std::cout << j << std::endl;
+    std::cout << ni << std::endl;
+    std::cout << nj << std::endl;
 
+    // ! Get valid move
+    // std::map<std::string, Piece*> whitePieces;
+    // std::set<std::string> possibleMoves = pieces[i][j];
 
+    // if(pieceTo != nullptr)
+    //     delete pieceTo;
+    
+    // pieceTo = pieceFrom;
+    // pieceFrom = nullptr;
 
+    if(pieces[ni][nj] != nullptr)
+        delete pieces[ni][nj];
+    
+    pieces[ni][nj] = pieces[i][j];
+    pieces[i][j] = nullptr;
 
+    updatePiecesPositions();
+
+    whiteTurn = !whiteTurn;
+
+    return true;
+}
+
+std::set<std::string> getValidMoves(std::string from, PieceType T){
+    switch (T){
+        case PAWN:
+            return getPawnMoves(from);
+        case ROOK:
+            return getRookMoves(from);
+        case KNIGHT:
+            return getKnightMoves(from);
+        case BISHOP:
+            return getBishopMoves(from);
+        case QUEEN:
+            return getQueenMoves(from);
+        case KING:
+            return getKingMoves(from);    
+        default:
+            break;
+    }
+}
+
+std::set<std::string> ChessBoard::getPawnMoves(std::string from){
+    std::set<std::string> pawnMoves;
+    return pawnMoves;
+}
+
+std::set<std::string> ChessBoard::getRookMoves(std::string from){
+    std::set<std::string> rookMoves;
+    return rookMoves;
+}
+
+// ! Estoy asumiendo que en from hay una pieza
+std::set<std::string> ChessBoard::getKnightMoves(std::string from){
+    std::set<std::string> knightMoves;
+
+    int row = string2row(from);
+    int col = string2column(from);
+
+    PieceColour c = pieces[row][col]->getColour();
+
+    for(int i=row-1; i<=row+1; i+=2){
+        for(int j=col-2; j<=col+2; j+=4){
+            //!Esto seguro explota
+            if(posInBoard(i,j) && (pieces[i][j] == nullptr || pieces[i][j]->getColour() != c) )
+                knightMoves.insert(pos2string(i,j));
+        }
+    }
+    for(int i=row-2; i<=row+2; i+=4){
+        for(int j=col-1; j<=col+1; j+=2){
+            //!Esto seguro explota
+            if(posInBoard(i,j) && (pieces[i][j] == nullptr || pieces[i][j]->getColour() != c) )
+                knightMoves.insert(pos2string(i,j));
+        }
+    }
+
+    return knightMoves;
+}
+
+std::set<std::string> ChessBoard::getBishopMoves(std::string from){
+    std::set<std::string> bishopMoves;
+    return bishopMoves;
+}
+
+std::set<std::string> ChessBoard::getQueenMoves(std::string from){
+    std::set<std::string> queenMoves = getBishopMoves(from);
+    std::set<std::string> rookMoves = getRookMoves(from);
+
+    queenMoves.insert(rookMoves.begin(), rookMoves.end());
+
+    return queenMoves;
+}
+
+std::set<std::string> ChessBoard::getKingMoves(std::string from){
+    std::set<std::string> kingMoves;
+    return kingMoves;
+}
 
 
 
