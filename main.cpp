@@ -26,8 +26,33 @@ int main(int argc, const char** argv){
     Board* ptr;
 
     ptr = new ChessBoard;
-    ptr->print();
+    ptr->printBoard();
+    ptr->printPositions();
 
+    int counter = 0;
+
+    while(counter < 5){
+        bool succesMove;
+
+        std::string from, to;
+
+        std::cout << "From: ";
+        std::cin >> from;
+        std::cout << "To: ";
+        std::cin >> to;
+
+        succesMove = ptr->makeMove(from, to);
+
+        ptr->printPositions();
+        ptr->printBoard();
+
+        if(succesMove)
+            counter++;
+    }
+
+    // ptr->printBoard();
+    // ptr->printPositions();
+    
     delete ptr;
 
     // ptr = new T2;
