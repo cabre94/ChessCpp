@@ -35,12 +35,14 @@ enum State{CHECK, CHECKMATE, NORMAL};
 
 enum PieceType{KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN};
 
+// enum MoveType{HORIZONTAL, VERTICAL, DIAGONAL, L, FORWARD, ONESTEP};
+
 
 class Piece{
 private:
     
 public:
-    Piece(PieceColour C, PieceType T);	//Default constructor
+    Piece(PieceColour C, PieceType T, std::string N);	//Default constructor
     virtual ~Piece();
 
     // Piece(const Piece &) = default;	//Copy constructor
@@ -51,6 +53,7 @@ public:
     // Color de la pieza
     PieceColour colour;
     PieceType type;
+    std::string name;
 
     std::string pos; // ! Chequear si uso esto
 
@@ -58,15 +61,18 @@ public:
 
     PieceType getType();    // TODO usar const?
     PieceColour getColour();
+    std::string getName();
 
-    virtual bool validMove(std::string newPos) = 0;
+    virtual bool validMove(std::string newPos) = 0; //Chequear si la use
+
+    virtual std::set<std::string> getPossibleMoves(Board *board, std::string from) = 0;
 
     virtual void printPiece() = 0;
 
 
 };
 
-Piece::Piece(PieceColour C, PieceType T) : colour(C), type(T) {}
+Piece::Piece(PieceColour C, PieceType T, std::string N) : colour(C), type(T), name(N) {}
 
 Piece::~Piece(){}
 
@@ -78,6 +84,9 @@ PieceColour Piece::getColour(){
     return colour;
 }
 
+std::string Piece::getName(){
+    return name;
+}
 /*
 PEON
 */
@@ -90,9 +99,12 @@ public:
     bool validMove(std::string newPos);
 
     void printPiece();
+    std::string getName();
+
+    std::set<std::string> getPossibleMoves(Board  *board, std::string from);
 };
 
-Pawn::Pawn(PieceColour C):Piece(C,PAWN){}
+Pawn::Pawn(PieceColour C):Piece(C,PAWN,"PAWN") {}
 
 Pawn::~Pawn(){}
 
@@ -110,6 +122,12 @@ void Pawn::printPiece(){
         // std::cout << "\u265F";
 }
 
+std::set<std::string> Pawn::getPossibleMoves(Board *board, std::string from){
+    std::set<std::string> validMoves;
+    validMoves = board->getValidMoves(from, PAWN);
+    return validMoves;
+}
+
 /*
 TORRE
 */
@@ -122,9 +140,11 @@ public:
     bool validMove(std::string newPos);
 
     void printPiece();
+
+    std::set<std::string> getPossibleMoves(Board *board, std::string from);
 };
 
-Rook::Rook(PieceColour C):Piece(C,ROOK){}
+Rook::Rook(PieceColour C):Piece(C,ROOK,"ROOK"){}
 
 Rook::~Rook(){}
 
@@ -142,6 +162,12 @@ void Rook::printPiece(){
         // std::cout << "\u265F";
 }
 
+std::set<std::string> Rook::getPossibleMoves(Board *board, std::string from){
+    std::set<std::string> validMoves;
+    validMoves = board->getValidMoves(from, ROOK);
+    return validMoves;
+}
+
 /*
 CABALLO
 */
@@ -153,9 +179,11 @@ public:
     bool validMove(std::string newPos);
 
     void printPiece();
+
+    std::set<std::string> getPossibleMoves(Board *board, std::string from);
 };
 
-Knight::Knight(PieceColour C):Piece(C,KNIGHT){}
+Knight::Knight(PieceColour C):Piece(C,KNIGHT,"KNIGHT"){}
 
 Knight::~Knight(){}
 
@@ -173,6 +201,12 @@ void Knight::printPiece(){
         // std::cout << "\u265F";
 }
 
+std::set<std::string> Knight::getPossibleMoves(Board *board, std::string from){
+    std::set<std::string> validMoves;
+    validMoves = board->getValidMoves(from, KNIGHT);
+    return validMoves;
+}
+
 /*
 ALFIL
 */
@@ -185,9 +219,11 @@ public:
     bool validMove(std::string newPos);
 
     void printPiece();
+
+    std::set<std::string> getPossibleMoves(Board *board, std::string from);
 };
 
-Bishop::Bishop(PieceColour C):Piece(C,BISHOP){}
+Bishop::Bishop(PieceColour C):Piece(C,BISHOP,"BISHOP"){}
 
 Bishop::~Bishop(){}
 
@@ -205,6 +241,12 @@ void Bishop::printPiece(){
         // std::cout << "\u265F";
 }
 
+std::set<std::string> Bishop::getPossibleMoves(Board *board, std::string from){
+    std::set<std::string> validMoves;
+    validMoves = board->getValidMoves(from, BISHOP);
+    return validMoves;
+}
+
 /*
 REINA
 */
@@ -217,9 +259,11 @@ public:
     bool validMove(std::string newPos);
 
     void printPiece();
+
+    std::set<std::string> getPossibleMoves(Board *board, std::string from);
 };
 
-Queen::Queen(PieceColour C):Piece(C,QUEEN){}
+Queen::Queen(PieceColour C):Piece(C,QUEEN,"QUEEN"){}
 
 Queen::~Queen(){}
 
@@ -237,6 +281,12 @@ void Queen::printPiece(){
         // std::cout << "\u265F";
 }
 
+std::set<std::string> Queen::getPossibleMoves(Board *board, std::string from){
+    std::set<std::string> validMoves;
+    validMoves = board->getValidMoves(from, QUEEN);
+    return validMoves;
+}
+
 /*
 REY
 */
@@ -249,9 +299,11 @@ public:
     bool validMove(std::string newPos);
 
     void printPiece();
+
+    std::set<std::string> getPossibleMoves(Board *board, std::string from);
 };
 
-King::King(PieceColour C):Piece(C,KING){}
+King::King(PieceColour C):Piece(C,KING,"KING"){}
 
 King::~King(){}
 
@@ -269,25 +321,10 @@ void King::printPiece(){
         // std::cout << "\u265F";
 }
 
+std::set<std::string> King::getPossibleMoves(Board *board, std::string from){
+    std::set<std::string> validMoves;
+    validMoves = board->getValidMoves(from, KING);
+    return validMoves;
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
-// int main(int argc, const char** argv){
-    
-//     Colour color;
-//     color = WHITE;
-
-//     std::cout << color << std::endl;
-
-//     return 0;
-// }
