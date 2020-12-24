@@ -8,8 +8,6 @@ public:
     Pawn(PieceColour C);
     ~Pawn();
 
-    bool validMove(std::string newPos);
-
     void printPiece();
     std::string getName();
 

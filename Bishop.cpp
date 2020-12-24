@@ -14,18 +14,11 @@ Bishop::Bishop(PieceColour C):Piece(C,BISHOP,"BISHOP"){}
 
 Bishop::~Bishop(){}
 
-bool Bishop::validMove(std::string newPos){
-    // TODO completar funcion
-    return true;
-}
-
 void Bishop::printPiece(){
     if(colour == WHITE)
         std::cout << "♗";
-        // std::cout << "\u2659";
     else
         std::cout << "♝";
-        // std::cout << "\u265F";
 }
 
 std::set<std::string> Bishop::getPossibleMoves(Board *board, std::string from){
