@@ -419,7 +419,11 @@ std::set<std::string> ChessBoard::getValidMoves(std::string from, PieceType T){
         case QUEEN:
             return getQueenMoves(from);
         case KING:
-            return getKingMoves(from);    
+            return getKingMoves(from);
+        case CHAMPION:
+            return getChampionMoves(from);
+        case MAGICIAN:
+            return getMagicianMoves(from);
         default:
             std::set<std::string> empty;
             return empty;
@@ -537,14 +541,12 @@ std::set<std::string> ChessBoard::getKnightMoves(std::string from){
 
     for(int i=row-1; i<=row+1; i+=2){
         for(int j=col-2; j<=col+2; j+=4){
-            //!Esto seguro explota
             if(posInBoard(i,j) && (pieces[i][j] == nullptr || pieces[i][j]->getColour() != c) )
                 knightMoves.insert(pos2string(i,j));
         }
     }
     for(int i=row-2; i<=row+2; i+=4){
         for(int j=col-1; j<=col+1; j+=2){
-            //!Esto seguro explota
             if(posInBoard(i,j) && (pieces[i][j] == nullptr || pieces[i][j]->getColour() != c) )
                 knightMoves.insert(pos2string(i,j));
         }
@@ -642,6 +644,61 @@ std::set<std::string> ChessBoard::getKingMoves(std::string from){
 
     return kingMoves;
 }
+
+std::set<std::string> ChessBoard::getChampionMoves(std::string from){
+    std::set<std::string> championMoves;
+
+    int row = string2row(from);
+    int col = string2column(from);
+
+    PieceColour c = pieces[row][col]->getColour();
+
+    // Movimientos de a dos
+    for(int i=-2; i <= 2; i+=2){
+        for(int j=-2; j <= 2; j+=2){
+            if(i == 0 && j == 0)
+                continue;
+            if(posInBoard(row+i,col+j) && (pieces[row+i][col+j] == nullptr || pieces[row+i][col+j]->getColour() != c))
+                championMoves.insert(pos2string(row+i,col+j));
+        }
+    }
+
+    for(int i=-1; i <= 1; ++i){
+        for(int j=-1; j <= 1; ++j){
+            if(i == j || i == -j)
+                continue;
+            if(posInBoard(row+i,col+j) && (pieces[row+i][col+j] == nullptr || pieces[row+i][col+j]->getColour() != c))
+                championMoves.insert(pos2string(row+i,col+j));
+        }
+    }
+
+    return championMoves;
+}
+
+std::set<std::string> ChessBoard::getMagicianMoves(std::string from){
+    std::set<std::string> magicianMoves;
+
+    int row = string2row(from);
+    int col = string2column(from);
+
+    PieceColour c = pieces[row][col]->getColour();
+
+    for(int i=row-1; i<=row+1; i+=2){
+        for(int j=col-3; j<=col+3; j+=6){
+            if(posInBoard(i,j) && (pieces[i][j] == nullptr || pieces[i][j]->getColour() != c))
+                magicianMoves.insert(pos2string(i,j));
+        }
+    }
+    for(int i=row-3; i<=row+3; i+=6){
+        for(int j=col-1; j<=col+1; j+=2){
+            if(posInBoard(i,j) && (pieces[i][j] == nullptr || pieces[i][j]->getColour() != c) )
+                magicianMoves.insert(pos2string(i,j));
+        }
+    }
+
+    return magicianMoves;
+}
+
 
 // Dado un color, nos devuelve todas los posibles movimientos
 void ChessBoard::updateAllValidMoves(){

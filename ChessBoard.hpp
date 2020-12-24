@@ -48,6 +48,8 @@ private:
     std::set<std::string> getBishopMoves(std::string from);
     std::set<std::string> getQueenMoves(std::string from);
     std::set<std::string> getKingMoves(std::string from);
+    std::set<std::string> getChampionMoves(std::string from);
+    std::set<std::string> getMagicianMoves(std::string from);
 
     char typeDistribution;
     Piece* pieces[8][8];    //! No enteindo porque no puedo poner SIZE
