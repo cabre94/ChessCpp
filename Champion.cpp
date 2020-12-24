@@ -14,18 +14,11 @@ Champion::Champion(PieceColour C):Piece(C,CHAMPION,"CHAMPION"){}
 
 Champion::~Champion(){}
 
-bool Champion::validMove(std::string newPos){
-    // TODO completar funcion
-    return true;
-}
-
 void Champion::printPiece(){
     if(colour == WHITE)
-        std::cout << "⚪";
-        // std::cout << "\u2659";
+        std::cout << "☆";
     else
-        std::cout << "⚫";
-        // std::cout << "\u265F";
+        std::cout << "★";
 }
 
 std::set<std::string> Champion::getPossibleMoves(Board *board, std::string from){
