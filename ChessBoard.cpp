@@ -353,9 +353,9 @@ void ChessBoard::printPositions(){
 }
 
 bool ChessBoard::posInBoard(int i, int j){
-    if( i<0 || i>7 || j<0 || j>7 )
-        return false;
-    return true;
+    if( i>=0 && i<8 && j>=0 && j<8 )
+        return true;
+    return false;
 }
 
 bool ChessBoard::makeMove(std::string from, std::string to){
@@ -489,9 +489,9 @@ std::set<std::string> ChessBoard::getPawnMoves(std::string from){
         pawnMoves.insert(pos2string(row+2*forward,col));
     
     // Por ultimo, chequeo si en la diagonal hay una pieza contraria que se pueda comer
-    if(pieces[row+forward][col+1] != nullptr && pieces[row+forward][col+1]->getColour() != c)
+    if(posInBoard(row+forward,col+1) && pieces[row+forward][col+1] != nullptr && pieces[row+forward][col+1]->getColour() != c)
         pawnMoves.insert(pos2string(row+forward,col+1));
-    if(pieces[row+forward][col-1] != nullptr && pieces[row+forward][col-1]->getColour() != c)
+    if(posInBoard(row+forward,col-1) && pieces[row+forward][col-1] != nullptr && pieces[row+forward][col-1]->getColour() != c)
         pawnMoves.insert(pos2string(row+forward,col-1));
 
     return pawnMoves;
