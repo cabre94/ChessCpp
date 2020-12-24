@@ -21,10 +21,10 @@ bool Champion::validMove(std::string newPos){
 
 void Champion::printPiece(){
     if(colour == WHITE)
-        std::cout << "⚪♽";
+        std::cout << "⚪";
         // std::cout << "\u2659";
     else
-        std::cout << "⚫♼";
+        std::cout << "⚫";
         // std::cout << "\u265F";
 }
 
