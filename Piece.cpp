@@ -26,5 +26,3 @@ PieceColour Piece::getColour(){
 std::string Piece::getName(){
     return name;
 }
-
-

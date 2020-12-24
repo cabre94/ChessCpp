@@ -14,18 +14,11 @@ Knight::Knight(PieceColour C):Piece(C,KNIGHT,"KNIGHT"){}
 
 Knight::~Knight(){}
 
-bool Knight::validMove(std::string newPos){
-    // TODO completar funcion
-    return true;
-}
-
 void Knight::printPiece(){
     if(colour == WHITE)
         std::cout << "♘";
-        // std::cout << "\u2659";
     else
         std::cout << "♞";
-        // std::cout << "\u265F";
 }
 
 std::set<std::string> Knight::getPossibleMoves(Board *board, std::string from){

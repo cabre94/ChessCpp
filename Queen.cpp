@@ -14,18 +14,11 @@ Queen::Queen(PieceColour C):Piece(C,QUEEN,"QUEEN"){}
 
 Queen::~Queen(){}
 
-bool Queen::validMove(std::string newPos){
-    // TODO completar funcion
-    return true;
-}
-
 void Queen::printPiece(){
     if(colour == WHITE)
         std::cout << "♕";
-        // std::cout << "\u2659";
     else
         std::cout << "♛";
-        // std::cout << "\u265F";
 }
 
 std::set<std::string> Queen::getPossibleMoves(Board *board, std::string from){

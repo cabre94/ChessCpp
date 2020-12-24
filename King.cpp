@@ -14,18 +14,11 @@ King::King(PieceColour C):Piece(C,KING,"KING"){}
 
 King::~King(){}
 
-bool King::validMove(std::string newPos){
-    // TODO completar funcion
-    return true;
-}
-
 void King::printPiece(){
     if(colour == WHITE)
         std::cout << "♔";
-        // std::cout << "\u2659";
     else
         std::cout << "♚";
-        // std::cout << "\u265F";
 }
 
 std::set<std::string> King::getPossibleMoves(Board *board, std::string from){

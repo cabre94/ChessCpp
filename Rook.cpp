@@ -14,18 +14,11 @@ Rook::Rook(PieceColour C):Piece(C,ROOK,"ROOK"){}
 
 Rook::~Rook(){}
 
-bool Rook::validMove(std::string newPos){
-    // TODO completar funcion
-    return true;
-}
-
 void Rook::printPiece(){
     if(colour == WHITE)
         std::cout << "♖";
-        // std::cout << "\u2659";
     else
         std::cout << "♜";
-        // std::cout << "\u265F";
 }
 
 std::set<std::string> Rook::getPossibleMoves(Board *board, std::string from){

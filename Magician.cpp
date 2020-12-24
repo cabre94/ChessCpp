@@ -14,18 +14,11 @@ Magician::Magician(PieceColour C):Piece(C,MAGICIAN,"MAGICIAN"){}
 
 Magician::~Magician(){}
 
-bool Magician::validMove(std::string newPos){
-    // TODO completar funcion
-    return true;
-}
-
 void Magician::printPiece(){
     if(colour == WHITE)
         std::cout << "♽";
-        // std::cout << "\u2659";
     else
         std::cout << "♼";
-        // std::cout << "\u265F";
 }
 
 std::set<std::string> Magician::getPossibleMoves(Board *board, std::string from){
