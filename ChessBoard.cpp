@@ -9,15 +9,25 @@ Description:
 */
 
 #include "ChessBoard.hpp"
-// #include "Piece.hpp"
 
 ChessBoard::ChessBoard(char c) : typeDistribution(c){
-    if(typeDistribution == 'n')
-        initializePieces();
-    else if(typeDistribution == 'b')
-        initializePiecesButterfly();
-    else if(typeDistribution == 'p')
-        initializePiecesPawnGame();
+    switch (c){
+        case 'n':
+            initializePieces();
+            break;
+        case 'b':
+            initializePiecesButterfly();
+            break;
+        case 'p':
+            initializePiecesPawnGame();
+            break;
+        case 'c':
+            initializePiecesChampionMagician();
+            break;
+        default:
+            std::cout << "invalid input" << std::endl;  //! Deberia tirar una excepcion
+            exit(1);
+    }
 }
 
 ChessBoard::~ChessBoard(){
@@ -195,6 +205,49 @@ void ChessBoard::initializePiecesPawnGame(){
     updateGameState();
 }
 
+void ChessBoard::initializePiecesChampionMagician(){
+    for(int i=0; i < 8; ++i)
+        for(int j=0; j < 8; ++j)
+            pieces[i][j] = nullptr;
+    // Agrego los peones
+    for(int j=0; j < 8; ++j){
+        pieces[1][j] = new Pawn(WHITE);
+        pieces[6][j] = new Pawn(BLACK);
+    }
+
+    // Agrego el resto de piezas blancas
+    pieces[0][0] = new Champion(WHITE);
+    pieces[0][1] = new Magician(WHITE);
+    pieces[0][2] = new Bishop(WHITE);
+    pieces[0][3] = new Queen(WHITE);
+    pieces[0][4] = new King(WHITE);
+    pieces[0][5] = new Bishop(WHITE);
+    pieces[0][6] = new Magician(WHITE);
+    pieces[0][7] = new Champion(WHITE);
+
+    // Agrego las piezas negras
+    pieces[7][0] = new Champion(BLACK);
+    pieces[7][1] = new Magician(BLACK);
+    pieces[7][2] = new Bishop(BLACK);
+    pieces[7][3] = new Queen(BLACK);
+    pieces[7][4] = new King(BLACK);
+    pieces[7][5] = new Bishop(BLACK);
+    pieces[7][6] = new Magician(BLACK);
+    pieces[7][7] = new Champion(BLACK);
+
+    whiteTurn = true;
+    gameEnded = false;
+
+    whiteKingPos = "E1";
+    blackKingPos = "E8";
+
+    updatePiecesPositions();
+
+    updateAllValidMoves();
+
+    updateGameState();
+}
+
 void ChessBoard::printBoard(){
     std::cout << "  ";
     for(char c = 'A'; c <= 'H'; ++c)
@@ -272,12 +325,8 @@ void ChessBoard::updatePiecesPositions(){
                 std::string str = pos2string(i,j);
                 if(c == WHITE)
                     whitePieces[str] = pieces[i][j];
-                    // if(pieces[i][j]->getType() == KING)
-                    //     whiteKingPos = str;
                 else
                     blackPieces[str] = pieces[i][j];
-                    // if(pieces[i][j]->getType() == KING)
-                    //     blackKingPos = str;
             }
         }
     }
@@ -310,12 +359,6 @@ bool ChessBoard::posInBoard(int i, int j){
 }
 
 bool ChessBoard::makeMove(std::string from, std::string to){
-    // TODO - Deberia chequear que la pieza es correcta (color y que haya pieza)
-    // TODO - Dada la pieza, que el "to" este dentro de los lugares posibles
-    // TODO - hacer el movimiento
-    // ! Puedo pedir aca directamente los strings mejor
-
-
 
     if(whiteTurn)
         std::cout << "White turn..." << std::endl;
@@ -364,9 +407,7 @@ bool ChessBoard::makeMove(std::string from, std::string to){
     else
         std::cout << to << std::endl;
 
-    
-
-    //!Esto deberia arrojar una excepcion
+    //!Esto deberia arrojar una excepcion en vez de hacerlo a mano
     // Chequeamos si es una posiciones validas
     int validMove = validMoves.count(to);
     if(!validMove){
@@ -377,15 +418,6 @@ bool ChessBoard::makeMove(std::string from, std::string to){
     // Tomo las coordenadas nuevas
     int ni = string2row(to);
     int nj = string2column(to);
-
-    // // Actualizo la posicion del Rey
-    // if(pieces[i][j]->getType() == KING){
-    //     if(whiteTurn)
-    //         whiteKingPos = pos2string(ni,nj);
-    //     else
-    //         blackKingPos = pos2string(ni,nj);
-    // }
-    
 
     if(pieces[ni][nj] != nullptr)
         delete pieces[ni][nj];
@@ -427,18 +459,8 @@ std::set<std::string> ChessBoard::getValidMoves(std::string from, PieceType T){
         default:
             std::set<std::string> empty;
             return empty;
-            // break;
     }
 }
-
-/*
-TODO
-    - Chequear que el nuevo lugar no sea del mismo color
-    - Que este dentro del tablero
-    - que sea movimiento valido para la pieza
-    - 
-
-*/
 
 std::set<std::string> ChessBoard::getPawnMoves(std::string from){
     std::set<std::string> pawnMoves;
@@ -699,8 +721,6 @@ std::set<std::string> ChessBoard::getMagicianMoves(std::string from){
     return magicianMoves;
 }
 
-
-// Dado un color, nos devuelve todas los posibles movimientos
 void ChessBoard::updateAllValidMoves(){
     allWhiteMoves.clear();
     allBlackMoves.clear();

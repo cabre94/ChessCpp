@@ -25,6 +25,7 @@ private:
     void initializePieces();
     void initializePiecesButterfly();
     void initializePiecesPawnGame();
+    void initializePiecesChampionMagician();
 
     void clearBoard();
 
