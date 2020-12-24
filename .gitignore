@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+exe
+Position.cpp
+SeparateCompilation.pdf
+TEST.cpp
