@@ -15,7 +15,7 @@ public:
 
     // Funciones virtuales
     void printBoard();
-    void printPositions();
+    // void printPositions();
     void printPosAndPieces();
     // int* string2pos(std::string str);
 

@@ -38,28 +38,18 @@ public:
     Piece(PieceColour C, PieceType T, std::string N);	//Default constructor
     virtual ~Piece();
 
-    // Piece(const Piece &) = default;	//Copy constructor
-    // Piece &operator=(const Piece &) = default;	//Copy assignment
-    // Piece(Piece &&) = default;	//Move constructor
-    // Piece &operator=(Piece &&) = default;	// Move assignment
+    Piece(const Piece &) = delete;	//Copy constructor
+    Piece &operator=(const Piece &) = delete;	//Copy assignment
+    Piece(Piece &&) = delete;	//Move constructor
+    Piece &operator=(Piece &&) = delete;	// Move assignment
 
-    // Color de la pieza
-    
-
-    std::string pos; // ! Chequear si uso esto
-
-    Board* board;   // ! En vez de tener cada pieza el puntero a tablero, se lo puedo pasar como argumento
-
-    PieceType getType();    // TODO usar const?
+    PieceType getType();
     PieceColour getColour();
     std::string getName();
-
-    // virtual bool validMove(std::string newPos) = 0; //Chequear si la use
 
     virtual std::set<std::string> getPossibleMoves(Board *board, std::string from) = 0;
 
     virtual void printPiece() = 0;
-
 
 };
 

@@ -348,10 +348,6 @@ void ChessBoard::printPosAndPieces(){
 
 }
 
-void ChessBoard::printPositions(){
-    return;
-}
-
 bool ChessBoard::posInBoard(int i, int j){
     if( i>=0 && i<8 && j>=0 && j<8 )
         return true;
