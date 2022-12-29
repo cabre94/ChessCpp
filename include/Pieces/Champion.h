@@ -1,7 +1,7 @@
-#ifndef CHAMPION_HPP
-#define CHAMPION_HPP
+#ifndef CHAMPION_H
+#define CHAMPION_H
 
-#include "Piece.hpp"
+#include "Piece.h"
 
 class Champion : public Piece{
 public:
@@ -13,4 +13,4 @@ public:
     std::set<std::string> getPossibleMoves(Board *board, std::string from);
 };
 
-#endif
+#endif // CHAMPION_H

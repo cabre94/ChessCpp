@@ -8,7 +8,8 @@ GitLab: https://gitlab.com/cabre94
 Description:
 */
 
-#include "Knight.hpp"
+#include "Board.h"
+#include "Knight.h"
 
 Knight::Knight(PieceColour C):Piece(C,KNIGHT,"KNIGHT"){}
 

@@ -34,3 +34,5 @@ exe
 Position.cpp
 SeparateCompilation.pdf
 TEST.cpp
+build/
+.vscode/

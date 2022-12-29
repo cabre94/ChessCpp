@@ -8,7 +8,15 @@ GitLab: https://gitlab.com/cabre94
 Description:
 */
 
-#include "ChessBoard.hpp"
+#include "ChessBoard.h"
+#include "Bishop.h"
+#include "Champion.h"
+#include "King.h"
+#include "Knight.h"
+#include "Magician.h"
+#include "Pawn.h"
+#include "Queen.h"
+#include "Rook.h"
 
 ChessBoard::ChessBoard(char c) : typeDistribution(c){
     switch (c){

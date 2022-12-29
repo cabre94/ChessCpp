@@ -1,7 +1,7 @@
-#ifndef MAGICIAN_HPP
-#define MAGICIAN_HPP
+#ifndef MAGICIAN_H
+#define MAGICIAN_H
 
-#include "Piece.hpp"
+#include "Piece.h"
 
 class Magician : public Piece{
 public:
@@ -13,4 +13,4 @@ public:
     std::set<std::string> getPossibleMoves(Board *board, std::string from);
 };
 
-#endif
+#endif // MAGICIAN_H

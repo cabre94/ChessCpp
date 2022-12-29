@@ -8,7 +8,8 @@ GitLab: https://gitlab.com/cabre94
 Description:
 */
 
-#include "Champion.hpp"
+#include "Board.h"
+#include "Champion.h"
 
 Champion::Champion(PieceColour C):Piece(C,CHAMPION,"CHAMPION"){}
 

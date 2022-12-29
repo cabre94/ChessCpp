@@ -8,7 +8,8 @@ GitLab: https://gitlab.com/cabre94
 Description:
 */
 
-#include "Magician.hpp"
+#include "Board.h"
+#include "Magician.h"
 
 Magician::Magician(PieceColour C):Piece(C,MAGICIAN,"MAGICIAN"){}
 

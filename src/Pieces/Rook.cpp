@@ -8,7 +8,8 @@ GitLab: https://gitlab.com/cabre94
 Description:
 */
 
-#include "Rook.hpp"
+#include "Board.h"
+#include "Rook.h"
 
 Rook::Rook(PieceColour C):Piece(C,ROOK,"ROOK"){}
 

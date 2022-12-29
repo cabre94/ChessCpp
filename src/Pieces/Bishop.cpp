@@ -8,7 +8,9 @@ GitLab: https://gitlab.com/cabre94
 Description:
 */
 
-#include "Bishop.hpp"
+#include "Board.h"
+
+#include "Bishop.h"
 
 Bishop::Bishop(PieceColour C):Piece(C,BISHOP,"BISHOP"){}
 

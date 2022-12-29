@@ -8,7 +8,8 @@ GitLab: https://gitlab.com/cabre94
 Description:
 */
 
-#include "King.hpp"
+#include "Board.h"
+#include "King.h"
 
 King::King(PieceColour C):Piece(C,KING,"KING"){}
 

@@ -8,7 +8,7 @@ GitLab: https://gitlab.com/cabre94
 Description:
 */
 
-#include "Board.hpp"
+#include "Board.h"
 
 
 Board::Board(){

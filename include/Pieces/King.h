@@ -1,7 +1,7 @@
-#ifndef KING_HPP
-#define KING_HPP
+#ifndef KING_H
+#define KING_H
 
-#include "Piece.hpp"
+#include "Piece.h"
 
 class King : public Piece{
 public:
@@ -13,4 +13,4 @@ public:
     std::set<std::string> getPossibleMoves(Board *board, std::string from);
 };
 
-#endif
+#endif // KING_H

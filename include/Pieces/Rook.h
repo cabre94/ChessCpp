@@ -1,7 +1,7 @@
-#ifndef ROOK_HPP
-#define ROOK_HPP
+#ifndef ROOK_H
+#define ROOK_H
 
-#include "Piece.hpp"
+#include "Piece.h"
 
 class Rook : public Piece{
 public:
@@ -13,4 +13,4 @@ public:
     std::set<std::string> getPossibleMoves(Board *board, std::string from);
 };
 
-#endif
+#endif // ROOK_H

@@ -9,10 +9,7 @@ Description:
 */
 
 
-#include "ChessGame.hpp"
-// #include "Piece.cpp"
-// #include "Board.hpp"
-// #include "ChessBoard.hpp"
+#include "ChessGame.h"
 #include <cstdlib>
 
 // #include "Board.cpp"
