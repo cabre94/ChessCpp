@@ -1,8 +1,10 @@
-#ifndef CHESSGAME_HPP
-#define CHESSGAME_HPP
+#ifndef CHESSGAME_H
+#define CHESSGAME_H
 
 #include <cstdlib>
-#include "Piece.hpp"
+
+#include "Board.h"
+#include "Piece.h"
 
 
 class ChessGame{
@@ -25,4 +27,4 @@ private:
 
 };
 
-#endif
+#endif // CHESSGAME_H

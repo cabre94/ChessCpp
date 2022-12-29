@@ -1,10 +1,10 @@
-#ifndef CHESSBOARD_HPP
-#define CHESSBOARD_HPP
+#ifndef CHESSBOARD_H
+#define CHESSBOARD_H
 
 #include <string>
 
-#include "Board.hpp"
-#include "Piece.hpp"
+#include "Board.h"
+#include "Piece.h"
 
 class ChessBoard : public Board{
 public:
@@ -57,4 +57,4 @@ private:
 
 };
 
-#endif
+#endif // CHESSBOARD_H

@@ -1,12 +1,12 @@
-#ifndef BOARD_HPP
-#define BOARD_HPP
+#ifndef BOARD_H
+#define BOARD_H
 
 #include <map>
 #include <set>
 #include <iostream>
 #include <string>
 
-#include "Piece.hpp"
+#include "Piece.h"
 // #include "Position.cpp"         //! No lo use al final
 
 class Piece;
@@ -49,6 +49,4 @@ protected:
     bool whiteInCheck, blackInCheck;
 };
 
-#include "ChessBoard.hpp"
-
-#endif
+#endif //BOARD_H

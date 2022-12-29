@@ -6,13 +6,12 @@ Email: cabre94@hotmail.com facundo.cabrera@ib.edu.ar
 GitHub: https://github.com/cabre94
 GitLab: https://gitlab.com/cabre94
 Description:
-TODO Falta implementar la coronacion
-TODO Falta implementar el enroque
-! Prohibir movimientos que dejen en jaque al rey propio
 * Para poder implementar juegos en donde uno no tenga al rey, tengo que cambiar la implementacion
 */
 
-#include "ChessGame.hpp"
+#include "ChessGame.h"
+#include "Board.h"
+#include "ChessBoard.h"
 
 ChessGame::ChessGame(){
     std::cout << "Choose chess variant" << std::endl;

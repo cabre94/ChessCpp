@@ -8,7 +8,7 @@ GitLab: https://gitlab.com/cabre94
 Description:
 */
 
-#include "Piece.hpp"
+#include "Piece.h"
 
 
 Piece::Piece(PieceColour C, PieceType T, std::string N) : colour(C), type(T), name(N) {}

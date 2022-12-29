@@ -1,7 +1,7 @@
-#ifndef BISHOP_HPP
-#define BISHOP_HPP
+#ifndef BISHOP_H
+#define BISHOP_H
 
-#include "Piece.hpp"
+#include "Piece.h"
 
 class Bishop : public Piece{
 public:
@@ -13,4 +13,4 @@ public:
     std::set<std::string> getPossibleMoves(Board *board, std::string from);
 };
 
-#endif
+#endif // BISHOP_H

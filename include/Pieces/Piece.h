@@ -1,5 +1,5 @@
-#ifndef PIECE_HPP
-#define PIECE_HPP
+#ifndef PIECE_H
+#define PIECE_H
 
 #include <iostream>
 #include <vector>
@@ -11,13 +11,7 @@
 enum PieceType{KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN, CHAMPION, MAGICIAN};
 
 
-#include "Board.hpp"
-
-/*
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!LAS PIEZAS SE VEN DE UN COLOR AL REVES DE LO QUE ES
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-*/
+// #include "Board.h"
 
 class Board;
 
@@ -53,13 +47,4 @@ public:
 
 };
 
-#include "Pawn.hpp"
-#include "Rook.hpp"
-#include "Knight.hpp"
-#include "Bishop.hpp"
-#include "Queen.hpp"
-#include "King.hpp"
-#include "Magician.hpp"
-#include "Champion.hpp"
-
-#endif
+#endif // PIECE_H

@@ -1,7 +1,7 @@
-#ifndef QUEEN_HPP
-#define QUEEN_HPP
+#ifndef QUEEN_H
+#define QUEEN_H
 
-#include "Piece.hpp"
+#include "Piece.h"
 
 class Queen : public Piece{
 public:
@@ -14,4 +14,4 @@ public:
 };
 
 
-#endif
+#endif // QUEEN_H

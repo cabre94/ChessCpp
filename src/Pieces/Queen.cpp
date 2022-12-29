@@ -8,7 +8,8 @@ GitLab: https://gitlab.com/cabre94
 Description:
 */
 
-#include "Queen.hpp"
+#include "Board.h"
+#include "Queen.h"
 
 Queen::Queen(PieceColour C):Piece(C,QUEEN,"QUEEN"){}
 

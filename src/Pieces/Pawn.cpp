@@ -8,7 +8,8 @@ GitLab: https://gitlab.com/cabre94
 Description:
 */
 
-#include "Pawn.hpp"
+#include "Board.h"
+#include "Pawn.h"
 
 Pawn::Pawn(PieceColour C):Piece(C,PAWN,"PAWN") {}
 

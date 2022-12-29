@@ -1,7 +1,7 @@
-#ifndef PAWN_HPP
-#define PAWN_HPP
+#ifndef PAWN_H
+#define PAWN_H
 
-#include "Piece.hpp"
+#include "Piece.h"
 
 class Pawn : public Piece{
 public:
@@ -14,4 +14,4 @@ public:
     std::set<std::string> getPossibleMoves(Board  *board, std::string from);
 };
 
-#endif
+#endif // PAWN_H
