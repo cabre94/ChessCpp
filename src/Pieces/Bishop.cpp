@@ -12,12 +12,12 @@ Description:
 
 #include "Bishop.h"
 
-Bishop::Bishop(PieceColour C):Piece(C,BISHOP,"BISHOP"){}
+Bishop::Bishop(PieceColor C):Piece(C,BISHOP,"BISHOP"){}
 
 Bishop::~Bishop(){}
 
 void Bishop::printPiece(){
-    if(colour == WHITE)
+    if(color == WHITE)
         std::cout << "♗";
     else
         std::cout << "♝";

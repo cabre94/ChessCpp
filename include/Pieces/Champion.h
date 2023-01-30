@@ -5,7 +5,7 @@
 
 class Champion : public Piece{
 public:
-    Champion(PieceColour C);
+    Champion(PieceColor C);
     ~Champion();
 
     void printPiece();

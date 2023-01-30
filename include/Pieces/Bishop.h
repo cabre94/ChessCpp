@@ -5,7 +5,7 @@
 
 class Bishop : public Piece{
 public:
-    Bishop(PieceColour C);
+    Bishop(PieceColor C);
     ~Bishop();
 
     void printPiece();

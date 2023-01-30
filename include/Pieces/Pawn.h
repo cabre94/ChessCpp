@@ -5,7 +5,7 @@
 
 class Pawn : public Piece{
 public:
-    Pawn(PieceColour C);
+    Pawn(PieceColor C);
     ~Pawn();
 
     void printPiece();

@@ -5,7 +5,7 @@
 
 class King : public Piece{
 public:
-    King(PieceColour C);
+    King(PieceColor C);
     ~King();
 
     void printPiece();

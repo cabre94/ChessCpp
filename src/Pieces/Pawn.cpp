@@ -11,12 +11,12 @@ Description:
 #include "Board.h"
 #include "Pawn.h"
 
-Pawn::Pawn(PieceColour C):Piece(C,PAWN,"PAWN") {}
+Pawn::Pawn(PieceColor C):Piece(C,PAWN,"PAWN") {}
 
 Pawn::~Pawn(){}
 
 void Pawn::printPiece(){
-    if(colour == WHITE)
+    if(color == WHITE)
         std::cout << "♙";
     else
         std::cout << "♟︎";

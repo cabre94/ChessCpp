@@ -329,7 +329,7 @@ void ChessBoard::updatePiecesPositions(){
     for(int i=0; i < 8; ++i){
         for(int j=0; j < 8; ++j){
             if(pieces[i][j] != nullptr){
-                PieceColour c = pieces[i][j]->getColour();
+                PieceColor c = pieces[i][j]->getColor();
                 std::string str = pos2string(i,j);
                 if(c == WHITE)
                     whitePieces[str] = pieces[i][j];
@@ -472,7 +472,7 @@ std::set<std::string> ChessBoard::getPawnMoves(std::string from){
     int row = string2row(from);
     int col = string2column(from);
 
-    PieceColour c = pieces[row][col]->getColour();
+    PieceColor c = pieces[row][col]->getColor();
 
     int forward = 1;
     bool initialPos = false;
@@ -493,9 +493,9 @@ std::set<std::string> ChessBoard::getPawnMoves(std::string from){
         pawnMoves.insert(pos2string(row+2*forward,col));
     
     // Por ultimo, chequeo si en la diagonal hay una pieza contraria que se pueda comer
-    if(posInBoard(row+forward,col+1) && pieces[row+forward][col+1] != nullptr && pieces[row+forward][col+1]->getColour() != c)
+    if(posInBoard(row+forward,col+1) && pieces[row+forward][col+1] != nullptr && pieces[row+forward][col+1]->getColor() != c)
         pawnMoves.insert(pos2string(row+forward,col+1));
-    if(posInBoard(row+forward,col-1) && pieces[row+forward][col-1] != nullptr && pieces[row+forward][col-1]->getColour() != c)
+    if(posInBoard(row+forward,col-1) && pieces[row+forward][col-1] != nullptr && pieces[row+forward][col-1]->getColor() != c)
         pawnMoves.insert(pos2string(row+forward,col-1));
 
     return pawnMoves;
@@ -507,13 +507,13 @@ std::set<std::string> ChessBoard::getRookMoves(std::string from){
     int row = string2row(from);
     int col = string2column(from);
 
-    PieceColour c = pieces[row][col]->getColour();
+    PieceColor c = pieces[row][col]->getColor();
 
     // Arriba
     for(int i=row+1; i < 8; ++i){
         if(pieces[i][col] == nullptr)
             rookMoves.insert(pos2string(i,col));
-        else if(pieces[i][col]->getColour() != c){
+        else if(pieces[i][col]->getColor() != c){
             rookMoves.insert(pos2string(i,col));
             break;
         }else
@@ -524,7 +524,7 @@ std::set<std::string> ChessBoard::getRookMoves(std::string from){
     for(int i=row-1; i >= 0; --i){
         if(pieces[i][col] == nullptr)
             rookMoves.insert(pos2string(i,col));
-        else if(pieces[i][col]->getColour() != c){
+        else if(pieces[i][col]->getColor() != c){
             rookMoves.insert(pos2string(i,col));
             break;
         }else
@@ -535,7 +535,7 @@ std::set<std::string> ChessBoard::getRookMoves(std::string from){
     for(int i=col+1; i < 8; ++i){
         if(pieces[row][i] == nullptr)
             rookMoves.insert(pos2string(row,i));
-        else if(pieces[row][i]->getColour() != c){
+        else if(pieces[row][i]->getColor() != c){
             rookMoves.insert(pos2string(row,i));
             break;
         }else
@@ -546,7 +546,7 @@ std::set<std::string> ChessBoard::getRookMoves(std::string from){
     for(int i=col+1; i < 8; ++i){
         if(pieces[row][i] == nullptr)
             rookMoves.insert(pos2string(row,i));
-        else if(pieces[row][i]->getColour() != c){
+        else if(pieces[row][i]->getColor() != c){
             rookMoves.insert(pos2string(row,i));
             break;
         }else
@@ -563,17 +563,17 @@ std::set<std::string> ChessBoard::getKnightMoves(std::string from){
     int row = string2row(from);
     int col = string2column(from);
 
-    PieceColour c = pieces[row][col]->getColour();
+    PieceColor c = pieces[row][col]->getColor();
 
     for(int i=row-1; i<=row+1; i+=2){
         for(int j=col-2; j<=col+2; j+=4){
-            if(posInBoard(i,j) && (pieces[i][j] == nullptr || pieces[i][j]->getColour() != c) )
+            if(posInBoard(i,j) && (pieces[i][j] == nullptr || pieces[i][j]->getColor() != c) )
                 knightMoves.insert(pos2string(i,j));
         }
     }
     for(int i=row-2; i<=row+2; i+=4){
         for(int j=col-1; j<=col+1; j+=2){
-            if(posInBoard(i,j) && (pieces[i][j] == nullptr || pieces[i][j]->getColour() != c) )
+            if(posInBoard(i,j) && (pieces[i][j] == nullptr || pieces[i][j]->getColor() != c) )
                 knightMoves.insert(pos2string(i,j));
         }
     }
@@ -587,13 +587,13 @@ std::set<std::string> ChessBoard::getBishopMoves(std::string from){
     int row = string2row(from);
     int col = string2column(from);
 
-    PieceColour c = pieces[row][col]->getColour();
+    PieceColor c = pieces[row][col]->getColor();
 
     // Arriba a la derecha
     for(int i=1; (row+i < 8) && (col+i < 8); ++i){
         if(pieces[row+i][col+i] == nullptr)
             bishopMoves.insert(pos2string(row+i,col+i));
-        else if(pieces[row+i][col+i]->getColour() != c){
+        else if(pieces[row+i][col+i]->getColor() != c){
             bishopMoves.insert(pos2string(row+i,col+i));
             break;
         }else
@@ -604,7 +604,7 @@ std::set<std::string> ChessBoard::getBishopMoves(std::string from){
     for(int i=1; (row-i >= 0) && (col+i < 8); ++i){
         if(pieces[row-i][col+i] == nullptr)
             bishopMoves.insert(pos2string(row-i,col+i));
-        else if(pieces[row-i][col+i]->getColour() != c){
+        else if(pieces[row-i][col+i]->getColor() != c){
             bishopMoves.insert(pos2string(row-i,col+i));
             break;
         }else
@@ -615,7 +615,7 @@ std::set<std::string> ChessBoard::getBishopMoves(std::string from){
     for(int i=1; (row-i >= 0) && (col-i >= 0); ++i){
         if(pieces[row-i][col-i] == nullptr)
             bishopMoves.insert(pos2string(row-i,col-i));
-        else if(pieces[row-i][col-i]->getColour() != c){
+        else if(pieces[row-i][col-i]->getColor() != c){
             bishopMoves.insert(pos2string(row-i,col-i));
             break;
         }else
@@ -626,7 +626,7 @@ std::set<std::string> ChessBoard::getBishopMoves(std::string from){
     for(int i=1; (row+i < 8) && (col-i >= 0); ++i){
         if(pieces[row+i][col-i] == nullptr)
             bishopMoves.insert(pos2string(row+i,col-i));
-        else if(pieces[row+i][col-i]->getColour() != c){
+        else if(pieces[row+i][col-i]->getColor() != c){
             bishopMoves.insert(pos2string(row+i,col-i));
             break;
         }else
@@ -652,7 +652,7 @@ std::set<std::string> ChessBoard::getKingMoves(std::string from){
     int row = string2row(from);
     int col = string2column(from);
 
-    PieceColour c = pieces[row][col]->getColour();
+    PieceColor c = pieces[row][col]->getColor();
 
     if(c == WHITE)
         oppositeMoves = allBlackMoves;
@@ -663,7 +663,7 @@ std::set<std::string> ChessBoard::getKingMoves(std::string from){
         for(int j=-1; j <= 1; ++j){
             if(i == 0 && j == 0)
                 continue;
-            if  (posInBoard(row+i,col+j) && ((pieces[row+i][col+j] == nullptr) || (pieces[row+i][col+j]->getColour() != c) ) && !stringInSet(oppositeMoves, pos2string(row+i,col+j)) )
+            if  (posInBoard(row+i,col+j) && ((pieces[row+i][col+j] == nullptr) || (pieces[row+i][col+j]->getColor() != c) ) && !stringInSet(oppositeMoves, pos2string(row+i,col+j)) )
                 kingMoves.insert(pos2string(row+i,col+j));
         }
     }
@@ -677,14 +677,14 @@ std::set<std::string> ChessBoard::getChampionMoves(std::string from){
     int row = string2row(from);
     int col = string2column(from);
 
-    PieceColour c = pieces[row][col]->getColour();
+    PieceColor c = pieces[row][col]->getColor();
 
     // Movimientos de a dos
     for(int i=-2; i <= 2; i+=2){
         for(int j=-2; j <= 2; j+=2){
             if(i == 0 && j == 0)
                 continue;
-            if(posInBoard(row+i,col+j) && (pieces[row+i][col+j] == nullptr || pieces[row+i][col+j]->getColour() != c))
+            if(posInBoard(row+i,col+j) && (pieces[row+i][col+j] == nullptr || pieces[row+i][col+j]->getColor() != c))
                 championMoves.insert(pos2string(row+i,col+j));
         }
     }
@@ -693,7 +693,7 @@ std::set<std::string> ChessBoard::getChampionMoves(std::string from){
         for(int j=-1; j <= 1; ++j){
             if(i == j || i == -j)
                 continue;
-            if(posInBoard(row+i,col+j) && (pieces[row+i][col+j] == nullptr || pieces[row+i][col+j]->getColour() != c))
+            if(posInBoard(row+i,col+j) && (pieces[row+i][col+j] == nullptr || pieces[row+i][col+j]->getColor() != c))
                 championMoves.insert(pos2string(row+i,col+j));
         }
     }
@@ -707,17 +707,17 @@ std::set<std::string> ChessBoard::getMagicianMoves(std::string from){
     int row = string2row(from);
     int col = string2column(from);
 
-    PieceColour c = pieces[row][col]->getColour();
+    PieceColor c = pieces[row][col]->getColor();
 
     for(int i=row-1; i<=row+1; i+=2){
         for(int j=col-3; j<=col+3; j+=6){
-            if(posInBoard(i,j) && (pieces[i][j] == nullptr || pieces[i][j]->getColour() != c))
+            if(posInBoard(i,j) && (pieces[i][j] == nullptr || pieces[i][j]->getColor() != c))
                 magicianMoves.insert(pos2string(i,j));
         }
     }
     for(int i=row-3; i<=row+3; i+=6){
         for(int j=col-1; j<=col+1; j+=2){
-            if(posInBoard(i,j) && (pieces[i][j] == nullptr || pieces[i][j]->getColour() != c) )
+            if(posInBoard(i,j) && (pieces[i][j] == nullptr || pieces[i][j]->getColor() != c) )
                 magicianMoves.insert(pos2string(i,j));
         }
     }
@@ -733,7 +733,7 @@ void ChessBoard::updateAllValidMoves(){
         for(int j=0; j < 8; ++j){
             if(pieces[i][j] != nullptr){    // ? Seria mejor un metodo que me diga si hay pieza?
                 std::set<std::string> aux = pieces[i][j]->getPossibleMoves(this, pos2string(i,j));
-                if(pieces[i][j]->getColour() == WHITE)
+                if(pieces[i][j]->getColor() == WHITE)
                     allWhiteMoves.insert(aux.begin(), aux.end());
                 else
                     allBlackMoves.insert(aux.begin(), aux.end());
@@ -751,7 +751,7 @@ void ChessBoard::updateGameState(){
     for(int i=0; i < 8; ++i){
         for(int j=0; j < 8; ++j){
             if(pieces[i][j] != nullptr && pieces[i][j]->getType() == KING){
-                if(pieces[i][j]->getColour() == WHITE)
+                if(pieces[i][j]->getColor() == WHITE)
                     whiteKingPos = pos2string(i,j);
                 else
                     blackKingPos = pos2string(i,j);

@@ -11,12 +11,12 @@ Description:
 #include "Board.h"
 #include "Champion.h"
 
-Champion::Champion(PieceColour C):Piece(C,CHAMPION,"CHAMPION"){}
+Champion::Champion(PieceColor C):Piece(C,CHAMPION,"CHAMPION"){}
 
 Champion::~Champion(){}
 
 void Champion::printPiece(){
-    if(colour == WHITE)
+    if(color == WHITE)
         std::cout << "☆";
     else
         std::cout << "★";

@@ -1,22 +1,12 @@
-/*
-date: 21-12-2020
-File: Knight.cpp
-Author : Facundo Martin Cabrera
-Email: cabre94@hotmail.com facundo.cabrera@ib.edu.ar
-GitHub: https://github.com/cabre94
-GitLab: https://gitlab.com/cabre94
-Description:
-*/
-
 #include "Board.h"
 #include "Knight.h"
 
-Knight::Knight(PieceColour C):Piece(C,KNIGHT,"KNIGHT"){}
+Knight::Knight(PieceColor C):Piece(C,KNIGHT,"KNIGHT"){}
 
 Knight::~Knight(){}
 
 void Knight::printPiece(){
-    if(colour == WHITE)
+    if(color == WHITE)
         std::cout << "♘";
     else
         std::cout << "♞";

@@ -11,12 +11,12 @@ Description:
 #include "Board.h"
 #include "King.h"
 
-King::King(PieceColour C):Piece(C,KING,"KING"){}
+King::King(PieceColor C):Piece(C,KING,"KING"){}
 
 King::~King(){}
 
 void King::printPiece(){
-    if(colour == WHITE)
+    if(color == WHITE)
         std::cout << "♔";
     else
         std::cout << "♚";

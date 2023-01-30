@@ -5,7 +5,7 @@
 
 class Magician : public Piece{
 public:
-    Magician(PieceColour C);
+    Magician(PieceColor C);
     ~Magician();
 
     void printPiece();

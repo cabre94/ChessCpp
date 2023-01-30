@@ -11,12 +11,12 @@ Description:
 #include "Board.h"
 #include "Magician.h"
 
-Magician::Magician(PieceColour C):Piece(C,MAGICIAN,"MAGICIAN"){}
+Magician::Magician(PieceColor C):Piece(C,MAGICIAN,"MAGICIAN"){}
 
 Magician::~Magician(){}
 
 void Magician::printPiece(){
-    if(colour == WHITE)
+    if(color == WHITE)
         std::cout << "♽";
     else
         std::cout << "♼";

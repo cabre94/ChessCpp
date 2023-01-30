@@ -11,7 +11,7 @@ Description:
 #include "Piece.h"
 
 
-Piece::Piece(PieceColour C, PieceType T, std::string N) : colour(C), type(T), name(N) {}
+Piece::Piece(PieceColor C, PieceType T, std::string N) : color(C), type(T), name(N) {}
 
 Piece::~Piece(){}
 
@@ -19,8 +19,8 @@ PieceType Piece::getType(){
     return type;
 }
 
-PieceColour Piece::getColour(){
-    return colour;
+PieceColor Piece::getColor(){
+    return color;
 }
 
 std::string Piece::getName(){
