@@ -5,12 +5,11 @@
 
 class Champion : public Piece{
 public:
-    Champion(PieceColor C);
-    ~Champion();
+    Champion(PieceColor color_, Position pos_) : Piece(color_, "CHAMPION", pos_){}
+    ~Champion() {}
 
-    void printPiece();
-
-    std::set<std::string> getPossibleMoves(Board *board, std::string from);
+    void printPiece() const override;
+    std::set<std::string> getPossibleMoves(const Board *board) const override;
 };
 
 #endif // CHAMPION_H

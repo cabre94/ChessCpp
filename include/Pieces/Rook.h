@@ -5,12 +5,11 @@
 
 class Rook : public Piece{
 public:
-    Rook(PieceColor C);
-    ~Rook();
+    Rook(PieceColor color_, Position pos_) : Piece(color_, "ROOK", pos_) {}
+    ~Rook() {}
 
-    void printPiece();
-
-    std::set<std::string> getPossibleMoves(Board *board, std::string from);
+    void printPiece() const override;
+    std::set<std::string> getPossibleMoves(const Board *board) const override;
 };
 
 #endif // ROOK_H

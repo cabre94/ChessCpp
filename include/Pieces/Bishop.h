@@ -5,12 +5,11 @@
 
 class Bishop : public Piece{
 public:
-    Bishop(PieceColor C);
-    ~Bishop();
+    Bishop(PieceColor color_, Position pos_) : Piece(color_, "BISHOP", pos_) {}
+    ~Bishop() {}
 
-    void printPiece();
-
-    std::set<std::string> getPossibleMoves(Board *board, std::string from);
+    void printPiece() const override;
+    std::set<std::string> getPossibleMoves(const Board *board) const override;
 };
 
 #endif // BISHOP_H

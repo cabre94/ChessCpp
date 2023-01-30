@@ -5,13 +5,11 @@
 
 class Pawn : public Piece{
 public:
-    Pawn(PieceColor C);
-    ~Pawn();
+    Pawn(PieceColor color_, Position pos_) : Piece(color_, "PAWN", pos_) {}
+    ~Pawn() {}
 
-    void printPiece();
-    std::string getName();
-
-    std::set<std::string> getPossibleMoves(Board  *board, std::string from);
+    void printPiece() const override;
+    std::set<std::string> getPossibleMoves(const Board *board) const override;
 };
 
 #endif // PAWN_H

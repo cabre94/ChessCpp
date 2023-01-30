@@ -1,30 +1,16 @@
-/*
-date: 21-12-2020
-File: King.cpp
-Author : Facundo Martin Cabrera
-Email: cabre94@hotmail.com facundo.cabrera@ib.edu.ar
-GitHub: https://github.com/cabre94
-GitLab: https://gitlab.com/cabre94
-Description:
-*/
-
 #include "Board.h"
 #include "King.h"
 
-King::King(PieceColor C):Piece(C,KING,"KING"){}
-
-King::~King(){}
-
-void King::printPiece(){
+void King::printPiece() const{
     if(color == WHITE)
         std::cout << "♔";
     else
         std::cout << "♚";
 }
 
-std::set<std::string> King::getPossibleMoves(Board *board, std::string from){
+std::set<std::string> King::getPossibleMoves(const Board *board) const{
     std::set<std::string> validMoves;
-    validMoves = board->getValidMoves(from, KING);
+    // validMoves = board->getValidMoves(pos, KING); // TODO
     return validMoves;
 }
 

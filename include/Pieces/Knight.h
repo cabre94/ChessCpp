@@ -5,12 +5,11 @@
 
 class Knight : public Piece{
 public:
-    Knight(PieceColor C);
-    ~Knight();
+    Knight(PieceColor color_, Position pos_) : Piece(color_, "KNIGHT", pos_) {}
+    ~Knight() {}
 
-    void printPiece();
-
-    std::set<std::string> getPossibleMoves(Board *board, std::string from);
+    void printPiece() const override;
+    std::set<std::string> getPossibleMoves(const Board *board) const override;
 };
 
 #endif // KNIGHT_H
