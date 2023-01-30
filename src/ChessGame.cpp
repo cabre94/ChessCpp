@@ -1,14 +1,3 @@
-/*
-date: 23-12-2020
-File: ChessGame.cpp
-Author : Facundo Martin Cabrera
-Email: cabre94@hotmail.com facundo.cabrera@ib.edu.ar
-GitHub: https://github.com/cabre94
-GitLab: https://gitlab.com/cabre94
-Description:
-* Para poder implementar juegos en donde uno no tenga al rey, tengo que cambiar la implementacion
-*/
-
 #include "ChessGame.h"
 #include "Board.h"
 #include "ChessBoard.h"
@@ -48,7 +37,7 @@ void ChessGame::play(){
     }
 }
 
-void ChessGame::printCheckMessage(){
+void ChessGame::printCheckMessage() const {
     if(boardPtr->isWhiteInCheck())
         std::cout << "White king is in check" << std::endl;
     if(boardPtr->isBlackInCheck())

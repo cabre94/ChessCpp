@@ -22,7 +22,7 @@ public:
 private:
     Board* boardPtr;
 
-    void printCheckMessage();
+    void printCheckMessage() const;
 
 
 };
