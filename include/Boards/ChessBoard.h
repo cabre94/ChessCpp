@@ -8,24 +8,38 @@
 
 class ChessBoard : public Board{
 public:
-    ChessBoard(char c = 'n');
+    ChessBoard(uint16_t nRow_, uint16_t nCol_);
     ~ChessBoard();
 
     
 
     // Funciones virtuales
-    void printBoard();
+    void printBoard() const override;
     // void printPositions();
-    void printPosAndPieces();
+    void printPosAndPieces() const override;
     // int* string2pos(std::string str);
 
     bool makeMove(std::string from, std::string to);
 
+	void createPices(const char c = 'n') override;
+
+
+	// TODO sacar
+    std::set<Position> getValidMoves(Position pos) const override;	// TODO Sacar esto
+
+
+	std::set<Position> getDiagonalMoves(const Position& pos) const override;
+	std::set<Position> getParallelMoves(const Position& pos) const override;
+	std::set<Position> getLShapeMoves(const Position& pos, const std::vector<u_int16_t>& deltas) const override;
+	std::set<Position> getFordwardMoves(const Position& pos, int direction, bool first = false) const override;
+	std::set<Position> getAllDirectionMoves(const Position& pos) const override;
+
+
 private:
     void initializePieces();
-    void initializePiecesButterfly();
-    void initializePiecesPawnGame();
-    void initializePiecesChampionMagician();
+    // void initializePiecesButterfly();
+    // void initializePiecesPawnGame();
+    // void initializePiecesChampionMagician();
 
     void clearBoard();
 
@@ -33,15 +47,19 @@ private:
 
     bool posInBoard(int i, int j);
 
-    std::string pos2string(int x, int y);
-    int string2row(std::string str);
-    int string2column(std::string str);
+    // std::string pos2string(int x, int y);
+    Position idx2Position(const uint32_t i, const uint32_t j) const;
+    
+	int position2row(const Position& pos) const;
+    int position2column(const Position& pos) const;
 
-    void updatePiecesPositions();
-    void updateAllValidMoves();
-    void updateGameState();
+	Piece* getPieceFromIdx(const uint32_t i, const uint32_t j) const;
 
-    std::set<std::string> getValidMoves(std::string from, PieceType T);
+    // void updatePiecesPositions();
+    // void updateAllValidMoves();
+    // void updateGameState();
+
+    std::set<std::string> getValidMoves(std::string from);
 
     std::set<std::string> getPawnMoves(std::string from);
     std::set<std::string> getRookMoves(std::string from);
@@ -52,8 +70,10 @@ private:
     std::set<std::string> getChampionMoves(std::string from);
     std::set<std::string> getMagicianMoves(std::string from);
 
-    char typeDistribution;
+    // char typeDistribution;
+	const uint16_t nRow, nCol;
     Piece* pieces[8][8];    //! No enteindo porque no puedo poner SIZE
+	Piece** positions;
 
 };
 
