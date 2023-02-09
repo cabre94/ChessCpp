@@ -8,36 +8,37 @@
 #include <cstdlib>
 #include <sstream>
 
-enum PieceType{KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN, CHAMPION, MAGICIAN};
+#include "Types.h"
+
+// enum PieceType{KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN, CHAMPION, MAGICIAN}; // TODO
 
 class Board;
 
-enum PieceColor{NONE, WHITE, BLACK};
+// enum PieceColor{NONE, WHITE, BLACK};
 enum State{CHECK, CHECKMATE, NORMAL};       //!
 
 class Piece{
 protected:
-    PieceColor color;
-    PieceType type;
+    const PlayerID player_id;	// TODO const
     std::string name;
+	Position pos;
     
 public:
-    Piece(PieceColor C, PieceType T, std::string N);	//Default constructor
-    virtual ~Piece();
+    Piece(PlayerID player_id_, std::string name_, Position pos_) 
+		: player_id(player_id_), name(name_), pos(pos_) {}
+    virtual ~Piece() {}
 
     Piece(const Piece &) = delete;				// Copy constructor
     Piece &operator=(const Piece &) = delete;	// Copy assignment
     Piece(Piece &&) = delete;					// Move constructor
     Piece &operator=(Piece &&) = delete;		// Move assignment
 
-    PieceType getType();
-    PieceColor getColor();
-    std::string getName();
+    PlayerID getPlayerID() const {return player_id;};
+    std::string getName() const {return name;};
+	Position getPosition() const {return pos;}
 
-    virtual std::set<std::string> getPossibleMoves(Board *board, std::string from) = 0;
-
-    virtual void printPiece() = 0;
-
+    virtual std::set<std::string> getPossibleMoves(const Board *board) const = 0;
+    virtual void printPiece() const = 0;
 };
 
 #endif // PIECE_H

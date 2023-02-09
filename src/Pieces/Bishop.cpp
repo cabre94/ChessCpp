@@ -1,31 +1,18 @@
-/*
-date: 21-12-2020
-File: Bishop.cpp
-Author : Facundo Martin Cabrera
-Email: cabre94@hotmail.com facundo.cabrera@ib.edu.ar
-GitHub: https://github.com/cabre94
-GitLab: https://gitlab.com/cabre94
-Description:
-*/
-
 #include "Board.h"
-
 #include "Bishop.h"
 
-Bishop::Bishop(PieceColor C):Piece(C,BISHOP,"BISHOP"){}
-
-Bishop::~Bishop(){}
-
-void Bishop::printPiece(){
-    if(color == WHITE)
+void Bishop::printPiece() const {
+    if(player_id == WHITE)
         std::cout << "♗";
     else
         std::cout << "♝";
 }
 
-std::set<std::string> Bishop::getPossibleMoves(Board *board, std::string from){
+std::set<std::string> Bishop::getPossibleMoves(const Board *board) const {
     std::set<std::string> validMoves;
-    validMoves = board->getValidMoves(from, BISHOP);
-    return validMoves;
+
+    // validMoves = board->getValidMoves(pos, BISHOP); // TODO
+    
+	return validMoves;
 }
 

@@ -5,13 +5,11 @@
 
 class Queen : public Piece{
 public:
-    Queen(PieceColor C);
-    ~Queen();
+    Queen(PlayerID player_id_, Position pos_) : Piece(player_id_, "QUEEN", pos_) {} 
+    ~Queen() {}
 
-    void printPiece();
-
-    std::set<std::string> getPossibleMoves(Board *board, std::string from);
+    void printPiece() const override;
+    std::set<std::string> getPossibleMoves(const Board *board) const override;
 };
-
 
 #endif // QUEEN_H

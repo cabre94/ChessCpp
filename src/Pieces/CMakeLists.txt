@@ -6,7 +6,7 @@ target_sources(
 	Knight.cpp
 	Magician.cpp
 	Pawn.cpp
-	Piece.cpp
+	# Piece.cpp
 	Queen.cpp
 	Rook.cpp
 )
