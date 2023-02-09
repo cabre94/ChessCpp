@@ -14,18 +14,18 @@
 
 class Board;
 
-enum PieceColor{NONE, WHITE, BLACK};
+// enum PieceColor{NONE, WHITE, BLACK};
 enum State{CHECK, CHECKMATE, NORMAL};       //!
 
 class Piece{
 protected:
-    PieceColor color;	// TODO const
+    const PlayerID player_id;	// TODO const
     std::string name;
 	Position pos;
     
 public:
-    Piece(PieceColor color_, std::string name_, Position pos_) 
-		: color(color_), name(name_), pos(pos_) {}
+    Piece(PlayerID player_id_, std::string name_, Position pos_) 
+		: player_id(player_id_), name(name_), pos(pos_) {}
     virtual ~Piece() {}
 
     Piece(const Piece &) = delete;				// Copy constructor
@@ -33,7 +33,7 @@ public:
     Piece(Piece &&) = delete;					// Move constructor
     Piece &operator=(Piece &&) = delete;		// Move assignment
 
-    PieceColor getColor() const {return color;};
+    PlayerID getPlayerID() const {return player_id;};
     std::string getName() const {return name;};
 	Position getPosition() const {return pos;}
 

@@ -5,7 +5,7 @@
 
 class Champion : public Piece{
 public:
-    Champion(PieceColor color_, Position pos_) : Piece(color_, "CHAMPION", pos_){}
+    Champion(PlayerID player_id_, Position pos_) : Piece(player_id_, "CHAMPION", pos_){}
     ~Champion() {}
 
     void printPiece() const override;

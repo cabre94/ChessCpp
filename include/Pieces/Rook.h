@@ -5,7 +5,7 @@
 
 class Rook : public Piece{
 public:
-    Rook(PieceColor color_, Position pos_) : Piece(color_, "ROOK", pos_) {}
+    Rook(PlayerID player_id_, Position pos_) : Piece(player_id_, "ROOK", pos_) {}
     ~Rook() {}
 
     void printPiece() const override;

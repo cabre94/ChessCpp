@@ -5,7 +5,7 @@
 
 class Pawn : public Piece{
 public:
-    Pawn(PieceColor color_, Position pos_) : Piece(color_, "PAWN", pos_) {}
+    Pawn(PlayerID player_id_, Position pos_) : Piece(player_id_, "PAWN", pos_) {}
     ~Pawn() {}
 
     void printPiece() const override;

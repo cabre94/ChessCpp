@@ -5,7 +5,7 @@
 
 class Magician : public Piece{
 public:
-    Magician(PieceColor color_, Position pos_) :Piece(color_,"MAGICIAN", pos_) {}
+    Magician(PlayerID player_id_, Position pos_) :Piece(player_id_,"MAGICIAN", pos_) {}
     ~Magician() {}
 
     void printPiece() const override;

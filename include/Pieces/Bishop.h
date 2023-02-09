@@ -5,7 +5,7 @@
 
 class Bishop : public Piece{
 public:
-    Bishop(PieceColor color_, Position pos_) : Piece(color_, "BISHOP", pos_) {}
+    Bishop(PlayerID player_id_, Position pos_) : Piece(player_id_, "BISHOP", pos_) {}
     ~Bishop() {}
 
     void printPiece() const override;

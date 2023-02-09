@@ -5,7 +5,7 @@
 
 class Queen : public Piece{
 public:
-    Queen(PieceColor color_, Position pos_) : Piece(color_, "QUEEN", pos_) {} 
+    Queen(PlayerID player_id_, Position pos_) : Piece(player_id_, "QUEEN", pos_) {} 
     ~Queen() {}
 
     void printPiece() const override;
