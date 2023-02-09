@@ -79,14 +79,14 @@ void ChessBoard::initializePieces(){
 	all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "G2"));
 	all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "H2"));
 
-	all_pieces.at(WHITE)->push_back(new Rook(WHITE, "A1"));
+	all_pieces.at(WHITE)->push_back(new Rook  (WHITE, "A1"));
 	all_pieces.at(WHITE)->push_back(new Knight(WHITE, "B1"));
 	all_pieces.at(WHITE)->push_back(new Bishop(WHITE, "C1"));
-	all_pieces.at(WHITE)->push_back(new Queen(WHITE, "D1"));
-	all_pieces.at(WHITE)->push_back(new King(WHITE, "E1"));
+	all_pieces.at(WHITE)->push_back(new Queen (WHITE, "D1"));
+	all_pieces.at(WHITE)->push_back(new King  (WHITE, "E1"));
 	all_pieces.at(WHITE)->push_back(new Bishop(WHITE, "F1"));
 	all_pieces.at(WHITE)->push_back(new Knight(WHITE, "G1"));
-	all_pieces.at(WHITE)->push_back(new Rook(WHITE, "H1"));
+	all_pieces.at(WHITE)->push_back(new Rook  (WHITE, "H1"));
 
 	// Piezas negras
 	all_pieces.at(BLACK)->push_back(new Pawn(BLACK, "A7"));
@@ -98,14 +98,14 @@ void ChessBoard::initializePieces(){
 	all_pieces.at(BLACK)->push_back(new Pawn(BLACK, "G7"));
 	all_pieces.at(BLACK)->push_back(new Pawn(BLACK, "H7"));
 
-	all_pieces.at(BLACK)->push_back(new Rook(BLACK, "A8"));
+	all_pieces.at(BLACK)->push_back(new Rook  (BLACK, "A8"));
 	all_pieces.at(BLACK)->push_back(new Knight(BLACK, "B8"));
 	all_pieces.at(BLACK)->push_back(new Bishop(BLACK, "C8"));
-	all_pieces.at(BLACK)->push_back(new Queen(BLACK, "D8"));
-	all_pieces.at(BLACK)->push_back(new King(BLACK, "E8"));
+	all_pieces.at(BLACK)->push_back(new Queen (BLACK, "D8"));
+	all_pieces.at(BLACK)->push_back(new King  (BLACK, "E8"));
 	all_pieces.at(BLACK)->push_back(new Bishop(BLACK, "F8"));
 	all_pieces.at(BLACK)->push_back(new Knight(BLACK, "G8"));
-	all_pieces.at(BLACK)->push_back(new Rook(BLACK, "H8"));
+	all_pieces.at(BLACK)->push_back(new Rook  (BLACK, "H8"));
 
     // whiteTurn = true;
     // gameEnded = false;
@@ -379,7 +379,7 @@ void ChessBoard::printBoard() const {
 
     // ! Primera linea
     std::cout << " \u250C";
-    for(int i = nCol; i >=1; i--){
+    for(int i = nCol; i > 1; i--){
         std::cout << "\u2500\u2500\u2500\u252C";
     }
     std::cout << "\u2500\u2500\u2500\u2510" << std::endl;
@@ -406,12 +406,11 @@ void ChessBoard::printBoard() const {
         //print the grid lines
         if(row>1) {
             std::cout << " \u251C";
-            for (int i=nCol; i>=1; i--) {
+            for (int i = nCol; i > 1; i--) {
 	            std::cout << "\u2500\u2500\u2500\u253C";
             }
             std::cout << "\u2500\u2500\u2500\u2524" << std::endl;
         }
-        // square = square -16;
     }
 
     // ! Uktima linea
