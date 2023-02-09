@@ -2,7 +2,7 @@
 #include "Bishop.h"
 
 void Bishop::printPiece() const {
-    if(color == WHITE)
+    if(player_id == WHITE)
         std::cout << "♗";
     else
         std::cout << "♝";

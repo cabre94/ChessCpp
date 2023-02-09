@@ -2,7 +2,7 @@
 #include "Pawn.h"
 
 void Pawn::printPiece() const {
-    if(color == WHITE)
+    if(player_id == WHITE)
         std::cout << "♙";
     else
         std::cout << "♟︎";

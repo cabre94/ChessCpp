@@ -2,7 +2,7 @@
 #include "Champion.h"
 
 void Champion::printPiece() const {
-    if(color == WHITE)
+    if(player_id == WHITE)
         std::cout << "☆";
     else
         std::cout << "★";
