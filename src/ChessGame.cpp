@@ -12,7 +12,7 @@ ChessGame::ChessGame(){
     char c;
     std::cin >> c;
 
-    boardPtr = new ChessBoard(c);
+    boardPtr = new ChessBoard(8,8);
 }
 
 ChessGame::~ChessGame(){

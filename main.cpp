@@ -13,8 +13,8 @@ Description:
 #include <cstdlib>
 
 // #include "Board.cpp"
-// #include "Piece.cpp"
-// #include "ChessBoard.cpp"
+#include "Piece.h"
+#include "ChessBoard.h"
 
 // int main(int argc, const char** argv){
     
@@ -68,9 +68,23 @@ Description:
 
 int main(int argc, const char** argv){
     
-    ChessGame game;
+    // ChessGame game;
 
-    game.play();
+    // game.play();
+
+	Board* board = new ChessBoard(8,8);
+
+	std::vector<Piece*> kk1;
+	std::vector<Piece*> kk2;
+
+	board->addPlayerPieces(kk1);
+	board->addPlayerPieces(kk2);
+
+	board->createPices('n');
+
+	board->printBoard();
+
+
 
     return 0;
 }
