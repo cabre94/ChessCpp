@@ -1,13 +1,3 @@
-/*
-date: 21-12-2020
-File: ChessBoard.cpp
-Author : Facundo Martin Cabrera
-Email: cabre94@hotmail.com facundo.cabrera@ib.edu.ar
-GitHub: https://github.com/cabre94
-GitLab: https://gitlab.com/cabre94
-Description:
-*/
-
 #include "ChessBoard.h"
 #include "Bishop.h"
 #include "Champion.h"
@@ -18,7 +8,12 @@ Description:
 #include "Queen.h"
 #include "Rook.h"
 
-ChessBoard::ChessBoard(char c) : typeDistribution(c){
+ChessBoard::ChessBoard(uint16_t nRow_, uint16_t nCol_)
+	 : nRow(nRow_), nCol(nCol_) {
+	
+	// positions = new Piece*[nRow * nCol];
+
+	#if 0
     switch (c){
         case 'n':
             initializePieces();
@@ -36,21 +31,113 @@ ChessBoard::ChessBoard(char c) : typeDistribution(c){
             std::cout << "invalid input" << std::endl;  //! Deberia tirar una excepcion
             exit(1);
     }
+	#endif
+
+
+	// incializar las dimensiones del tablero
+
+	// ------------------------------
+	// Esto lo dejo asi lo mando a otra funcion
+	// Crear las piezas y agregarlas a las referencias/punteros que correspondan
+	// Deberia usar un PlayerID (un entero) para identificar cuales son
+	// ------------------------------
+
+
+}
+
+void ChessBoard::createPices(const char c){
+	switch (c){
+        case 'n':
+            initializePieces();
+            break;
+        // case 'b':
+        //     initializePiecesButterfly();
+        //     break;
+        // case 'p':
+        //     initializePiecesPawnGame();
+        //     break;
+        // case 'c':
+        //     initializePiecesChampionMagician();
+        //     break;
+        default:
+            std::cout << "invalid input" << std::endl;  //! Deberia tirar una excepcion
+            exit(1);
+    }
+}
+
+void ChessBoard::initializePieces(){
+
+	// Aca asumo que el vector para esta inicializado y tiene los punteros a vector
+
+	// Piezas blancas
+	all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "A2"));
+	all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "B2"));
+	all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "C2"));
+	all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "D2"));
+	all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "E2"));
+	all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "F2"));
+	all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "G2"));
+	all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "H2"));
+
+	all_pieces.at(WHITE)->push_back(new Rook(WHITE, "A1"));
+	all_pieces.at(WHITE)->push_back(new Knight(WHITE, "B1"));
+	all_pieces.at(WHITE)->push_back(new Bishop(WHITE, "C1"));
+	all_pieces.at(WHITE)->push_back(new Queen(WHITE, "D1"));
+	all_pieces.at(WHITE)->push_back(new King(WHITE, "E1"));
+	all_pieces.at(WHITE)->push_back(new Bishop(WHITE, "F1"));
+	all_pieces.at(WHITE)->push_back(new Knight(WHITE, "G1"));
+	all_pieces.at(WHITE)->push_back(new Rook(WHITE, "H1"));
+
+	// Piezas negras
+	all_pieces.at(BLACK)->push_back(new Pawn(BLACK, "A7"));
+	all_pieces.at(BLACK)->push_back(new Pawn(BLACK, "B7"));
+	all_pieces.at(BLACK)->push_back(new Pawn(BLACK, "C7"));
+	all_pieces.at(BLACK)->push_back(new Pawn(BLACK, "D7"));
+	all_pieces.at(BLACK)->push_back(new Pawn(BLACK, "E7"));
+	all_pieces.at(BLACK)->push_back(new Pawn(BLACK, "F7"));
+	all_pieces.at(BLACK)->push_back(new Pawn(BLACK, "G7"));
+	all_pieces.at(BLACK)->push_back(new Pawn(BLACK, "H7"));
+
+	all_pieces.at(BLACK)->push_back(new Rook(BLACK, "A8"));
+	all_pieces.at(BLACK)->push_back(new Knight(BLACK, "B8"));
+	all_pieces.at(BLACK)->push_back(new Bishop(BLACK, "C8"));
+	all_pieces.at(BLACK)->push_back(new Queen(BLACK, "D8"));
+	all_pieces.at(BLACK)->push_back(new King(BLACK, "E8"));
+	all_pieces.at(BLACK)->push_back(new Bishop(BLACK, "F8"));
+	all_pieces.at(BLACK)->push_back(new Knight(BLACK, "G8"));
+	all_pieces.at(BLACK)->push_back(new Rook(BLACK, "H8"));
+
+    // whiteTurn = true;
+    // gameEnded = false;
+
+    // whiteKingPos = "E1";
+    // blackKingPos = "E8";
+
+    // updatePiecesPositions();
+
+    // updateAllValidMoves();
+
+    // updateGameState();
 }
 
 ChessBoard::~ChessBoard(){
-    clearBoard();
+
+
+    // clearBoard();
+	// delete [] positions;
 }
 
 void ChessBoard::clearBoard(){
-    for(int i=0; i < 8; ++i){
-        for(int j=0; j < 8; ++j){
-            if(pieces[i][j] != nullptr){    // ? Seria mejor un metodo que me diga si hay pieza?
-                delete pieces[i][j];
-                pieces[i][j] = nullptr;
-            }
-        }
-    }
+
+
+    // for(int i=0; i < 8; ++i){
+    //     for(int j=0; j < 8; ++j){
+    //         if(pieces[i][j] != nullptr){    // ? Seria mejor un metodo que me diga si hay pieza?
+    //             delete pieces[i][j];
+    //             pieces[i][j] = nullptr;
+    //         }
+    //     }
+    // }
 }
 
 void ChessBoard::printSet(std::set<std::string> moveSet){
@@ -59,6 +146,8 @@ void ChessBoard::printSet(std::set<std::string> moveSet){
     std::cout << std::endl;
 }
 
+// TODO: Borrar
+#if 0
 void ChessBoard::initializePieces(){
     for(int i=0; i < 8; ++i)
         for(int j=0; j < 8; ++j)
@@ -101,7 +190,9 @@ void ChessBoard::initializePieces(){
 
     updateGameState();
 }
+#endif
 
+#if 0
 void ChessBoard::initializePiecesButterfly(){
     for(int i=0; i < 8; ++i)
         for(int j=0; j < 8; ++j)
@@ -158,7 +249,9 @@ void ChessBoard::initializePiecesButterfly(){
 
     updateGameState();
 }
+#endif
 
+#if 0
 void ChessBoard::initializePiecesPawnGame(){
     for(int i=0; i < 8; ++i)
         for(int j=0; j < 8; ++j)
@@ -212,7 +305,9 @@ void ChessBoard::initializePiecesPawnGame(){
 
     updateGameState();
 }
+#endif
 
+#if 0
 void ChessBoard::initializePiecesChampionMagician(){
     for(int i=0; i < 8; ++i)
         for(int j=0; j < 8; ++j)
@@ -255,8 +350,28 @@ void ChessBoard::initializePiecesChampionMagician(){
 
     updateGameState();
 }
+#endif
 
-void ChessBoard::printBoard(){
+Piece* ChessBoard::getPieceFromIdx(const uint32_t i, const uint32_t j) const {
+	Position pos = idx2Position(i, j);
+
+	for(size_t i = 0; i < all_pieces.size(); ++i){
+		for(size_t j = 0; j < all_pieces[i]->size(); ++j){
+			Position piece_pos = all_pieces.at(i)->at(j)->getPosition();
+
+			if(pos == piece_pos)
+				return all_pieces.at(i)->at(j);
+		}
+	}
+
+	return nullptr;
+}
+
+void ChessBoard::printBoard() const {
+	Piece* piece;
+
+	// TODO fix to use nRow and Ncol
+	// TODO En toda la funcion los indices quedaron mezclados
     std::cout << "  ";
     for(char c = 'A'; c <= 'H'; ++c)
         std::cout << " " << c << "  ";
@@ -264,20 +379,23 @@ void ChessBoard::printBoard(){
 
     // ! Primera linea
     std::cout << " \u250C";
-    for(int i = 7; i >=1; i--){
+    for(int i = nCol; i >=1; i--){
         std::cout << "\u2500\u2500\u2500\u252C";
     }
     std::cout << "\u2500\u2500\u2500\u2510" << std::endl;
 
     // ! Ahora las piezas
-    for(int row = 8; row >= 1; --row){
+    for(int row = nRow; row >= 1; --row){
         std::cout << row << "\u2502";
-        for(int i = 0; i < 8; ++i){
-            if(pieces[row-1][i] == nullptr)
+
+        for(int j = 0; j < 8; ++j){
+			piece = getPieceFromIdx(row - 1, j);
+
+            if(piece == nullptr)
                 std::cout << "   \u2502";
             else{
                 std::cout << " ";
-                pieces[row-1][i]->printPiece();
+				piece->printPiece();
                 std::cout << " ";
                 std::cout << "\u2502";
             }
@@ -288,7 +406,7 @@ void ChessBoard::printBoard(){
         //print the grid lines
         if(row>1) {
             std::cout << " \u251C";
-            for (int i=7;i>=1;i--) {
+            for (int i=nCol; i>=1; i--) {
 	            std::cout << "\u2500\u2500\u2500\u253C";
             }
             std::cout << "\u2500\u2500\u2500\u2524" << std::endl;
@@ -305,23 +423,25 @@ void ChessBoard::printBoard(){
     std::cout << "\u2500\u2500\u2500\u2518" << std::endl;
 }
 
-std::string ChessBoard::pos2string(int x, int y){
-    std::string str;
-    str.resize(2);
-    str[0] = char(y +'A');
-    str[1] = char(x +'1');
+// std::string ChessBoard::pos2string(int x, int y){
+Position ChessBoard::idx2Position(const uint32_t i, const uint32_t j) const {
+    Position pos;
+    pos.resize(2);
+    pos[0] = char(j + 'A');
+    pos[1] = char(i + '1');
 
-    return str;
+    return pos;
 }
 
-int ChessBoard::string2row(std::string str){
-    return int(str[1] - '1');
+int ChessBoard::position2row(const Position& pos) const {
+    return int(pos[1] - '1');
 }
 
-int ChessBoard::string2column(std::string str){
-    return int(str[0] - 'A');
+int ChessBoard::position2column(const Position& pos) const {
+    return int(pos[0] - 'A');
 }
 
+#if 0
 void ChessBoard::updatePiecesPositions(){
     whitePieces.clear();
     blackPieces.clear();
@@ -339,8 +459,9 @@ void ChessBoard::updatePiecesPositions(){
         }
     }
 }
+#endif
 
-void ChessBoard::printPosAndPieces(){
+void ChessBoard::printPosAndPieces() const{
 
     std::cout << "White pieces:" << std::endl;
 
@@ -364,6 +485,7 @@ bool ChessBoard::posInBoard(int i, int j){
 
 bool ChessBoard::makeMove(std::string from, std::string to){
 
+	#if 0
     if(whiteTurn)
         std::cout << "White turn..." << std::endl;
     else
@@ -439,35 +561,82 @@ bool ChessBoard::makeMove(std::string from, std::string to){
 
     whiteTurn = !whiteTurn;
 
+	#endif
+
     return true;
 }
 
-std::set<std::string> ChessBoard::getValidMoves(std::string from, PieceType T){
-    switch (T){
-        case PAWN:
-            return getPawnMoves(from);
-        case ROOK:
-            return getRookMoves(from);
-        case KNIGHT:
-            return getKnightMoves(from);
-        case BISHOP:
-            return getBishopMoves(from);
-        case QUEEN:
-            return getQueenMoves(from);
-        case KING:
-            return getKingMoves(from);
-        case CHAMPION:
-            return getChampionMoves(from);
-        case MAGICIAN:
-            return getMagicianMoves(from);
-        default:
-            std::set<std::string> empty;
-            return empty;
-    }
+// std::set<std::string> ChessBoard::getValidMoves(std::string from, PieceType T){
+std::set<Position> ChessBoard::getValidMoves(Position pos) const {
+    // switch (T){
+    //     case PAWN:
+    //         return getPawnMoves(from);
+    //     case ROOK:
+    //         return getRookMoves(from);
+    //     case KNIGHT:
+    //         return getKnightMoves(from);
+    //     case BISHOP:
+    //         return getBishopMoves(from);
+    //     case QUEEN:
+    //         return getQueenMoves(from);
+    //     case KING:
+    //         return getKingMoves(from);
+    //     case CHAMPION:
+    //         return getChampionMoves(from);
+    //     case MAGICIAN:
+    //         return getMagicianMoves(from);
+    //     default:
+    //         std::set<std::string> empty;
+    //         return empty;
+    // }
+
+	std::set<std::string> empty;
+	return empty;
 }
+
+
+std::set<Position> ChessBoard::getDiagonalMoves(const Position& pos) const {
+	// TODO 
+	std::set<std::string> empty;
+	return empty;
+}
+
+std::set<Position> ChessBoard::getParallelMoves(const Position& pos) const {
+	// TODO 
+	std::set<std::string> empty;
+	return empty;
+}
+
+std::set<Position> ChessBoard::getLShapeMoves(const Position& pos, const std::vector<u_int16_t>& deltas) const {
+	// TODO 
+	std::set<std::string> empty;
+	return empty;
+}
+
+std::set<Position> ChessBoard::getFordwardMoves(const Position& pos, int direction, bool first) const {
+	// TODO 
+	std::set<std::string> empty;
+	return empty;
+}
+
+std::set<Position> ChessBoard::getAllDirectionMoves(const Position& pos) const {
+	// TODO 
+	std::set<std::string> empty;
+	return empty;
+}
+
+
+
+
+
+
+
+
 
 std::set<std::string> ChessBoard::getPawnMoves(std::string from){
     std::set<std::string> pawnMoves;
+
+	#if 0
 
     int row = string2row(from);
     int col = string2column(from);
@@ -497,12 +666,17 @@ std::set<std::string> ChessBoard::getPawnMoves(std::string from){
         pawnMoves.insert(pos2string(row+forward,col+1));
     if(posInBoard(row+forward,col-1) && pieces[row+forward][col-1] != nullptr && pieces[row+forward][col-1]->getColor() != c)
         pawnMoves.insert(pos2string(row+forward,col-1));
+	
+	#endif
 
     return pawnMoves;
 }
 
 std::set<std::string> ChessBoard::getRookMoves(std::string from){
     std::set<std::string> rookMoves;
+
+	#if 0
+
 
     int row = string2row(from);
     int col = string2column(from);
@@ -554,11 +728,15 @@ std::set<std::string> ChessBoard::getRookMoves(std::string from){
     }
 
 
+	#endif
+
     return rookMoves;
 }
 
 std::set<std::string> ChessBoard::getKnightMoves(std::string from){
     std::set<std::string> knightMoves;
+
+	#if 0
 
     int row = string2row(from);
     int col = string2column(from);
@@ -578,11 +756,16 @@ std::set<std::string> ChessBoard::getKnightMoves(std::string from){
         }
     }
 
+	#endif
+
     return knightMoves;
 }
 
 std::set<std::string> ChessBoard::getBishopMoves(std::string from){
     std::set<std::string> bishopMoves;
+
+	#if 0
+
 
     int row = string2row(from);
     int col = string2column(from);
@@ -633,6 +816,8 @@ std::set<std::string> ChessBoard::getBishopMoves(std::string from){
             break;
     }
 
+	#endif
+
     return bishopMoves;
 }
 
@@ -648,6 +833,9 @@ std::set<std::string> ChessBoard::getQueenMoves(std::string from){
 std::set<std::string> ChessBoard::getKingMoves(std::string from){
     std::set<std::string> kingMoves;
     std::set<std::string> oppositeMoves;
+
+	#if 0
+
 
     int row = string2row(from);
     int col = string2column(from);
@@ -668,11 +856,15 @@ std::set<std::string> ChessBoard::getKingMoves(std::string from){
         }
     }
 
+	#endif
+
     return kingMoves;
 }
 
 std::set<std::string> ChessBoard::getChampionMoves(std::string from){
     std::set<std::string> championMoves;
+
+	#if 0
 
     int row = string2row(from);
     int col = string2column(from);
@@ -698,11 +890,15 @@ std::set<std::string> ChessBoard::getChampionMoves(std::string from){
         }
     }
 
+	#endif
+
     return championMoves;
 }
 
 std::set<std::string> ChessBoard::getMagicianMoves(std::string from){
     std::set<std::string> magicianMoves;
+
+	#if 0
 
     int row = string2row(from);
     int col = string2column(from);
@@ -722,9 +918,12 @@ std::set<std::string> ChessBoard::getMagicianMoves(std::string from){
         }
     }
 
+	#endif
+
     return magicianMoves;
 }
 
+#if 0
 void ChessBoard::updateAllValidMoves(){
     allWhiteMoves.clear();
     allBlackMoves.clear();
@@ -742,7 +941,9 @@ void ChessBoard::updateAllValidMoves(){
     }
 
 }
+#endif
 
+#if 0
 void ChessBoard::updateGameState(){
     // bool whiteking = false, whiteking;
     whiteKingPos.clear();
@@ -767,3 +968,4 @@ void ChessBoard::updateGameState(){
         whiteInCheck = true;
     
 }
+#endif
