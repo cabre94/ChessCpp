@@ -10,19 +10,11 @@
 
 #include "Types.h"
 
-// enum PieceType{KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN, CHAMPION, MAGICIAN}; // TODO
-
 class Board;
 
-// enum PieceColor{NONE, WHITE, BLACK};
-enum State{CHECK, CHECKMATE, NORMAL};       //!
+enum State{CHECK, CHECKMATE, NORMAL};       // TODO
 
-class Piece{
-protected:
-    const PlayerID player_id;	// TODO const
-    std::string name;
-	Position pos;
-    
+class Piece{    
 public:
     Piece(PlayerID player_id_, std::string name_, Position pos_) 
 		: player_id(player_id_), name(name_), pos(pos_) {}
@@ -39,6 +31,11 @@ public:
 
     virtual std::set<std::string> getPossibleMoves(const Board *board) const = 0;
     virtual void printPiece() const = 0;
+
+protected:
+    const PlayerID player_id;
+    std::string name;
+	Position pos;
 };
 
 #endif // PIECE_H

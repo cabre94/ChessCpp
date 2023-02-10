@@ -16,6 +16,7 @@ target_include_directories(
 	"${INCLUDE_DIR}"
 	"${INCLUDE_DIR}/Boards"
 	"${INCLUDE_DIR}/Pieces"
+	"${INCLUDE_DIR}/Players"
 )
 
 add_subdirectory("src")

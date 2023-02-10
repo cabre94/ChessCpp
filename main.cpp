@@ -1,20 +1,10 @@
-/*
-date: 19-12-2020
-File: main.cpp
-Author : Facundo Martin Cabrera
-Email: cabre94@hotmail.com facundo.cabrera@ib.edu.ar
-GitHub: https://github.com/cabre94
-GitLab: https://gitlab.com/cabre94
-Description:
-*/
-
-
 #include "ChessGame.h"
 #include <cstdlib>
 
 // #include "Board.cpp"
 #include "Piece.h"
 #include "ChessBoard.h"
+#include "RealPlayer.h"
 
 // int main(int argc, const char** argv){
     
@@ -74,15 +64,17 @@ int main(int argc, const char** argv){
 
 	Board* board = new ChessBoard(8,8);
 
-	std::vector<Piece*> kk1;
-	std::vector<Piece*> kk2;
+	RealPlayer player_white(WHITE);
+	RealPlayer player_black(BLACK);
 
-	board->addPlayerPieces(kk1);
-	board->addPlayerPieces(kk2);
+	board->addPlayerPieces(player_white.getPieces());
+	board->addPlayerPieces(player_black.getPieces());
 
 	board->createPices('n');
 
 	board->printBoard();
+
+	delete board;
 
 
 
