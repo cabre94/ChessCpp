@@ -1,20 +1,10 @@
-/*
-date: 19-12-2020
-File: main.cpp
-Author : Facundo Martin Cabrera
-Email: cabre94@hotmail.com facundo.cabrera@ib.edu.ar
-GitHub: https://github.com/cabre94
-GitLab: https://gitlab.com/cabre94
-Description:
-*/
-
-
 #include "ChessGame.h"
 #include <cstdlib>
 
 // #include "Board.cpp"
-// #include "Piece.cpp"
-// #include "ChessBoard.cpp"
+#include "Piece.h"
+#include "ChessBoard.h"
+#include "RealPlayer.h"
 
 // int main(int argc, const char** argv){
     
@@ -68,9 +58,25 @@ Description:
 
 int main(int argc, const char** argv){
     
-    ChessGame game;
+    // ChessGame game;
 
-    game.play();
+    // game.play();
+
+	Board* board = new ChessBoard(8,8);
+
+	RealPlayer player_white(WHITE);
+	RealPlayer player_black(BLACK);
+
+	board->addPlayerPieces(player_white.getPieces());
+	board->addPlayerPieces(player_black.getPieces());
+
+	board->createPices('n');
+
+	board->printBoard();
+
+	delete board;
+
+
 
     return 0;
 }

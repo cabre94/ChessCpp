@@ -1,29 +1,15 @@
-/*
-date: 24-12-2020
-File: Champion.cpp
-Author : Facundo Martin Cabrera
-Email: cabre94@hotmail.com facundo.cabrera@ib.edu.ar
-GitHub: https://github.com/cabre94
-GitLab: https://gitlab.com/cabre94
-Description:
-*/
-
 #include "Board.h"
 #include "Champion.h"
 
-Champion::Champion(PieceColour C):Piece(C,CHAMPION,"CHAMPION"){}
-
-Champion::~Champion(){}
-
-void Champion::printPiece(){
-    if(colour == WHITE)
+void Champion::printPiece() const {
+    if(player_id == WHITE)
         std::cout << "☆";
     else
         std::cout << "★";
 }
 
-std::set<std::string> Champion::getPossibleMoves(Board *board, std::string from){
+std::set<std::string> Champion::getPossibleMoves(const Board *board) const {
     std::set<std::string> validMoves;
-    validMoves = board->getValidMoves(from, CHAMPION);
+    // validMoves = board->getValidMoves(pos, CHAMPION); // TODO
     return validMoves;
 }

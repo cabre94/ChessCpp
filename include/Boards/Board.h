@@ -5,48 +5,61 @@
 #include <set>
 #include <iostream>
 #include <string>
+#include <vector>
 
+#include "Types.h"
 #include "Piece.h"
-// #include "Position.cpp"         //! No lo use al final
 
 class Piece;
 
 class Board{
 public:
-    Board();	//Default constructor
-    virtual ~Board();
+    Board();
+    virtual ~Board() {}
 
-    Board(const Board &) = default;	//Copy constructor
-    Board &operator=(const Board &) = default;	//Copy assignment
-    Board(Board &&) = default;	//Move constructor
-    Board &operator=(Board &&) = default;	// Move assignment
+    Board(const Board &) = default;				// Copy constructor
+    Board &operator=(const Board &) = default;	// Copy assignment
+    Board(Board &&) = default;					// Move constructor
+    Board &operator=(Board &&) = default;		// Move assignment
 
-    virtual void printBoard() = 0;
-    virtual void printPosAndPieces() = 0;
+    virtual void printBoard() const  = 0;
+    virtual void printPosAndPieces() const = 0;
+    virtual std::set<Position> getValidMoves(Position pos) const = 0;	// TODO Sacar esto
 
-    virtual bool makeMove(std::string from, std::string to) = 0;
+	// Aca deberian poner los metodos que dan las posiciones validas
+	virtual std::set<Position> getDiagonalMoves(const Position& pos) const = 0;
+	virtual std::set<Position> getParallelMoves(const Position& pos) const = 0;
+	virtual std::set<Position> getLShapeMoves(const Position& pos, const std::vector<u_int16_t>& deltas) const = 0;
+	virtual std::set<Position> getFordwardMoves(const Position& pos, int direction, bool first = false) const = 0;
+	virtual std::set<Position> getAllDirectionMoves(const Position& pos) const = 0;
 
-    virtual std::set<std::string> getValidMoves(std::string from, PieceType T) = 0;
+    virtual bool makeMove(Position from, Position to) = 0;
 
-    bool askWinner();
+	virtual void createPices(const char c = 'n') = 0;
 
-    bool isWhiteInCheck();
-    bool isBlackInCheck();
+    bool askWinner() const {return gameEnded;}			// TODO move to Game class
+    bool isWhiteInCheck() const {return whiteInCheck;}	// TODO move to Game class
+    bool isBlackInCheck() const {return blackInCheck;}	// TODO move to Game class
+
+	void addPlayerPieces(std::vector<Piece*>& player_pieces);
 
 protected:
-    bool stringInSet(std::set<std::string> set, std::string str);
+    bool stringInSet(const std::set<std::string>& set, const std::string& str) const;
 
-    std::map<std::string, Piece*> whitePieces;
-    std::map<std::string, Piece*> blackPieces;
+	// Necesito acceso a las piezas de todos para chequear
+	std::vector<std::vector<Piece*>*> all_pieces;
 
-    std::set<std::string> allWhiteMoves;
-    std::set<std::string> allBlackMoves;
+    std::map<Position, Piece*> whitePieces;	// TODO move to Game class
+    std::map<Position, Piece*> blackPieces;	// TODO move to Game class
 
-    std::string whiteKingPos, blackKingPos;
+    std::set<Position> allWhiteMoves;	// TODO move to Game class
+    std::set<Position> allBlackMoves;	// TODO move to Game class
 
-    bool whiteTurn;
-    bool gameEnded;
-    bool whiteInCheck, blackInCheck;
+    Position whiteKingPos, blackKingPos;	// TODO: Sacar esto
+
+    uint64_t turn = 0;	// TODO move to Game class
+    bool gameEnded;		// TODO move to Game class
+    bool whiteInCheck, blackInCheck; // TODO: Sacar esto
 };
 
 #endif //BOARD_H
