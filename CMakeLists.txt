@@ -1,7 +1,9 @@
 # cmake_minimum_required(VERSION 3.10)
 cmake_minimum_required(VERSION 3.13.0)
 
-project(ChessCpp)
+# project(ChessCpp)
+project(ChessCpp LANGUAGES CXX)	# This sets CMAKE_PROJECT_NAME, but nested
+								# calls changes PROJECT_NAME, CMAKE_PROJECT_NAME
 
 # add_executable(chess_main main.cpp)
 add_executable(chess_main)
@@ -20,3 +22,7 @@ target_include_directories(
 )
 
 add_subdirectory("src")
+
+# TODO: use variable to activate tests
+enable_testing()
+add_subdirectory(test)
