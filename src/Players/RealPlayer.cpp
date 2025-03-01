@@ -1,5 +1,7 @@
 #include "RealPlayer.h"
 
-void RealPlayer::dummy() const {
+namespace chess {
 
-}
+void RealPlayer::dummy() const {}
+
+} // namespace chess

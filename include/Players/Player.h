@@ -1,28 +1,25 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#pragma once
 
 #include <vector>
 
 #include "Piece.h"
 #include "Types.h"
 
+namespace chess {
 
-class Player{
+class Player {
 public:
-	Player(PlayerID player_id_) : player_id(player_id_){}
-	virtual ~Player();
+    Player(PlayerID player_id_) : player_id(player_id_) {}
+    virtual ~Player();
 
-	std::vector<Piece*>& getPieces(){return pieces;}
+    std::vector<Piece *> &getPieces() { return pieces; }
 
-	virtual void dummy() const = 0;
+    virtual void dummy() const = 0;
 
 protected:
+    const PlayerID player_id;
 
-	const PlayerID player_id;
-
-	std::vector<Piece*> pieces;
-
+    std::vector<Piece *> pieces;
 };
 
-
-#endif // PLAYER_H
+} // namespace chess

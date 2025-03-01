@@ -2,7 +2,9 @@
 #include "Board.h"
 #include "ChessBoard.h"
 
-ChessGame::ChessGame(){
+namespace chess {
+
+ChessGame::ChessGame() {
     std::cout << "Choose chess variant" << std::endl;
     std::cout << "n: Normal Chess game" << std::endl;
     std::cout << "b: ButterflyChess - Normal board chess with butterfly distribution" << std::endl;
@@ -12,16 +14,14 @@ ChessGame::ChessGame(){
     char c;
     std::cin >> c;
 
-    boardPtr = new ChessBoard(8,8);
+    boardPtr = new ChessBoard(8, 8);
 }
 
-ChessGame::~ChessGame(){
-    delete boardPtr;
-}
+ChessGame::~ChessGame() { delete boardPtr; }
 
-void ChessGame::play(){
+void ChessGame::play() {
 
-    while(!boardPtr->askWinner()){
+    while (!boardPtr->askWinner()) {
         // system("clear");
 
         bool succesMove;
@@ -38,8 +38,10 @@ void ChessGame::play(){
 }
 
 void ChessGame::printCheckMessage() const {
-    if(boardPtr->isWhiteInCheck())
+    if (boardPtr->isWhiteInCheck())
         std::cout << "White king is in check" << std::endl;
-    if(boardPtr->isBlackInCheck())
+    if (boardPtr->isBlackInCheck())
         std::cout << "Black king is in check" << std::endl;
 }
+
+} // namespace chess

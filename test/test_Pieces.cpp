@@ -16,7 +16,7 @@ TEST(chessCpp, test_Pieces) {
     static const uint32_t PLAYER_ID = 0xB0CA;
     static const std::string expected_pos = "A1";
 
-    const Bishop bishop(PLAYER_ID, expected_pos);
+    const chess::Bishop bishop(PLAYER_ID, expected_pos);
 
     ASSERT_EQ(bishop.getPlayerID(), PLAYER_ID);
     ASSERT_EQ(bishop.getName(), "BISHOP");

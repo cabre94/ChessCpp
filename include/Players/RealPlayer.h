@@ -1,14 +1,15 @@
-#ifndef REALPLAYER_H
-#define REALPLAYER_H
+#pragma once
 
 #include "Player.h"
 
-class RealPlayer : public Player{
-public:
-	RealPlayer(PlayerID player_id_) : Player(player_id_) {}
-	~RealPlayer(){}
+namespace chess {
 
-	void dummy() const override;
+class RealPlayer : public Player {
+public:
+    RealPlayer(PlayerID player_id_) : Player(player_id_) {}
+    ~RealPlayer() {}
+
+    void dummy() const override;
 };
 
-#endif // REALPLAYER_H
+} // namespace chess
