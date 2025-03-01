@@ -1,5 +1,4 @@
-#ifndef BOARD_H
-#define BOARD_H
+#pragma once 
 
 #include <map>
 #include <set>
@@ -9,6 +8,8 @@
 
 #include "Types.h"
 #include "Piece.h"
+
+namespace chess {
 
 class Piece;
 
@@ -62,4 +63,4 @@ protected:
     bool whiteInCheck, blackInCheck; // TODO: Sacar esto
 };
 
-#endif //BOARD_H
+} // namespace chess
