@@ -1,5 +1,4 @@
-#ifndef PIECE_H
-#define PIECE_H
+#pragma once
 
 #include <cstdlib>
 #include <iostream>
@@ -9,6 +8,8 @@
 #include <vector>
 
 #include "Types.h"
+
+namespace chess {
 
 class Board;
 
@@ -38,4 +39,4 @@ protected:
     Position pos;
 };
 
-#endif // PIECE_H
+} // namespace chess

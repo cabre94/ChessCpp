@@ -1,7 +1,8 @@
-#ifndef KNIGHT_H
-#define KNIGHT_H
+#pragma once
 
 #include "Piece.h"
+
+namespace chess {
 
 class Knight : public Piece{
 public:
@@ -12,4 +13,4 @@ public:
     std::set<std::string> getPossibleMoves(const Board *board) const override;
 };
 
-#endif // KNIGHT_H
+} // namespace chess

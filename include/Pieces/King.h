@@ -1,9 +1,10 @@
-#ifndef KING_H
-#define KING_H
+#pragma once
 
 #include "Piece.h"
 
-class King : public Piece{
+namespace chess {
+
+class King : public Piece {
 public:
     King(PlayerID player_id_, Position pos_) : Piece(player_id_, "KING", pos_) {}
     ~King() {}
@@ -12,4 +13,4 @@ public:
     std::set<std::string> getPossibleMoves(const Board *board) const override;
 };
 
-#endif // KING_H
+} // namespace chess

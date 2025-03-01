@@ -1,9 +1,10 @@
-#ifndef BISHOP_H
-#define BISHOP_H
+#pragma once
 
 #include "Piece.h"
 
-class Bishop : public Piece{
+namespace chess {
+
+class Bishop : public Piece {
 public:
     Bishop(PlayerID player_id_, Position pos_) : Piece(player_id_, "BISHOP", pos_) {}
     ~Bishop() {}
@@ -12,4 +13,4 @@ public:
     std::set<std::string> getPossibleMoves(const Board *board) const override;
 };
 
-#endif // BISHOP_H
+} // namespace chess
