@@ -1,30 +1,28 @@
-#ifndef CHESSGAME_H
-#define CHESSGAME_H
+#pragma once
 
 #include <cstdlib>
 
 #include "Board.h"
 #include "Piece.h"
 
+namespace chess {
 
-class ChessGame{
+class ChessGame {
 public:
     ChessGame();
     ~ChessGame();
 
-    ChessGame(const ChessGame &) = default;	//Copy constructor
-    ChessGame &operator=(const ChessGame &) = default;	//Copy assignment
-    ChessGame(ChessGame &&) = default;	//Move constructor
-    ChessGame &operator=(ChessGame &&) = default;	// Move assignment
+    ChessGame(const ChessGame &) = default;            // Copy constructor
+    ChessGame &operator=(const ChessGame &) = default; // Copy assignment
+    ChessGame(ChessGame &&) = default;                 // Move constructor
+    ChessGame &operator=(ChessGame &&) = default;      // Move assignment
 
     void play();
 
 private:
-    Board* boardPtr;
+    Board *boardPtr;
 
     void printCheckMessage() const;
-
-
 };
 
-#endif // CHESSGAME_H
+} // namespace chess

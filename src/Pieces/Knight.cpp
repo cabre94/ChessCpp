@@ -1,8 +1,10 @@
-#include "Board.h"
 #include "Knight.h"
+#include "Board.h"
+
+namespace chess {
 
 void Knight::printPiece() const {
-    if(player_id == WHITE)
+    if (player_id == WHITE)
         std::cout << "♘";
     else
         std::cout << "♞";
@@ -14,3 +16,4 @@ std::set<std::string> Knight::getPossibleMoves(const Board *board) const {
     return validMoves;
 }
 
+} // namespace chess

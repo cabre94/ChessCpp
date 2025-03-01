@@ -1,9 +1,10 @@
-#ifndef ROOK_H
-#define ROOK_H
+#pragma once
 
 #include "Piece.h"
 
-class Rook : public Piece{
+namespace chess {
+
+class Rook : public Piece {
 public:
     Rook(PlayerID player_id_, Position pos_) : Piece(player_id_, "ROOK", pos_) {}
     ~Rook() {}
@@ -12,4 +13,4 @@ public:
     std::set<std::string> getPossibleMoves(const Board *board) const override;
 };
 
-#endif // ROOK_H
+} // namespace chess
