@@ -59,7 +59,7 @@ protected:
     std::set<Position> allWhiteMoves; // TODO move to Game class
     std::set<Position> allBlackMoves; // TODO move to Game class
 
-    Position whiteKingPos, blackKingPos; // TODO: Sacar esto
+    // Position whiteKingPos, blackKingPos; // TODO: Sacar esto
 
     uint64_t turn = 0;               // TODO move to Game class
     bool gameEnded;                  // TODO move to Game class
