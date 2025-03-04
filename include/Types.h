@@ -1,14 +1,15 @@
-#ifndef TYPES_H
-#define TYPES_H
+#pragma once
 
 #include <cstdint>
 #include <string>
 
-using Position = std::string;
+namespace chess {
 
-using PlayerID = uint32_t;
+// using Position = std::string;
 
-constexpr PlayerID WHITE = 0;
-constexpr PlayerID BLACK = 1;
+// using PlayerID = uint32_t;
 
-#endif // TYPES_H
+// constexpr PlayerID WHITE = 0;
+// constexpr PlayerID BLACK = 1;
+
+}
