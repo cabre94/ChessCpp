@@ -2,9 +2,9 @@
 
 #include <string>
 
-#include "Board.h"
-#include "Piece.h"
-#include "Position.h"
+#include "Boards/Board.h"
+#include "Pieces/Piece.h"
+#include "Positions/Position.h"
 
 namespace chess {
 

@@ -1,7 +1,7 @@
 #include "ChessGame.h"
-#include "Board.h"
-#include "ChessBoard.h"
-#include "Position.h"
+#include "Boards/Board.h"
+#include "Boards/ChessBoard.h"
+#include "Positions/Position.h"
 
 namespace chess {
 

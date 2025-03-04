@@ -2,10 +2,10 @@
 
 // #include "Board.cpp"
 #include "ChessGame.h"
-#include "ChessBoard.h"
-#include "Piece.h"
-#include "RealPlayer.h"
-#include "Position.h"
+#include "Boards/ChessBoard.h"
+#include "Pieces/Piece.h"
+#include "Players/RealPlayer.h"
+#include "Positions/Position.h"
 
 // int main(int argc, const char** argv){
 

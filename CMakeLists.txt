@@ -16,10 +16,6 @@ message(STATUS "Include path: ${INCLUDE_DIR}")
 target_include_directories(
 	chess_main PRIVATE
 	"${INCLUDE_DIR}"
-	"${INCLUDE_DIR}/Boards"
-	"${INCLUDE_DIR}/Pieces"
-	"${INCLUDE_DIR}/Players"
-	"${INCLUDE_DIR}/Types"
 )
 
 add_subdirectory("src")

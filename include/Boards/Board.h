@@ -6,8 +6,8 @@
 #include <string>
 #include <vector>
 
-#include "Piece.h"
-#include "Position.h"
+#include "Pieces/Piece.h"
+#include "Positions/Position.h"
 #include "Types.h"
 
 namespace chess {

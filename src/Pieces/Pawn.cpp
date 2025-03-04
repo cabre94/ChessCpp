@@ -1,6 +1,6 @@
-#include "Pawn.h"
-#include "Board.h"
-#include "Position.h"
+#include "Pieces/Pawn.h"
+#include "Boards/Board.h"
+#include "Positions/Position.h"
 
 namespace chess {
 

@@ -1,13 +1,13 @@
-#include "ChessBoard.h"
-#include "Bishop.h"
-#include "Champion.h"
-#include "King.h"
-#include "Knight.h"
-#include "Magician.h"
-#include "Pawn.h"
-#include "Position.h"
-#include "Queen.h"
-#include "Rook.h"
+#include "Boards/ChessBoard.h"
+#include "Pieces/Bishop.h"
+#include "Pieces/Champion.h"
+#include "Pieces/King.h"
+#include "Pieces/Knight.h"
+#include "Pieces/Magician.h"
+#include "Pieces/Pawn.h"
+#include "Pieces/Queen.h"
+#include "Pieces/Rook.h"
+#include "Positions/Position.h"
 
 namespace chess {
 
@@ -423,8 +423,8 @@ void ChessBoard::printBoard() const {
 // Position ChessBoard::pos2string(int x, int y){
 Position ChessBoard::idx2Position(const uint32_t i, const uint32_t j) const {
 
-	std::string pos_str;
-	pos_str.resize(2);
+    std::string pos_str;
+    pos_str.resize(2);
     pos_str[0] = char(j + 'a');
     pos_str[1] = char(i + '1');
 

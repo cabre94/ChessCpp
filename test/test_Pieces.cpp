@@ -4,7 +4,7 @@
 #include <string>
 
 #include "Pieces/Bishop.h"
-#include "Types/Position.h"
+#include "Positions/Position.h"
 // #include "Champion.h"
 // #include "King.h"
 // #include "Knight.h"
