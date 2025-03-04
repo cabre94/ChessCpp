@@ -5,6 +5,7 @@
 #include "Knight.h"
 #include "Magician.h"
 #include "Pawn.h"
+#include "Position.h"
 #include "Queen.h"
 #include "Rook.h"
 

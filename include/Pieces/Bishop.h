@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Piece.h"
+#include "Position.h"
 
 namespace chess {
 

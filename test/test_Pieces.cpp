@@ -14,7 +14,7 @@
 
 TEST(chessCpp, test_Pieces) {
     static const uint32_t PLAYER_ID = 0xB0CA;
-    static const std::string expected_pos = "A1";
+    static const chess::Position expected_pos = "A1";
 
     const chess::Bishop bishop(PLAYER_ID, expected_pos);
 

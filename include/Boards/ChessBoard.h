@@ -4,6 +4,7 @@
 
 #include "Board.h"
 #include "Piece.h"
+#include "Position.h"
 
 namespace chess {
 
@@ -16,9 +17,9 @@ public:
     void printBoard() const override;
     // void printPositions();
     void printPosAndPieces() const override;
-    // int* string2pos(std::string str);
+    // int* string2pos(Position str);
 
-    bool makeMove(std::string from, std::string to);
+    bool makeMove(Position from, Position to);
 
     void createPices(const char c = 'n') override;
 
@@ -41,15 +42,15 @@ private:
 
     void clearBoard();
 
-    void printSet(std::set<std::string> moveSet);
+    void printSet(std::set<Position> moveSet);
 
     bool posInBoard(int i, int j);
 
-    // std::string pos2string(int x, int y);
+    // Position pos2string(int x, int y);
     Position idx2Position(const uint32_t i, const uint32_t j) const;
 
-    int position2row(const Position &pos) const;
-    int position2column(const Position &pos) const;
+    // int position2row(const Position &pos) const;
+    // int position2column(const Position &pos) const;
 
     Piece *getPieceFromIdx(const uint32_t i, const uint32_t j) const;
 
@@ -57,16 +58,16 @@ private:
     // void updateAllValidMoves();
     // void updateGameState();
 
-    std::set<std::string> getValidMoves(std::string from);
+    std::set<Position> getValidMoves(Position from);
 
-    std::set<std::string> getPawnMoves(std::string from);
-    std::set<std::string> getRookMoves(std::string from);
-    std::set<std::string> getKnightMoves(std::string from);
-    std::set<std::string> getBishopMoves(std::string from);
-    std::set<std::string> getQueenMoves(std::string from);
-    std::set<std::string> getKingMoves(std::string from);
-    std::set<std::string> getChampionMoves(std::string from);
-    std::set<std::string> getMagicianMoves(std::string from);
+    std::set<Position> getPawnMoves(Position from);
+    std::set<Position> getRookMoves(Position from);
+    std::set<Position> getKnightMoves(Position from);
+    std::set<Position> getBishopMoves(Position from);
+    std::set<Position> getQueenMoves(Position from);
+    std::set<Position> getKingMoves(Position from);
+    std::set<Position> getChampionMoves(Position from);
+    std::set<Position> getMagicianMoves(Position from);
 
     // char typeDistribution;
     const uint16_t nRow, nCol;
