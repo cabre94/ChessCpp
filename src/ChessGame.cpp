@@ -1,6 +1,7 @@
 #include "ChessGame.h"
 #include "Board.h"
 #include "ChessBoard.h"
+#include "Position.h"
 
 namespace chess {
 
@@ -33,7 +34,7 @@ void ChessGame::play() {
 
         printCheckMessage();
 
-        succesMove = boardPtr->makeMove(from, to);
+        // succesMove = boardPtr->makeMove(from, to);
     }
 }
 

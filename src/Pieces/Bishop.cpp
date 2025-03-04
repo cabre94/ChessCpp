@@ -1,5 +1,6 @@
 #include "Bishop.h"
 #include "Board.h"
+#include "Position.h"
 
 namespace chess {
 
