@@ -20,7 +20,7 @@ target_include_directories(
 	"${INCLUDE_DIR}/Boards"
 	"${INCLUDE_DIR}/Pieces"
 	"${INCLUDE_DIR}/Players"
-	"${INCLUDE_DIR}/Types"
+	"${INCLUDE_DIR}/Positions"
 )
 
 # target_link_directories(${TEST_NAME} PRIVATE ${CMAKE_BINARY_DIR}/src)
