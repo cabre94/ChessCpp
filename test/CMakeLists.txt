@@ -17,10 +17,6 @@ add_executable(
 target_include_directories(
 	${TEST_NAME} PRIVATE
 	"${INCLUDE_DIR}"
-	"${INCLUDE_DIR}/Boards"
-	"${INCLUDE_DIR}/Pieces"
-	"${INCLUDE_DIR}/Players"
-	"${INCLUDE_DIR}/Positions"
 )
 
 # target_link_directories(${TEST_NAME} PRIVATE ${CMAKE_BINARY_DIR}/src)
