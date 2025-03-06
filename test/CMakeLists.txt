@@ -11,6 +11,7 @@ set(TEST_NAME test_chessCpp)
 add_executable(
 	${TEST_NAME}
 	test_Pieces.cpp
+	test_Positions.cpp
 	${PROJECT_SOURCE_DIR}/src/Pieces/Bishop.cpp
 )
 
@@ -25,6 +26,7 @@ target_link_libraries(
 	${TEST_NAME}
 	PRIVATE
 	GTest::GTest
+	GTest::Main
 	${GTEST_LIBRARIES}
 	# ${PROJECT_NAME}	# Here add myLib
 )
