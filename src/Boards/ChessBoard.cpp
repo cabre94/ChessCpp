@@ -138,6 +138,8 @@ void ChessBoard::clearBoard() {
 }
 
 void ChessBoard::printSet(std::set<Position> moveSet) {
+	(void) moveSet;
+
 #if 0
     for (auto it = moveSet.begin(); it != moveSet.end(); ++it)
         std::cout << it->str() << " ";
@@ -480,6 +482,8 @@ bool ChessBoard::posInBoard(int i, int j) {
 }
 
 bool ChessBoard::makeMove(Position from, Position to) {
+	(void) from;
+	(void) to;
 
 #if 0
     if(whiteTurn)
@@ -564,6 +568,8 @@ bool ChessBoard::makeMove(Position from, Position to) {
 
 // std::set<Position> ChessBoard::getValidMoves(Position from, PieceType T){
 std::set<Position> ChessBoard::getValidMoves(Position pos) const {
+	(void) pos;
+
     // switch (T){
     //     case PAWN:
     //         return getPawnMoves(from);
@@ -591,12 +597,14 @@ std::set<Position> ChessBoard::getValidMoves(Position pos) const {
 }
 
 std::set<Position> ChessBoard::getDiagonalMoves(const Position &pos) const {
+	(void) pos;
     // TODO
     std::set<Position> empty;
     return empty;
 }
 
 std::set<Position> ChessBoard::getParallelMoves(const Position &pos) const {
+	(void) pos;
     // TODO
     std::set<Position> empty;
     return empty;
@@ -604,6 +612,8 @@ std::set<Position> ChessBoard::getParallelMoves(const Position &pos) const {
 
 std::set<Position> ChessBoard::getLShapeMoves(const Position &pos,
                                               const std::vector<u_int16_t> &deltas) const {
+	(void) pos;
+	(void) deltas;
     // TODO
     std::set<Position> empty;
     return empty;
@@ -611,18 +621,24 @@ std::set<Position> ChessBoard::getLShapeMoves(const Position &pos,
 
 std::set<Position> ChessBoard::getFordwardMoves(const Position &pos, int direction,
                                                 bool first) const {
+	(void) pos;
+	(void) direction;
+	(void) first;
     // TODO
     std::set<Position> empty;
     return empty;
 }
 
 std::set<Position> ChessBoard::getAllDirectionMoves(const Position &pos) const {
+	(void) pos;
+
     // TODO
     std::set<Position> empty;
     return empty;
 }
 
 std::set<Position> ChessBoard::getPawnMoves(Position from) {
+	(void) from;
     std::set<Position> pawnMoves;
 
 #if 0
@@ -662,6 +678,7 @@ std::set<Position> ChessBoard::getPawnMoves(Position from) {
 }
 
 std::set<Position> ChessBoard::getRookMoves(Position from) {
+	(void) from;
     std::set<Position> rookMoves;
 
 #if 0
@@ -722,6 +739,7 @@ std::set<Position> ChessBoard::getRookMoves(Position from) {
 }
 
 std::set<Position> ChessBoard::getKnightMoves(Position from) {
+	(void) from;
     std::set<Position> knightMoves;
 
 #if 0
@@ -750,6 +768,7 @@ std::set<Position> ChessBoard::getKnightMoves(Position from) {
 }
 
 std::set<Position> ChessBoard::getBishopMoves(Position from) {
+	(void) from;
     std::set<Position> bishopMoves;
 
 #if 0
@@ -819,8 +838,9 @@ std::set<Position> ChessBoard::getQueenMoves(Position from) {
 }
 
 std::set<Position> ChessBoard::getKingMoves(Position from) {
+	(void) from;
     std::set<Position> kingMoves;
-    std::set<Position> oppositeMoves;
+    std::set<Position> oppositeMoves;	// oponente TODO
 
 #if 0
 
@@ -850,6 +870,7 @@ std::set<Position> ChessBoard::getKingMoves(Position from) {
 }
 
 std::set<Position> ChessBoard::getChampionMoves(Position from) {
+	(void) from;
     std::set<Position> championMoves;
 
 #if 0
@@ -884,6 +905,7 @@ std::set<Position> ChessBoard::getChampionMoves(Position from) {
 }
 
 std::set<Position> ChessBoard::getMagicianMoves(Position from) {
+	(void) from;
     std::set<Position> magicianMoves;
 
 #if 0

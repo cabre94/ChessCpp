@@ -15,6 +15,8 @@ add_executable(
 	${PROJECT_SOURCE_DIR}/src/Pieces/Bishop.cpp
 )
 
+target_compile_options(${TEST_NAME} PRIVATE -Werror -Wall -Wextra)
+
 target_include_directories(
 	${TEST_NAME} PRIVATE
 	"${INCLUDE_DIR}"

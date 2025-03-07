@@ -7,6 +7,7 @@ project(ChessCpp LANGUAGES CXX)	# This sets CMAKE_PROJECT_NAME, but nested
 
 # add_executable(chess_main main.cpp)
 add_executable(chess_main)
+target_compile_options(chess_main PRIVATE -Werror -Wall -Wextra)
 target_sources(chess_main PRIVATE "main.cpp")
 
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include/)

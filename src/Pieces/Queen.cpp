@@ -11,6 +11,7 @@ void Queen::printPiece() const {
 }
 
 std::set<Position> Queen::getPossibleMoves(const Board *board) const {
+	(void) board;
     std::set<Position> validMoves;
     // validMoves = board->getValidMoves(from, QUEEN); // TODO
     return validMoves;

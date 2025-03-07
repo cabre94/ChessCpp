@@ -25,7 +25,7 @@ void ChessGame::play() {
     while (!boardPtr->askWinner()) {
         // system("clear");
 
-        bool succesMove;
+        // bool succesMove;
 
         std::string from, to;
 

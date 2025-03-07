@@ -11,6 +11,7 @@ void Knight::printPiece() const {
 }
 
 std::set<Position> Knight::getPossibleMoves(const Board *board) const {
+	(void) board;
     std::set<Position> validMoves;
     // validMoves = board->getValidMoves(pos_, KNIGHT); // TODO
     return validMoves;

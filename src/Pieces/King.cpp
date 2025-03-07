@@ -11,6 +11,7 @@ void King::printPiece() const {
 }
 
 std::set<Position> King::getPossibleMoves(const Board *board) const {
+	(void) board;
     std::set<Position> validMoves;
     // validMoves = board->getValidMoves(pos, KING); // TODO
     return validMoves;

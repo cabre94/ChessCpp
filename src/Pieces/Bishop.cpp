@@ -12,6 +12,7 @@ void Bishop::printPiece() const {
 }
 
 std::set<Position> Bishop::getPossibleMoves(const Board *board) const {
+	(void) board;
     std::set<Position> validMoves;
 
     // validMoves = board->getValidMoves(pos, BISHOP); // TODO
