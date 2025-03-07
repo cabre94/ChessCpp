@@ -10,8 +10,8 @@ void Champion::printPiece() const {
         std::cout << "★";
 }
 
-std::set<std::string> Champion::getPossibleMoves(const Board *board) const {
-    std::set<std::string> validMoves;
+std::set<Position> Champion::getPossibleMoves(const Board *board) const {
+    std::set<Position> validMoves;
     // validMoves = board->getValidMoves(pos, CHAMPION); // TODO
     return validMoves;
 }

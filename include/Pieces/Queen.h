@@ -10,7 +10,7 @@ public:
     ~Queen() {}
 
     void printPiece() const override;
-    std::set<std::string> getPossibleMoves(const Board *board) const override;
+    std::set<Position> getPossibleMoves(const Board *board) const override;
 };
 
 } // namespace chess

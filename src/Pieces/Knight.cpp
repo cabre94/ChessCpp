@@ -10,8 +10,8 @@ void Knight::printPiece() const {
         std::cout << "♞";
 }
 
-std::set<std::string> Knight::getPossibleMoves(const Board *board) const {
-    std::set<std::string> validMoves;
+std::set<Position> Knight::getPossibleMoves(const Board *board) const {
+    std::set<Position> validMoves;
     // validMoves = board->getValidMoves(pos_, KNIGHT); // TODO
     return validMoves;
 }

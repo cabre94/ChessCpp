@@ -10,8 +10,8 @@ void Queen::printPiece() const {
         std::cout << "♛";
 }
 
-std::set<std::string> Queen::getPossibleMoves(const Board *board) const {
-    std::set<std::string> validMoves;
+std::set<Position> Queen::getPossibleMoves(const Board *board) const {
+    std::set<Position> validMoves;
     // validMoves = board->getValidMoves(from, QUEEN); // TODO
     return validMoves;
 }

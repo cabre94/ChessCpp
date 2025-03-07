@@ -11,8 +11,8 @@ void Pawn::printPiece() const {
         std::cout << "♟︎";
 }
 
-std::set<std::string> Pawn::getPossibleMoves(const Board *board) const {
-    std::set<std::string> validMoves;
+std::set<Position> Pawn::getPossibleMoves(const Board *board) const {
+    std::set<Position> validMoves;
     // validMoves = board->getValidMoves(from, PAWN); // TODO
     return validMoves;
 }

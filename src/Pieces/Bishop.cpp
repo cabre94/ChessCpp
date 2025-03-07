@@ -11,8 +11,8 @@ void Bishop::printPiece() const {
         std::cout << "♝";
 }
 
-std::set<std::string> Bishop::getPossibleMoves(const Board *board) const {
-    std::set<std::string> validMoves;
+std::set<Position> Bishop::getPossibleMoves(const Board *board) const {
+    std::set<Position> validMoves;
 
     // validMoves = board->getValidMoves(pos, BISHOP); // TODO
 
