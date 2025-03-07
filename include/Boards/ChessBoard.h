@@ -19,7 +19,7 @@ public:
     void printPosAndPieces() const override;
     // int* string2pos(Position str);
 
-    bool makeMove(Position from, Position to);
+    bool makeMove(Position from, Position to) override;
 
     void createPices(const char c = 'n') override;
 
