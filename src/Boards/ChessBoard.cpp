@@ -391,10 +391,10 @@ void ChessBoard::printBoard() const {
     std::cout << "\u2500\u2500\u2500\u2510" << std::endl;
 
     // ! Ahora las piezas
-    for (int row = nRow; row >= 1; --row) {
+    for (uint32_t row = nRow; row >= 1; --row) {
         std::cout << row << "\u2502";
 
-        for (int j = 0; j < 8; ++j) {
+        for (uint32_t j = 0; j < 8; ++j) {
             piece = getPieceFromIdx(row - 1, j);
 
             if (piece == nullptr)
