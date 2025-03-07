@@ -20,8 +20,8 @@ public:
             throw std::invalid_argument("Invalid chess position: " + pos);
         }
 
-        pos_[0] = std::tolower(pos_[0]); // Normalizar columna a minúscula
-        pos_[1] = std::tolower(pos_[1]); // Aunque los números no cambian, es seguro hacerlo
+        pos_[0] = (char) std::tolower(pos_[0]); // Normalizar columna a minúscula
+        pos_[1] = (char) std::tolower(pos_[1]); // Aunque los números no cambian, es seguro hacerlo
 
         if (!formatAndCheckValid(pos_)) {
             throw std::invalid_argument("Invalid chess position: " + pos);
@@ -32,7 +32,7 @@ public:
     }
 
 	// TODO: Should be explicit too?
-    Position(const char pos[3]) : Position(std::string(pos)) {}
+    Position(const char pos_[3]) : Position(std::string(pos_)) {}
 
     // Get position as string
     const std::string &str() const { return pos; }

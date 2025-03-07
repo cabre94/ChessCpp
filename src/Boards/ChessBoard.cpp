@@ -354,7 +354,11 @@ void ChessBoard::initializePiecesChampionMagician(){
 #endif
 
 Piece *ChessBoard::getPieceFromIdx(const uint32_t i, const uint32_t j) const {
-    Position pos = idx2Position(i, j);
+	(void) i;
+	(void) j;
+
+#if 0
+	Position pos = idx2Position(i, j);
 
     for (size_t i = 0; i < all_pieces.size(); ++i) {
         for (size_t j = 0; j < all_pieces[i]->size(); ++j) {
@@ -365,6 +369,7 @@ Piece *ChessBoard::getPieceFromIdx(const uint32_t i, const uint32_t j) const {
         }
     }
 
+#endif
     return nullptr;
 }
 
