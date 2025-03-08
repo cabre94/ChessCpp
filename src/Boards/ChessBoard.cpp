@@ -49,6 +49,115 @@ ChessBoard::~ChessBoard() {
     // delete [] positions;
 }
 
+void ChessBoard::printBoard() const {
+    Piece *piece;
+
+    // TODO fix to use nRow and Ncol
+    // TODO En toda la funcion los indices quedaron mezclados
+    std::cout << "  ";
+    for (char c = 'A'; c <= 'H'; ++c)
+        std::cout << " " << c << "  ";
+    std::cout << std::endl;
+
+    // ! Primera linea
+    std::cout << " \u250C";
+    for (int i = N_COL; i > 1; i--) {
+        std::cout << "\u2500\u2500\u2500\u252C";
+    }
+    std::cout << "\u2500\u2500\u2500\u2510" << std::endl;
+
+    // ! Ahora las piezas
+    for (uint32_t row = N_ROW; row >= 1; --row) {
+        std::cout << row << "\u2502";
+
+        for (uint32_t j = 0; j < N_COL; ++j) {
+            piece = getPieceFromIdx(row - 1, j);
+
+            if (piece == nullptr)
+                std::cout << "   \u2502";
+            else {
+                std::cout << " ";
+                piece->printPiece();
+                std::cout << " ";
+                std::cout << "\u2502";
+            }
+        }
+        std::cout << std::endl;
+
+        // print the grid lines
+        if (row > 1) {
+            std::cout << " \u251C";
+            for (int i = N_COL; i > 1; i--) {
+                std::cout << "\u2500\u2500\u2500\u253C";
+            }
+            std::cout << "\u2500\u2500\u2500\u2524" << std::endl;
+        }
+    }
+
+    // ! Uktima linea
+    // print bottom
+    std::cout << " \u2514";
+    for (int i = 7; i >= 1; i--) {
+        std::cout << "\u2500\u2500\u2500\u2534";
+    }
+    std::cout << "\u2500\u2500\u2500\u2518" << std::endl;
+}
+
+std::set<Position> ChessBoard::getDiagonalMoves(const Position &pos) const {
+    (void) pos;
+    // TODO
+    std::set<Position> empty;
+    return empty;
+}
+
+std::set<Position> ChessBoard::getParallelMoves(const Position &pos) const {
+    (void) pos;
+    // TODO
+    std::set<Position> empty;
+    return empty;
+}
+
+std::set<Position> ChessBoard::getLShapeMoves(const Position &pos,
+                                              const std::vector<u_int16_t> &deltas) const {
+    (void) pos;
+    (void) deltas;
+    // TODO
+    std::set<Position> empty;
+    return empty;
+}
+
+std::set<Position> ChessBoard::getFordwardMoves(const Position &pos, int direction,
+                                                bool first) const {
+    (void) pos;
+    (void) direction;
+    (void) first;
+    // TODO
+    std::set<Position> empty;
+    return empty;
+}
+
+std::set<Position> ChessBoard::getAllDirectionMoves(const Position &pos) const {
+    (void) pos;
+
+    // TODO
+    std::set<Position> empty;
+    return empty;
+}
+
+bool ChessBoard::validIdxs(uint32_t r, uint32_t c) const { return r < N_ROW && c < N_COL; }
+
+bool ChessBoard::validPos(const Position &pos) const { return validIdxs(pos[1], pos[0]); }
+
+// Position ChessBoard::pos2string(int x, int y){
+Position ChessBoard::idx2Pos(const uint32_t r, const uint32_t c) const {
+    if (validIdxs(r, c))
+        throw std::out_of_range("ChessBoard::idx2Pos: Invalid indexes");
+
+    return Position(r, c);
+}
+
+////////////////////////////////////////////////////////////////
+
 #if 0
 void ChessBoard::createPices(const char c) {
     switch (c) {
@@ -379,60 +488,6 @@ Piece *ChessBoard::getPieceFromIdx(const uint32_t i, const uint32_t j) const {
     return nullptr;
 }
 
-void ChessBoard::printBoard() const {
-    Piece *piece;
-
-    // TODO fix to use nRow and Ncol
-    // TODO En toda la funcion los indices quedaron mezclados
-    std::cout << "  ";
-    for (char c = 'A'; c <= 'H'; ++c)
-        std::cout << " " << c << "  ";
-    std::cout << std::endl;
-
-    // ! Primera linea
-    std::cout << " \u250C";
-    for (int i = N_COL; i > 1; i--) {
-        std::cout << "\u2500\u2500\u2500\u252C";
-    }
-    std::cout << "\u2500\u2500\u2500\u2510" << std::endl;
-
-    // ! Ahora las piezas
-    for (uint32_t row = N_ROW; row >= 1; --row) {
-        std::cout << row << "\u2502";
-
-        for (uint32_t j = 0; j < N_COL; ++j) {
-            piece = getPieceFromIdx(row - 1, j);
-
-            if (piece == nullptr)
-                std::cout << "   \u2502";
-            else {
-                std::cout << " ";
-                piece->printPiece();
-                std::cout << " ";
-                std::cout << "\u2502";
-            }
-        }
-        std::cout << std::endl;
-
-        // print the grid lines
-        if (row > 1) {
-            std::cout << " \u251C";
-            for (int i = N_COL; i > 1; i--) {
-                std::cout << "\u2500\u2500\u2500\u253C";
-            }
-            std::cout << "\u2500\u2500\u2500\u2524" << std::endl;
-        }
-    }
-
-    // ! Uktima linea
-    // print bottom
-    std::cout << " \u2514";
-    for (int i = 7; i >= 1; i--) {
-        std::cout << "\u2500\u2500\u2500\u2534";
-    }
-    std::cout << "\u2500\u2500\u2500\u2518" << std::endl;
-}
-
 #if 0
 int ChessBoard::position2row(const Position &pos) const { return int(pos[1] - '1'); }
 
@@ -474,19 +529,6 @@ void ChessBoard::printPosAndPieces() const {
     std::cout << std::endl << std::endl;
 }
 #endif
-
-// TODO: Change method name
-bool ChessBoard::validIdxs(uint32_t r, uint32_t c) const { return r < N_ROW && c < N_COL; }
-
-bool ChessBoard::validPos(const Position &pos) const { return validIdxs(pos[1], pos[0]); }
-
-// Position ChessBoard::pos2string(int x, int y){
-Position ChessBoard::idx2Pos(const uint32_t r, const uint32_t c) const {
-    if (validIdxs(r, c))
-        throw std::out_of_range("ChessBoard::idx2Pos: Invalid indexes");
-
-    return Position(r, c);
-}
 
 #if 0
 bool ChessBoard::makeMove(Position from, Position to) {
@@ -604,47 +646,6 @@ std::set<Position> ChessBoard::getValidMoves(Position pos) const {
     return empty;
 }
 #endif
-
-std::set<Position> ChessBoard::getDiagonalMoves(const Position &pos) const {
-    (void) pos;
-    // TODO
-    std::set<Position> empty;
-    return empty;
-}
-
-std::set<Position> ChessBoard::getParallelMoves(const Position &pos) const {
-    (void) pos;
-    // TODO
-    std::set<Position> empty;
-    return empty;
-}
-
-std::set<Position> ChessBoard::getLShapeMoves(const Position &pos,
-                                              const std::vector<u_int16_t> &deltas) const {
-    (void) pos;
-    (void) deltas;
-    // TODO
-    std::set<Position> empty;
-    return empty;
-}
-
-std::set<Position> ChessBoard::getFordwardMoves(const Position &pos, int direction,
-                                                bool first) const {
-    (void) pos;
-    (void) direction;
-    (void) first;
-    // TODO
-    std::set<Position> empty;
-    return empty;
-}
-
-std::set<Position> ChessBoard::getAllDirectionMoves(const Position &pos) const {
-    (void) pos;
-
-    // TODO
-    std::set<Position> empty;
-    return empty;
-}
 
 #if 0
 std::set<Position> ChessBoard::getPawnMoves(Position from) {
