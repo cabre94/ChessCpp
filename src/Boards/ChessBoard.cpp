@@ -106,8 +106,8 @@ void ChessBoard::printBoard() const {
 std::set<Position> ChessBoard::getDiagonalMoves(const Position &pos) const {
     (void) pos;
     // TODO
-    std::set<Position> empty;
-    return empty;
+    std::set<Position> moves;
+    return moves;
 }
 
 std::set<Position> ChessBoard::getParallelMoves(const Position &pos) const {

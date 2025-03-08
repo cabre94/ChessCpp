@@ -29,8 +29,8 @@ public:
     // virtual std::set<Position> getValidMoves(Position pos) const = 0; // TODO Sacar esto
 
     // Aca deberian poner los metodos que dan las posiciones validas
-    virtual std::set<Position> getDiagonalMoves(const Position &pos) const = 0;
     virtual std::set<Position> getParallelMoves(const Position &pos) const = 0;
+    virtual std::set<Position> getDiagonalMoves(const Position &pos) const = 0;
     virtual std::set<Position> getLShapeMoves(const Position &pos,
                                               const std::vector<uint16_t> &deltas) const = 0;
     virtual std::set<Position> getFordwardMoves(const Position &pos, int direction,
