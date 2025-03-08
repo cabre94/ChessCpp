@@ -1,11 +1,11 @@
 #pragma once
 
+#include <array>
 #include <cctype>
 #include <cstdint>
 #include <stdexcept>
 #include <string>
 #include <tuple>
-#include <array>
 
 // todo: Other dimentions?
 
@@ -31,8 +31,20 @@ public:
         pos = pos_;
     }
 
-	// TODO: Should be explicit too?
+    // TODO: Should be explicit too?
     Position(const char pos_[3]) : Position(std::string(pos_)) {}
+
+    // Constructor a partir de índices de fila y columna
+    Position(uint32_t row, uint32_t col) {
+        // Assume that indexes are already checked
+        // if (row > 7 || col > 7)
+        //     throw std::out_of_range("Invalid indices for chess position");
+
+        idx = {col, row};
+        pos.resize(2);
+        pos[0] = (char) 'a' + idx[0];
+        pos[1] = (char) '1' + idx[1];
+    }
 
     // Get position as string
     const std::string &str() const { return pos; }
@@ -58,6 +70,7 @@ private:
         char row = pos[0]; // Letra de la columna ('a' - 'h')
         char col = pos[1]; // Número de la fila ('1' - '8')
 
+        // TODO: Puede que deba estar en otro lado y que la posicion no sepa las dimensiones
         return (row >= 'a' && row <= 'h') && (col >= '1' && col <= '8');
     }
 };
