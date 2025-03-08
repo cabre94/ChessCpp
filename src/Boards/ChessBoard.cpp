@@ -103,41 +103,49 @@ void ChessBoard::printBoard() const {
     std::cout << "\u2500\u2500\u2500\u2518" << std::endl;
 }
 
-std::set<Position> ChessBoard::getDiagonalMoves(const Position &pos) const {
+std::set<Position> ChessBoard::getDiagonalMoves(const Position &pos,
+                                                const PlayerID player_id) const {
     (void) pos;
+    (void) player_id;
     // TODO
     std::set<Position> moves;
     return moves;
 }
 
-std::set<Position> ChessBoard::getParallelMoves(const Position &pos) const {
+std::set<Position> ChessBoard::getParallelMoves(const Position &pos,
+                                                const PlayerID player_id) const {
     (void) pos;
+    (void) player_id;
     // TODO
     std::set<Position> empty;
     return empty;
 }
 
-std::set<Position> ChessBoard::getLShapeMoves(const Position &pos,
+std::set<Position> ChessBoard::getLShapeMoves(const Position &pos, const PlayerID player_id,
                                               const std::vector<u_int16_t> &deltas) const {
     (void) pos;
     (void) deltas;
+    (void) player_id;
     // TODO
     std::set<Position> empty;
     return empty;
 }
 
-std::set<Position> ChessBoard::getFordwardMoves(const Position &pos, int direction,
-                                                bool first) const {
+std::set<Position> ChessBoard::getFordwardMoves(const Position &pos, const PlayerID player_id,
+                                                int direction, bool first) const {
     (void) pos;
     (void) direction;
     (void) first;
+    (void) player_id;
     // TODO
     std::set<Position> empty;
     return empty;
 }
 
-std::set<Position> ChessBoard::getAllDirectionMoves(const Position &pos) const {
+std::set<Position> ChessBoard::getAllDirectionMoves(const Position &pos,
+                                                    const PlayerID player_id) const {
     (void) pos;
+    (void) player_id;
 
     // TODO
     std::set<Position> empty;

@@ -27,13 +27,16 @@ public:
     // TODO sacar
     // std::set<Position> getValidMoves(Position pos) const override; // TODO Sacar esto
 
-    std::set<Position> getDiagonalMoves(const Position &pos) const override;
-    std::set<Position> getParallelMoves(const Position &pos) const override;
-    std::set<Position> getLShapeMoves(const Position &pos,
+    std::set<Position> getDiagonalMoves(const Position &pos,
+                                        const PlayerID player_id) const override;
+    std::set<Position> getParallelMoves(const Position &pos,
+                                        const PlayerID player_id) const override;
+    std::set<Position> getLShapeMoves(const Position &pos, const PlayerID player_id,
                                       const std::vector<uint16_t> &deltas) const override;
-    std::set<Position> getFordwardMoves(const Position &pos, int direction,
-                                        bool first = false) const override;
-    std::set<Position> getAllDirectionMoves(const Position &pos) const override;
+    std::set<Position> getFordwardMoves(const Position &pos, const PlayerID player_id,
+                                        int direction, bool first = false) const override;
+    std::set<Position> getAllDirectionMoves(const Position &pos,
+                                            const PlayerID player_id) const override;
 
 private:
     // void initializePieces();
