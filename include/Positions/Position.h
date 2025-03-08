@@ -54,6 +54,7 @@ public:
     bool operator==(const Position &other) const { return idx == other.idx && pos == other.pos; }
     bool operator!=(const Position &other) const { return !(*this == other); }
     bool operator<(const Position &other) const { return idx < other.idx; }
+    bool operator>(const Position &other) const { return idx > other.idx; }
 
     friend std::ostream &operator<<(std::ostream &os, const Position &position) {
         return os << position.pos;
