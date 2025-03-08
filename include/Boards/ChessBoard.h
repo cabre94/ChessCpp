@@ -48,11 +48,7 @@ private:
     bool validIdxs(uint32_t r, uint32_t c) const;
     bool validPos(const Position &pos) const;
 
-    // Position pos2string(int x, int y);
     Position idx2Pos(const uint32_t r, const uint32_t c) const;
-
-    // int position2row(const Position &pos) const;
-    // int position2column(const Position &pos) const;
 
     Piece *getPieceFromIdx(const uint32_t r, const uint32_t c) const;
 
