@@ -12,6 +12,7 @@ add_executable(
 	${TEST_NAME}
 	test_Pieces.cpp
 	test_Positions.cpp
+	test_ChessBoard.cpp
 	${PROJECT_SOURCE_DIR}/src/Pieces/Bishop.cpp
 )
 
