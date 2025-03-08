@@ -42,8 +42,8 @@ public:
 
         idx = {col, row};
         pos.resize(2);
-        pos[0] = (char) 'a' + idx[0];
-        pos[1] = (char) '1' + idx[1];
+        pos[0] = static_cast<char>('a' + static_cast<int>(idx[0]));
+        pos[1] = static_cast<char>('1' + static_cast<int>(idx[1]));
     }
 
     // Get position as string
