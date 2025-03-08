@@ -481,14 +481,11 @@ bool ChessBoard::validIdxs(uint32_t r, uint32_t c) const { return r < N_ROW && c
 bool ChessBoard::validPos(const Position &pos) const { return validIdxs(pos[1], pos[0]); }
 
 // Position ChessBoard::pos2string(int x, int y){
-Position ChessBoard::idx2Pos(const uint32_t i, const uint32_t j) const {
+Position ChessBoard::idx2Pos(const uint32_t r, const uint32_t c) const {
+    if (validIdxs(r, c))
+        throw std::out_of_range("ChessBoard::idx2Pos: Invalid indexes");
 
-    std::string pos_str;
-    pos_str.resize(2);
-    pos_str[0] = char(j + 'a');
-    pos_str[1] = char(i + '1');
-
-    return Position(pos_str);
+    return Position(r, c);
 }
 
 #if 0
