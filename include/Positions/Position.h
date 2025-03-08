@@ -76,12 +76,4 @@ private:
     }
 };
 
-// Enum class para restringir PlayerID
-// enum class PlayerID : uint8_t { WHITE = 0, BLACK = 1 };
-
-using PlayerID = uint32_t;
-
-constexpr PlayerID WHITE = 0;
-constexpr PlayerID BLACK = 1;
-
 } // namespace chess

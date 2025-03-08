@@ -14,12 +14,12 @@
 // #include "Rook.h"
 
 TEST(Pieces, Getters) {
-    static const uint32_t PLAYER_ID = 0xB0CA;
+    static const chess::PlayerID player_id = chess::WHITE;
     static const chess::Position expected_pos = "A1";
 
-    const chess::Bishop bishop(PLAYER_ID, expected_pos);
+    const chess::Bishop bishop(player_id, expected_pos);
 
-    ASSERT_EQ(bishop.getPlayerID(), PLAYER_ID);
+    ASSERT_EQ(bishop.getPlayerID(), player_id);
     ASSERT_EQ(bishop.getName(), "BISHOP");
     ASSERT_EQ(bishop.getPosition(), expected_pos);
 }
