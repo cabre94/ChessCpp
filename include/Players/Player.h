@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "Piece.h"
+#include "Pieces/Piece.h"
 #include "Types.h"
 
 namespace chess {

@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 
+#include "Positions/Position.h"
 #include "Types.h"
 
 namespace chess {
@@ -30,7 +31,7 @@ public:
     std::string getName() const { return name; };
     Position getPosition() const { return pos; }
 
-    virtual std::set<std::string> getPossibleMoves(const Board *board) const = 0;
+    virtual std::set<Position> getPossibleMoves(const Board *board) const = 0;
     virtual void printPiece() const = 0;
 
 protected:

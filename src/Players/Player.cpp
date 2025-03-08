@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "Players/Player.h"
 
 namespace chess {
 

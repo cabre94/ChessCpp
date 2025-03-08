@@ -1,4 +1,4 @@
-#include "RealPlayer.h"
+#include "Players/RealPlayer.h"
 
 namespace chess {
 

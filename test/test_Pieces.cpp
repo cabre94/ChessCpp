@@ -4,6 +4,7 @@
 #include <string>
 
 #include "Pieces/Bishop.h"
+#include "Positions/Position.h"
 // #include "Champion.h"
 // #include "King.h"
 // #include "Knight.h"
@@ -12,19 +13,13 @@
 // #include "Queen.h"
 // #include "Rook.h"
 
-TEST(chessCpp, test_Pieces) {
-    static const uint32_t PLAYER_ID = 0xB0CA;
-    static const std::string expected_pos = "A1";
+TEST(Pieces, Getters) {
+    static const chess::PlayerID player_id = chess::WHITE;
+    static const chess::Position expected_pos = "A1";
 
-    const chess::Bishop bishop(PLAYER_ID, expected_pos);
+    const chess::Bishop bishop(player_id, expected_pos);
 
-    ASSERT_EQ(bishop.getPlayerID(), PLAYER_ID);
+    ASSERT_EQ(bishop.getPlayerID(), player_id);
     ASSERT_EQ(bishop.getName(), "BISHOP");
     ASSERT_EQ(bishop.getPosition(), expected_pos);
-}
-
-int main(int argc, char** argv)
-{
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();	// TODO: check if neccesary
 }

@@ -1,6 +1,7 @@
 #include "ChessGame.h"
-#include "Board.h"
-#include "ChessBoard.h"
+#include "Boards/Board.h"
+#include "Boards/ChessBoard.h"
+#include "Positions/Position.h"
 
 namespace chess {
 
@@ -14,34 +15,34 @@ ChessGame::ChessGame() {
     char c;
     std::cin >> c;
 
-    boardPtr = new ChessBoard(8, 8);
+    boardPtr = new ChessBoard();
 }
 
 ChessGame::~ChessGame() { delete boardPtr; }
 
 void ChessGame::play() {
 
-    while (!boardPtr->askWinner()) {
-        // system("clear");
+    // while (!boardPtr->askWinner()) {
+    //     // system("clear");
 
-        bool succesMove;
+    //     // bool succesMove;
 
-        std::string from, to;
+    //     std::string from, to;
 
-        boardPtr->printPosAndPieces();
-        boardPtr->printBoard();
+    //     boardPtr->printPosAndPieces();
+    //     boardPtr->printBoard();
 
-        printCheckMessage();
+    //     printCheckMessage();
 
-        succesMove = boardPtr->makeMove(from, to);
-    }
+    //     // succesMove = boardPtr->makeMove(from, to);
+    // }
 }
 
 void ChessGame::printCheckMessage() const {
-    if (boardPtr->isWhiteInCheck())
-        std::cout << "White king is in check" << std::endl;
-    if (boardPtr->isBlackInCheck())
-        std::cout << "Black king is in check" << std::endl;
+    // if (boardPtr->isWhiteInCheck())
+    //     std::cout << "White king is in check" << std::endl;
+    // if (boardPtr->isBlackInCheck())
+    //     std::cout << "Black king is in check" << std::endl;
 }
 
 } // namespace chess

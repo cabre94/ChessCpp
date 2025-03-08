@@ -1,5 +1,5 @@
-#include "Rook.h"
-#include "Board.h"
+#include "Pieces/Rook.h"
+#include "Boards/Board.h"
 
 namespace chess {
 
@@ -10,8 +10,9 @@ void Rook::printPiece() const {
         std::cout << "♜";
 }
 
-std::set<std::string> Rook::getPossibleMoves(const Board *board) const {
-    std::set<std::string> validMoves;
+std::set<Position> Rook::getPossibleMoves(const Board *board) const {
+	(void) board;
+    std::set<Position> validMoves;
     // validMoves = board->getValidMoves(from, ROOK); // TODO
     return validMoves;
 }

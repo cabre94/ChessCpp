@@ -2,9 +2,10 @@
 
 // #include "Board.cpp"
 #include "ChessGame.h"
-#include "ChessBoard.h"
-#include "Piece.h"
-#include "RealPlayer.h"
+#include "Boards/ChessBoard.h"
+#include "Pieces/Piece.h"
+#include "Players/RealPlayer.h"
+#include "Positions/Position.h"
 
 // int main(int argc, const char** argv){
 
@@ -53,20 +54,22 @@
 // }
 
 int main(int argc, const char **argv) {
+	(void) argc;
+	(void) argv;
 
     // ChessGame game;
 
     // game.play();
 
-    chess::Board *board = new chess::ChessBoard(8, 8);
+    chess::Board *board = new chess::ChessBoard();
 
-    chess::RealPlayer player_white(WHITE);
-    chess::RealPlayer player_black(BLACK);
+    chess::RealPlayer player_white(chess::WHITE);
+    chess::RealPlayer player_black(chess::BLACK);
 
-    board->addPlayerPieces(player_white.getPieces());
-    board->addPlayerPieces(player_black.getPieces());
+    // board->addPlayerPieces(player_white.getPieces());
+    // board->addPlayerPieces(player_black.getPieces());
 
-    board->createPices('n');
+    // board->createPices('n');
 
     board->printBoard();
 

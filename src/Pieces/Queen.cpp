@@ -1,5 +1,5 @@
-#include "Queen.h"
-#include "Board.h"
+#include "Pieces/Queen.h"
+#include "Boards/Board.h"
 
 namespace chess {
 
@@ -10,8 +10,9 @@ void Queen::printPiece() const {
         std::cout << "♛";
 }
 
-std::set<std::string> Queen::getPossibleMoves(const Board *board) const {
-    std::set<std::string> validMoves;
+std::set<Position> Queen::getPossibleMoves(const Board *board) const {
+	(void) board;
+    std::set<Position> validMoves;
     // validMoves = board->getValidMoves(from, QUEEN); // TODO
     return validMoves;
 }

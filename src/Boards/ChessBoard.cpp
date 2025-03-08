@@ -1,16 +1,18 @@
-#include "ChessBoard.h"
-#include "Bishop.h"
-#include "Champion.h"
-#include "King.h"
-#include "Knight.h"
-#include "Magician.h"
-#include "Pawn.h"
-#include "Queen.h"
-#include "Rook.h"
+#include "Boards/ChessBoard.h"
+#include "Pieces/Bishop.h"
+#include "Pieces/Champion.h"
+#include "Pieces/King.h"
+#include "Pieces/Knight.h"
+#include "Pieces/Magician.h"
+#include "Pieces/Pawn.h"
+#include "Pieces/Queen.h"
+#include "Pieces/Rook.h"
+#include "Positions/Position.h"
 
 namespace chess {
 
-ChessBoard::ChessBoard(uint16_t nRow_, uint16_t nCol_) : nRow(nRow_), nCol(nCol_) {
+// ChessBoard::ChessBoard(uint16_t nRow_, uint16_t nCol_) : nRow(nRow_), nCol(nCol_) {
+ChessBoard::ChessBoard() {
 
     // positions = new Piece*[nRow * nCol];
 
@@ -34,15 +36,137 @@ ChessBoard::ChessBoard(uint16_t nRow_, uint16_t nCol_) : nRow(nRow_), nCol(nCol_
     }
 #endif
 
-    // incializar las dimensiones del tablero
-
-    // ------------------------------
-    // Esto lo dejo asi lo mando a otra funcion
-    // Crear las piezas y agregarlas a las referencias/punteros que correspondan
-    // Deberia usar un PlayerID (un entero) para identificar cuales son
-    // ------------------------------
+    for (size_t r = 0; r < N_ROW; r++) {
+        for (size_t c = 0; c < N_COL; c++) {
+            pieces[r][c] = nullptr;
+        }
+    }
 }
 
+ChessBoard::~ChessBoard() {
+
+    // clearBoard();
+    // delete [] positions;
+}
+
+void ChessBoard::printBoard() const {
+    Piece *piece;
+
+    // TODO fix to use nRow and Ncol
+    // TODO En toda la funcion los indices quedaron mezclados
+    std::cout << "  ";
+    for (char c = 'A'; c <= 'H'; ++c)
+        std::cout << " " << c << "  ";
+    std::cout << std::endl;
+
+    // ! Primera linea
+    std::cout << " \u250C";
+    for (int i = N_COL; i > 1; i--) {
+        std::cout << "\u2500\u2500\u2500\u252C";
+    }
+    std::cout << "\u2500\u2500\u2500\u2510" << std::endl;
+
+    // ! Ahora las piezas
+    for (uint32_t row = N_ROW; row >= 1; --row) {
+        std::cout << row << "\u2502";
+
+        for (uint32_t j = 0; j < N_COL; ++j) {
+            piece = getPieceFromIdx(row - 1, j);
+
+            if (piece == nullptr)
+                std::cout << "   \u2502";
+            else {
+                std::cout << " ";
+                piece->printPiece();
+                std::cout << " ";
+                std::cout << "\u2502";
+            }
+        }
+        std::cout << std::endl;
+
+        // print the grid lines
+        if (row > 1) {
+            std::cout << " \u251C";
+            for (int i = N_COL; i > 1; i--) {
+                std::cout << "\u2500\u2500\u2500\u253C";
+            }
+            std::cout << "\u2500\u2500\u2500\u2524" << std::endl;
+        }
+    }
+
+    // ! Uktima linea
+    // print bottom
+    std::cout << " \u2514";
+    for (int i = 7; i >= 1; i--) {
+        std::cout << "\u2500\u2500\u2500\u2534";
+    }
+    std::cout << "\u2500\u2500\u2500\u2518" << std::endl;
+}
+
+std::set<Position> ChessBoard::getDiagonalMoves(const Position &pos,
+                                                const PlayerID player_id) const {
+    (void) pos;
+    (void) player_id;
+    // TODO
+    std::set<Position> moves;
+    return moves;
+}
+
+std::set<Position> ChessBoard::getParallelMoves(const Position &pos,
+                                                const PlayerID player_id) const {
+    (void) pos;
+    (void) player_id;
+    // TODO
+    std::set<Position> empty;
+    return empty;
+}
+
+std::set<Position> ChessBoard::getLShapeMoves(const Position &pos, const PlayerID player_id,
+                                              const std::vector<u_int16_t> &deltas) const {
+    (void) pos;
+    (void) deltas;
+    (void) player_id;
+    // TODO
+    std::set<Position> empty;
+    return empty;
+}
+
+std::set<Position> ChessBoard::getFordwardMoves(const Position &pos, const PlayerID player_id,
+                                                int direction, bool first) const {
+    (void) pos;
+    (void) direction;
+    (void) first;
+    (void) player_id;
+    // TODO
+    std::set<Position> empty;
+    return empty;
+}
+
+std::set<Position> ChessBoard::getAllDirectionMoves(const Position &pos,
+                                                    const PlayerID player_id) const {
+    (void) pos;
+    (void) player_id;
+
+    // TODO
+    std::set<Position> empty;
+    return empty;
+}
+
+bool ChessBoard::validIdxs(uint32_t r, uint32_t c) const { return r < N_ROW && c < N_COL; }
+
+bool ChessBoard::validPos(const Position &pos) const { return validIdxs(pos[1], pos[0]); }
+
+// Position ChessBoard::pos2string(int x, int y){
+Position ChessBoard::idx2Pos(const uint32_t r, const uint32_t c) const {
+    if (validIdxs(r, c))
+        throw std::out_of_range("ChessBoard::idx2Pos: Invalid indexes");
+
+    return Position(r, c);
+}
+
+////////////////////////////////////////////////////////////////
+
+#if 0
 void ChessBoard::createPices(const char c) {
     switch (c) {
         case 'n':
@@ -62,7 +186,9 @@ void ChessBoard::createPices(const char c) {
             exit(1);
     }
 }
+#endif
 
+#if 0
 void ChessBoard::initializePieces() {
 
     // Aca asumo que el vector para esta inicializado y tiene los punteros a vector
@@ -116,14 +242,11 @@ void ChessBoard::initializePieces() {
     // updateAllValidMoves();
 
     // updateGameState();
+
 }
+#endif
 
-ChessBoard::~ChessBoard() {
-
-    // clearBoard();
-    // delete [] positions;
-}
-
+#if 0
 void ChessBoard::clearBoard() {
 
     // for(int i=0; i < 8; ++i){
@@ -135,12 +258,17 @@ void ChessBoard::clearBoard() {
     //     }
     // }
 }
+#endif
 
-void ChessBoard::printSet(std::set<std::string> moveSet) {
+#if 0
+void ChessBoard::printSet(std::set<Position> moveSet) {
+    (void) moveSet;
+
     for (auto it = moveSet.begin(); it != moveSet.end(); ++it)
-        std::cout << *it << " ";
+        std::cout << it->str() << " ";
     std::cout << std::endl;
 }
+#endif
 
 // TODO: Borrar
 #if 0
@@ -349,7 +477,11 @@ void ChessBoard::initializePiecesChampionMagician(){
 #endif
 
 Piece *ChessBoard::getPieceFromIdx(const uint32_t i, const uint32_t j) const {
-    Position pos = idx2Position(i, j);
+    (void) i;
+    (void) j;
+
+#if 0
+	Position pos = idx2Position(i, j);
 
     for (size_t i = 0; i < all_pieces.size(); ++i) {
         for (size_t j = 0; j < all_pieces[i]->size(); ++j) {
@@ -360,76 +492,9 @@ Piece *ChessBoard::getPieceFromIdx(const uint32_t i, const uint32_t j) const {
         }
     }
 
+#endif
     return nullptr;
 }
-
-void ChessBoard::printBoard() const {
-    Piece *piece;
-
-    // TODO fix to use nRow and Ncol
-    // TODO En toda la funcion los indices quedaron mezclados
-    std::cout << "  ";
-    for (char c = 'A'; c <= 'H'; ++c)
-        std::cout << " " << c << "  ";
-    std::cout << std::endl;
-
-    // ! Primera linea
-    std::cout << " \u250C";
-    for (int i = nCol; i > 1; i--) {
-        std::cout << "\u2500\u2500\u2500\u252C";
-    }
-    std::cout << "\u2500\u2500\u2500\u2510" << std::endl;
-
-    // ! Ahora las piezas
-    for (int row = nRow; row >= 1; --row) {
-        std::cout << row << "\u2502";
-
-        for (int j = 0; j < 8; ++j) {
-            piece = getPieceFromIdx(row - 1, j);
-
-            if (piece == nullptr)
-                std::cout << "   \u2502";
-            else {
-                std::cout << " ";
-                piece->printPiece();
-                std::cout << " ";
-                std::cout << "\u2502";
-            }
-        }
-        std::cout << std::endl;
-
-        // print the grid lines
-        if (row > 1) {
-            std::cout << " \u251C";
-            for (int i = nCol; i > 1; i--) {
-                std::cout << "\u2500\u2500\u2500\u253C";
-            }
-            std::cout << "\u2500\u2500\u2500\u2524" << std::endl;
-        }
-    }
-
-    // ! Uktima linea
-    // print bottom
-    std::cout << " \u2514";
-    for (int i = 7; i >= 1; i--) {
-        std::cout << "\u2500\u2500\u2500\u2534";
-    }
-    std::cout << "\u2500\u2500\u2500\u2518" << std::endl;
-}
-
-// std::string ChessBoard::pos2string(int x, int y){
-Position ChessBoard::idx2Position(const uint32_t i, const uint32_t j) const {
-    Position pos;
-    pos.resize(2);
-    pos[0] = char(j + 'A');
-    pos[1] = char(i + '1');
-
-    return pos;
-}
-
-int ChessBoard::position2row(const Position &pos) const { return int(pos[1] - '1'); }
-
-int ChessBoard::position2column(const Position &pos) const { return int(pos[0] - 'A'); }
 
 #if 0
 void ChessBoard::updatePiecesPositions(){
@@ -440,7 +505,7 @@ void ChessBoard::updatePiecesPositions(){
         for(int j=0; j < 8; ++j){
             if(pieces[i][j] != nullptr){
                 PieceColor c = pieces[i][j]->getColor();
-                std::string str = pos2string(i,j);
+                Position str = pos2string(i,j);
                 if(c == WHITE)
                     whitePieces[str] = pieces[i][j];
                 else
@@ -451,8 +516,8 @@ void ChessBoard::updatePiecesPositions(){
 }
 #endif
 
+#if 0
 void ChessBoard::printPosAndPieces() const {
-
     std::cout << "White pieces:" << std::endl;
 
     for (auto it = whitePieces.begin(); it != whitePieces.end(); ++it)
@@ -465,16 +530,13 @@ void ChessBoard::printPosAndPieces() const {
 
     std::cout << std::endl << std::endl;
 }
-
-bool ChessBoard::posInBoard(int i, int j) {
-    if (i >= 0 && i < 8 && j >= 0 && j < 8)
-        return true;
-    return false;
-}
-
-bool ChessBoard::makeMove(std::string from, std::string to) {
+#endif
 
 #if 0
+bool ChessBoard::makeMove(Position from, Position to) {
+    (void) from;
+    (void) to;
+	
     if(whiteTurn)
         std::cout << "White turn..." << std::endl;
     else
@@ -506,7 +568,7 @@ bool ChessBoard::makeMove(std::string from, std::string to) {
     
 
     // Tomo los lugares validos a los que se puede mover la pieza
-    std::set<std::string> validMoves = pieces[i][j]->getPossibleMoves(this, from);
+    std::set<Position> validMoves = pieces[i][j]->getPossibleMoves(this, from);
 
     if(validMoves.empty()){
         std::cout << "No available moves: ";
@@ -550,13 +612,16 @@ bool ChessBoard::makeMove(std::string from, std::string to) {
 
     whiteTurn = !whiteTurn;
 
-#endif
-
+	
     return true;
 }
+#endif
 
-// std::set<std::string> ChessBoard::getValidMoves(std::string from, PieceType T){
+#if 0
+// std::set<Position> ChessBoard::getValidMoves(Position from, PieceType T){
 std::set<Position> ChessBoard::getValidMoves(Position pos) const {
+    (void) pos;
+
     // switch (T){
     //     case PAWN:
     //         return getPawnMoves(from);
@@ -575,50 +640,21 @@ std::set<Position> ChessBoard::getValidMoves(Position pos) const {
     //     case MAGICIAN:
     //         return getMagicianMoves(from);
     //     default:
-    //         std::set<std::string> empty;
+    //         std::set<Position> empty;
     //         return empty;
     // }
 
-    std::set<std::string> empty;
+    std::set<Position> empty;
     return empty;
 }
-
-std::set<Position> ChessBoard::getDiagonalMoves(const Position &pos) const {
-    // TODO
-    std::set<std::string> empty;
-    return empty;
-}
-
-std::set<Position> ChessBoard::getParallelMoves(const Position &pos) const {
-    // TODO
-    std::set<std::string> empty;
-    return empty;
-}
-
-std::set<Position> ChessBoard::getLShapeMoves(const Position &pos,
-                                              const std::vector<u_int16_t> &deltas) const {
-    // TODO
-    std::set<std::string> empty;
-    return empty;
-}
-
-std::set<Position> ChessBoard::getFordwardMoves(const Position &pos, int direction,
-                                                bool first) const {
-    // TODO
-    std::set<std::string> empty;
-    return empty;
-}
-
-std::set<Position> ChessBoard::getAllDirectionMoves(const Position &pos) const {
-    // TODO
-    std::set<std::string> empty;
-    return empty;
-}
-
-std::set<std::string> ChessBoard::getPawnMoves(std::string from) {
-    std::set<std::string> pawnMoves;
+#endif
 
 #if 0
+std::set<Position> ChessBoard::getPawnMoves(Position from) {
+	(void) from;
+    std::set<Position> pawnMoves;
+
+    #if 0
 
     int row = string2row(from);
     int col = string2column(from);
@@ -649,15 +685,16 @@ std::set<std::string> ChessBoard::getPawnMoves(std::string from) {
     if(posInBoard(row+forward,col-1) && pieces[row+forward][col-1] != nullptr && pieces[row+forward][col-1]->getColor() != c)
         pawnMoves.insert(pos2string(row+forward,col-1));
 
-#endif
+    #endif
 
     return pawnMoves;
 }
 
-std::set<std::string> ChessBoard::getRookMoves(std::string from) {
-    std::set<std::string> rookMoves;
+std::set<Position> ChessBoard::getRookMoves(Position from) {
+	(void) from;
+    std::set<Position> rookMoves;
 
-#if 0
+    #if 0
 
 
     int row = string2row(from);
@@ -709,15 +746,16 @@ std::set<std::string> ChessBoard::getRookMoves(std::string from) {
             break;
     }
 
-#endif
+    #endif
 
     return rookMoves;
 }
 
-std::set<std::string> ChessBoard::getKnightMoves(std::string from) {
-    std::set<std::string> knightMoves;
+std::set<Position> ChessBoard::getKnightMoves(Position from) {
+	(void) from;
+    std::set<Position> knightMoves;
 
-#if 0
+    #if 0
 
     int row = string2row(from);
     int col = string2column(from);
@@ -737,15 +775,16 @@ std::set<std::string> ChessBoard::getKnightMoves(std::string from) {
         }
     }
 
-#endif
+    #endif
 
     return knightMoves;
 }
 
-std::set<std::string> ChessBoard::getBishopMoves(std::string from) {
-    std::set<std::string> bishopMoves;
+std::set<Position> ChessBoard::getBishopMoves(Position from) {
+	(void) from;
+    std::set<Position> bishopMoves;
 
-#if 0
+    #if 0
 
 
     int row = string2row(from);
@@ -797,25 +836,26 @@ std::set<std::string> ChessBoard::getBishopMoves(std::string from) {
             break;
     }
 
-#endif
+    #endif
 
     return bishopMoves;
 }
 
-std::set<std::string> ChessBoard::getQueenMoves(std::string from) {
-    std::set<std::string> queenMoves = getBishopMoves(from);
-    std::set<std::string> rookMoves = getRookMoves(from);
+std::set<Position> ChessBoard::getQueenMoves(Position from) {
+    std::set<Position> queenMoves = getBishopMoves(from);
+    std::set<Position> rookMoves = getRookMoves(from);
 
     queenMoves.insert(rookMoves.begin(), rookMoves.end());
 
     return queenMoves;
 }
 
-std::set<std::string> ChessBoard::getKingMoves(std::string from) {
-    std::set<std::string> kingMoves;
-    std::set<std::string> oppositeMoves;
+std::set<Position> ChessBoard::getKingMoves(Position from) {
+	(void) from;
+    std::set<Position> kingMoves;
+    std::set<Position> oppositeMoves;	// oponente TODO
 
-#if 0
+    #if 0
 
 
     int row = string2row(from);
@@ -837,15 +877,16 @@ std::set<std::string> ChessBoard::getKingMoves(std::string from) {
         }
     }
 
-#endif
+    #endif
 
     return kingMoves;
 }
 
-std::set<std::string> ChessBoard::getChampionMoves(std::string from) {
-    std::set<std::string> championMoves;
+std::set<Position> ChessBoard::getChampionMoves(Position from) {
+	(void) from;
+    std::set<Position> championMoves;
 
-#if 0
+    #if 0
 
     int row = string2row(from);
     int col = string2column(from);
@@ -871,15 +912,16 @@ std::set<std::string> ChessBoard::getChampionMoves(std::string from) {
         }
     }
 
-#endif
+    #endif
 
     return championMoves;
 }
 
-std::set<std::string> ChessBoard::getMagicianMoves(std::string from) {
-    std::set<std::string> magicianMoves;
+std::set<Position> ChessBoard::getMagicianMoves(Position from) {
+	(void) from;
+    std::set<Position> magicianMoves;
 
-#if 0
+    #if 0
 
     int row = string2row(from);
     int col = string2column(from);
@@ -899,10 +941,11 @@ std::set<std::string> ChessBoard::getMagicianMoves(std::string from) {
         }
     }
 
-#endif
+    #endif
 
     return magicianMoves;
 }
+#endif
 
 #if 0
 void ChessBoard::updateAllValidMoves(){
@@ -912,7 +955,7 @@ void ChessBoard::updateAllValidMoves(){
     for(int i=0; i < 8; ++i){
         for(int j=0; j < 8; ++j){
             if(pieces[i][j] != nullptr){    // ? Seria mejor un metodo que me diga si hay pieza?
-                std::set<std::string> aux = pieces[i][j]->getPossibleMoves(this, pos2string(i,j));
+                std::set<Position> aux = pieces[i][j]->getPossibleMoves(this, pos2string(i,j));
                 if(pieces[i][j]->getColor() == WHITE)
                     allWhiteMoves.insert(aux.begin(), aux.end());
                 else

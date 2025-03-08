@@ -2,76 +2,81 @@
 
 #include <string>
 
-#include "Board.h"
-#include "Piece.h"
+#include "Boards/Board.h"
+#include "Pieces/Piece.h"
+#include "Positions/Position.h"
 
 namespace chess {
 
 class ChessBoard : public Board {
 public:
-    ChessBoard(uint16_t nRow_, uint16_t nCol_);
+    // ChessBoard(uint16_t nRow_, uint16_t nCol_);
+    ChessBoard();
     ~ChessBoard();
 
     // Funciones virtuales
     void printBoard() const override;
     // void printPositions();
-    void printPosAndPieces() const override;
-    // int* string2pos(std::string str);
+    // void printPosAndPieces() const override;
+    // int* string2pos(Position str);
 
-    bool makeMove(std::string from, std::string to);
+    // bool makeMove(Position from, Position to) override;
 
-    void createPices(const char c = 'n') override;
+    // void createPices(const char c = 'n') override;
 
     // TODO sacar
-    std::set<Position> getValidMoves(Position pos) const override; // TODO Sacar esto
+    // std::set<Position> getValidMoves(Position pos) const override; // TODO Sacar esto
 
-    std::set<Position> getDiagonalMoves(const Position &pos) const override;
-    std::set<Position> getParallelMoves(const Position &pos) const override;
-    std::set<Position> getLShapeMoves(const Position &pos,
-                                      const std::vector<u_int16_t> &deltas) const override;
-    std::set<Position> getFordwardMoves(const Position &pos, int direction,
-                                        bool first = false) const override;
-    std::set<Position> getAllDirectionMoves(const Position &pos) const override;
+    std::set<Position> getDiagonalMoves(const Position &pos,
+                                        const PlayerID player_id) const override;
+    std::set<Position> getParallelMoves(const Position &pos,
+                                        const PlayerID player_id) const override;
+    std::set<Position> getLShapeMoves(const Position &pos, const PlayerID player_id,
+                                      const std::vector<uint16_t> &deltas) const override;
+    std::set<Position> getFordwardMoves(const Position &pos, const PlayerID player_id,
+                                        int direction, bool first = false) const override;
+    std::set<Position> getAllDirectionMoves(const Position &pos,
+                                            const PlayerID player_id) const override;
 
 private:
-    void initializePieces();
+    // void initializePieces();
     // void initializePiecesButterfly();
     // void initializePiecesPawnGame();
     // void initializePiecesChampionMagician();
 
-    void clearBoard();
+    // void clearBoard();
 
-    void printSet(std::set<std::string> moveSet);
+    // void printSet(std::set<Position> moveSet);
 
-    bool posInBoard(int i, int j);
+    bool validIdxs(uint32_t r, uint32_t c) const;
+    bool validPos(const Position &pos) const;
 
-    // std::string pos2string(int x, int y);
-    Position idx2Position(const uint32_t i, const uint32_t j) const;
+    Position idx2Pos(const uint32_t r, const uint32_t c) const;
 
-    int position2row(const Position &pos) const;
-    int position2column(const Position &pos) const;
-
-    Piece *getPieceFromIdx(const uint32_t i, const uint32_t j) const;
+    Piece *getPieceFromIdx(const uint32_t r, const uint32_t c) const;
 
     // void updatePiecesPositions();
     // void updateAllValidMoves();
     // void updateGameState();
 
-    std::set<std::string> getValidMoves(std::string from);
+    // std::set<Position> getValidMoves(Position from) const;
 
-    std::set<std::string> getPawnMoves(std::string from);
-    std::set<std::string> getRookMoves(std::string from);
-    std::set<std::string> getKnightMoves(std::string from);
-    std::set<std::string> getBishopMoves(std::string from);
-    std::set<std::string> getQueenMoves(std::string from);
-    std::set<std::string> getKingMoves(std::string from);
-    std::set<std::string> getChampionMoves(std::string from);
-    std::set<std::string> getMagicianMoves(std::string from);
+    // std::set<Position> getPawnMoves(Position from);
+    // std::set<Position> getRookMoves(Position from);
+    // std::set<Position> getKnightMoves(Position from);
+    // std::set<Position> getBishopMoves(Position from);
+    // std::set<Position> getQueenMoves(Position from);
+    // std::set<Position> getKingMoves(Position from);
+    // std::set<Position> getChampionMoves(Position from);
+    // std::set<Position> getMagicianMoves(Position from);
 
     // char typeDistribution;
-    const uint16_t nRow, nCol;
-    Piece *pieces[8][8]; //! No enteindo porque no puedo poner SIZE
-    Piece **positions;
+    static const uint32_t N_ROW = 8;
+    static const uint32_t N_COL = 8;
+
+    // const uint16_t nRow, nCol;
+    Piece *pieces[N_ROW][N_COL]; //! No enteindo porque no puedo poner SIZE
+    // Piece **positions;
 };
 
 } // namespace chess

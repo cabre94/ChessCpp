@@ -2,8 +2,8 @@
 
 #include <cstdlib>
 
-#include "Board.h"
-#include "Piece.h"
+#include "Boards/Board.h"
+#include "Pieces/Piece.h"
 
 namespace chess {
 
