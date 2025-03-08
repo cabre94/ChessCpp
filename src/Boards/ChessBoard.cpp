@@ -43,6 +43,12 @@ ChessBoard::ChessBoard() {
     }
 }
 
+ChessBoard::~ChessBoard() {
+
+    // clearBoard();
+    // delete [] positions;
+}
+
 #if 0
 void ChessBoard::createPices(const char c) {
     switch (c) {
@@ -65,11 +71,11 @@ void ChessBoard::createPices(const char c) {
 }
 #endif
 
+#if 0
 void ChessBoard::initializePieces() {
 
     // Aca asumo que el vector para esta inicializado y tiene los punteros a vector
 
-#if 0
     // Piezas blancas
     all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "A2"));
     all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "B2"));
@@ -120,15 +126,10 @@ void ChessBoard::initializePieces() {
 
     // updateGameState();
 
+}
 #endif
-}
 
-ChessBoard::~ChessBoard() {
-
-    // clearBoard();
-    // delete [] positions;
-}
-
+#if 0
 void ChessBoard::clearBoard() {
 
     // for(int i=0; i < 8; ++i){
@@ -140,16 +141,17 @@ void ChessBoard::clearBoard() {
     //     }
     // }
 }
+#endif
 
+#if 0
 void ChessBoard::printSet(std::set<Position> moveSet) {
     (void) moveSet;
 
-#if 0
     for (auto it = moveSet.begin(); it != moveSet.end(); ++it)
         std::cout << it->str() << " ";
     std::cout << std::endl;
-#endif
 }
+#endif
 
 // TODO: Borrar
 #if 0
@@ -431,17 +433,6 @@ void ChessBoard::printBoard() const {
     std::cout << "\u2500\u2500\u2500\u2518" << std::endl;
 }
 
-// Position ChessBoard::pos2string(int x, int y){
-Position ChessBoard::idx2Position(const uint32_t i, const uint32_t j) const {
-
-    std::string pos_str;
-    pos_str.resize(2);
-    pos_str[0] = char(j + 'a');
-    pos_str[1] = char(i + '1');
-
-    return Position(pos_str);
-}
-
 #if 0
 int ChessBoard::position2row(const Position &pos) const { return int(pos[1] - '1'); }
 
@@ -485,10 +476,19 @@ void ChessBoard::printPosAndPieces() const {
 #endif
 
 // TODO: Change method name
-bool ChessBoard::posInBoard(int i, int j) {
-    if (i >= 0 && i < 8 && j >= 0 && j < 8)
-        return true;
-    return false;
+bool ChessBoard::validIdxs(uint32_t r, uint32_t c) const { return r < N_ROW && c < N_COL; }
+
+bool ChessBoard::validPos(const Position &pos) const { return validIdxs(pos[1], pos[0]); }
+
+// Position ChessBoard::pos2string(int x, int y){
+Position ChessBoard::idx2Pos(const uint32_t i, const uint32_t j) const {
+
+    std::string pos_str;
+    pos_str.resize(2);
+    pos_str[0] = char(j + 'a');
+    pos_str[1] = char(i + '1');
+
+    return Position(pos_str);
 }
 
 #if 0
