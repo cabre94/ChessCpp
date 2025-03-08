@@ -26,6 +26,7 @@ TEST(Positions, CreationAndParams) {
     char c[] = "A1";
     std::string str = "A1";
     std::string str_lower;
+    std::array<uint32_t, 2> idx = {0, 0};
 
     for (char row = '1'; row <= '8'; row++) {
         for (char col = 'A'; col <= 'H'; col++) {
@@ -35,28 +36,50 @@ TEST(Positions, CreationAndParams) {
             c[1] = row;
             str[0] = col;
             str[1] = row;
+            idx[0] = (uint32_t) col - 'A';
+            idx[1] = (uint32_t) row - '1';
             str_lower = toLower(str);
 
-            // Create Position with std::string
+            // ------- std::string constructor -------
             const chess::Position pos_str(str);
 
             // Check indexes
-            ASSERT_EQ(pos_str[0], col - 'A');
-            ASSERT_EQ(pos_str[1], row - '1');
+            ASSERT_EQ(pos_str[0], idx[0]);
+            ASSERT_EQ(pos_str[1], idx[1]);
             ASSERT_EQ(pos_str.str(), str_lower);
 
-            // Create Position with const char*
+            // ------- const char* constructor -------
             const chess::Position pos_c(c);
 
             // Check indexes
-            ASSERT_EQ(pos_c[0], col - 'A');
-            ASSERT_EQ(pos_c[1], row - '1');
+            ASSERT_EQ(pos_c[0], idx[0]);
+            ASSERT_EQ(pos_c[1], idx[1]);
             ASSERT_EQ(pos_c.str(), str_lower);
 
-            ASSERT_TRUE(pos_str == pos_c);
-            ASSERT_FALSE(pos_str != pos_c);
-            ASSERT_FALSE(pos_str < pos_c);
-            ASSERT_FALSE(pos_c < pos_str);
+            // ------- Indexes constructor -------
+            const chess::Position pos_idx(idx[1], idx[0]);
+
+            // Check indexes
+            ASSERT_EQ(pos_idx[0], idx[0]);
+            ASSERT_EQ(pos_idx[1], idx[1]);
+            ASSERT_EQ(pos_idx.str(), str_lower);
+
+            // ------- Check comparison operator -------
+            ASSERT_TRUE(pos_str == pos_c);   // operator ==
+            ASSERT_TRUE(pos_c == pos_idx);   // operator ==
+            ASSERT_TRUE(pos_idx == pos_str); // operator ==
+
+            ASSERT_FALSE(pos_str != pos_c);   // operator !=
+            ASSERT_FALSE(pos_c != pos_idx);   // operator !=
+            ASSERT_FALSE(pos_idx != pos_str); // operator !=
+
+            ASSERT_FALSE(pos_str < pos_c);   // operator <
+            ASSERT_FALSE(pos_c < pos_idx);   // operator <
+            ASSERT_FALSE(pos_idx < pos_str); // operator <
+
+            ASSERT_FALSE(pos_str > pos_c);   // operator >
+            ASSERT_FALSE(pos_c > pos_idx);   // operator >
+            ASSERT_FALSE(pos_idx > pos_str); // operator >
         }
     }
 }
