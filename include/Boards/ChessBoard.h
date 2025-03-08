@@ -58,16 +58,16 @@ private:
     // void updateAllValidMoves();
     // void updateGameState();
 
-    std::set<Position> getValidMoves(Position from);
+    // std::set<Position> getValidMoves(Position from) const;
 
-    std::set<Position> getPawnMoves(Position from);
-    std::set<Position> getRookMoves(Position from);
-    std::set<Position> getKnightMoves(Position from);
-    std::set<Position> getBishopMoves(Position from);
-    std::set<Position> getQueenMoves(Position from);
-    std::set<Position> getKingMoves(Position from);
-    std::set<Position> getChampionMoves(Position from);
-    std::set<Position> getMagicianMoves(Position from);
+    // std::set<Position> getPawnMoves(Position from);
+    // std::set<Position> getRookMoves(Position from);
+    // std::set<Position> getKnightMoves(Position from);
+    // std::set<Position> getBishopMoves(Position from);
+    // std::set<Position> getQueenMoves(Position from);
+    // std::set<Position> getKingMoves(Position from);
+    // std::set<Position> getChampionMoves(Position from);
+    // std::set<Position> getMagicianMoves(Position from);
 
     // char typeDistribution;
     const uint16_t nRow, nCol;

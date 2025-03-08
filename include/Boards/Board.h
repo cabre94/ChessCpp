@@ -41,13 +41,16 @@ public:
 
     virtual void createPices(const char c = 'n') = 0;
 
+#if 0
     bool askWinner() const { return gameEnded; }         // TODO move to Game class
     bool isWhiteInCheck() const { return whiteInCheck; } // TODO move to Game class
     bool isBlackInCheck() const { return blackInCheck; } // TODO move to Game class
 
     void addPlayerPieces(std::vector<Piece *> &player_pieces);
+#endif
 
 protected:
+#if 0
     bool stringInSet(const std::set<std::string> &set, const std::string &str) const;
 
     // Necesito acceso a las piezas de todos para chequear
@@ -64,6 +67,7 @@ protected:
     uint64_t turn = 0;               // TODO move to Game class
     bool gameEnded;                  // TODO move to Game class
     bool whiteInCheck, blackInCheck; // TODO: Sacar esto
+#endif
 };
 
 } // namespace chess

@@ -66,8 +66,8 @@ int main(int argc, const char **argv) {
     chess::RealPlayer player_white(chess::WHITE);
     chess::RealPlayer player_black(chess::BLACK);
 
-    board->addPlayerPieces(player_white.getPieces());
-    board->addPlayerPieces(player_black.getPieces());
+    // board->addPlayerPieces(player_white.getPieces());
+    // board->addPlayerPieces(player_black.getPieces());
 
     board->createPices('n');
 

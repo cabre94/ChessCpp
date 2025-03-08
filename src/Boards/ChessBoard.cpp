@@ -68,6 +68,7 @@ void ChessBoard::initializePieces() {
 
     // Aca asumo que el vector para esta inicializado y tiene los punteros a vector
 
+#if 0
     // Piezas blancas
     all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "A2"));
     all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "B2"));
@@ -117,6 +118,8 @@ void ChessBoard::initializePieces() {
     // updateAllValidMoves();
 
     // updateGameState();
+
+#endif
 }
 
 ChessBoard::~ChessBoard() {
@@ -138,7 +141,7 @@ void ChessBoard::clearBoard() {
 }
 
 void ChessBoard::printSet(std::set<Position> moveSet) {
-	(void) moveSet;
+    (void) moveSet;
 
 #if 0
     for (auto it = moveSet.begin(); it != moveSet.end(); ++it)
@@ -354,8 +357,8 @@ void ChessBoard::initializePiecesChampionMagician(){
 #endif
 
 Piece *ChessBoard::getPieceFromIdx(const uint32_t i, const uint32_t j) const {
-	(void) i;
-	(void) j;
+    (void) i;
+    (void) j;
 
 #if 0
 	Position pos = idx2Position(i, j);
@@ -487,8 +490,8 @@ bool ChessBoard::posInBoard(int i, int j) {
 }
 
 bool ChessBoard::makeMove(Position from, Position to) {
-	(void) from;
-	(void) to;
+    (void) from;
+    (void) to;
 
 #if 0
     if(whiteTurn)
@@ -573,7 +576,7 @@ bool ChessBoard::makeMove(Position from, Position to) {
 
 // std::set<Position> ChessBoard::getValidMoves(Position from, PieceType T){
 std::set<Position> ChessBoard::getValidMoves(Position pos) const {
-	(void) pos;
+    (void) pos;
 
     // switch (T){
     //     case PAWN:
@@ -602,14 +605,14 @@ std::set<Position> ChessBoard::getValidMoves(Position pos) const {
 }
 
 std::set<Position> ChessBoard::getDiagonalMoves(const Position &pos) const {
-	(void) pos;
+    (void) pos;
     // TODO
     std::set<Position> empty;
     return empty;
 }
 
 std::set<Position> ChessBoard::getParallelMoves(const Position &pos) const {
-	(void) pos;
+    (void) pos;
     // TODO
     std::set<Position> empty;
     return empty;
@@ -617,8 +620,8 @@ std::set<Position> ChessBoard::getParallelMoves(const Position &pos) const {
 
 std::set<Position> ChessBoard::getLShapeMoves(const Position &pos,
                                               const std::vector<u_int16_t> &deltas) const {
-	(void) pos;
-	(void) deltas;
+    (void) pos;
+    (void) deltas;
     // TODO
     std::set<Position> empty;
     return empty;
@@ -626,27 +629,28 @@ std::set<Position> ChessBoard::getLShapeMoves(const Position &pos,
 
 std::set<Position> ChessBoard::getFordwardMoves(const Position &pos, int direction,
                                                 bool first) const {
-	(void) pos;
-	(void) direction;
-	(void) first;
+    (void) pos;
+    (void) direction;
+    (void) first;
     // TODO
     std::set<Position> empty;
     return empty;
 }
 
 std::set<Position> ChessBoard::getAllDirectionMoves(const Position &pos) const {
-	(void) pos;
+    (void) pos;
 
     // TODO
     std::set<Position> empty;
     return empty;
 }
 
+#if 0
 std::set<Position> ChessBoard::getPawnMoves(Position from) {
 	(void) from;
     std::set<Position> pawnMoves;
 
-#if 0
+    #if 0
 
     int row = string2row(from);
     int col = string2column(from);
@@ -677,7 +681,7 @@ std::set<Position> ChessBoard::getPawnMoves(Position from) {
     if(posInBoard(row+forward,col-1) && pieces[row+forward][col-1] != nullptr && pieces[row+forward][col-1]->getColor() != c)
         pawnMoves.insert(pos2string(row+forward,col-1));
 
-#endif
+    #endif
 
     return pawnMoves;
 }
@@ -686,7 +690,7 @@ std::set<Position> ChessBoard::getRookMoves(Position from) {
 	(void) from;
     std::set<Position> rookMoves;
 
-#if 0
+    #if 0
 
 
     int row = string2row(from);
@@ -738,7 +742,7 @@ std::set<Position> ChessBoard::getRookMoves(Position from) {
             break;
     }
 
-#endif
+    #endif
 
     return rookMoves;
 }
@@ -747,7 +751,7 @@ std::set<Position> ChessBoard::getKnightMoves(Position from) {
 	(void) from;
     std::set<Position> knightMoves;
 
-#if 0
+    #if 0
 
     int row = string2row(from);
     int col = string2column(from);
@@ -767,7 +771,7 @@ std::set<Position> ChessBoard::getKnightMoves(Position from) {
         }
     }
 
-#endif
+    #endif
 
     return knightMoves;
 }
@@ -776,7 +780,7 @@ std::set<Position> ChessBoard::getBishopMoves(Position from) {
 	(void) from;
     std::set<Position> bishopMoves;
 
-#if 0
+    #if 0
 
 
     int row = string2row(from);
@@ -828,7 +832,7 @@ std::set<Position> ChessBoard::getBishopMoves(Position from) {
             break;
     }
 
-#endif
+    #endif
 
     return bishopMoves;
 }
@@ -847,7 +851,7 @@ std::set<Position> ChessBoard::getKingMoves(Position from) {
     std::set<Position> kingMoves;
     std::set<Position> oppositeMoves;	// oponente TODO
 
-#if 0
+    #if 0
 
 
     int row = string2row(from);
@@ -869,7 +873,7 @@ std::set<Position> ChessBoard::getKingMoves(Position from) {
         }
     }
 
-#endif
+    #endif
 
     return kingMoves;
 }
@@ -878,7 +882,7 @@ std::set<Position> ChessBoard::getChampionMoves(Position from) {
 	(void) from;
     std::set<Position> championMoves;
 
-#if 0
+    #if 0
 
     int row = string2row(from);
     int col = string2column(from);
@@ -904,7 +908,7 @@ std::set<Position> ChessBoard::getChampionMoves(Position from) {
         }
     }
 
-#endif
+    #endif
 
     return championMoves;
 }
@@ -913,7 +917,7 @@ std::set<Position> ChessBoard::getMagicianMoves(Position from) {
 	(void) from;
     std::set<Position> magicianMoves;
 
-#if 0
+    #if 0
 
     int row = string2row(from);
     int col = string2column(from);
@@ -933,10 +937,11 @@ std::set<Position> ChessBoard::getMagicianMoves(Position from) {
         }
     }
 
-#endif
+    #endif
 
     return magicianMoves;
 }
+#endif
 
 #if 0
 void ChessBoard::updateAllValidMoves(){
