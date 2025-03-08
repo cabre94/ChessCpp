@@ -36,13 +36,11 @@ ChessBoard::ChessBoard() {
     }
 #endif
 
-    // incializar las dimensiones del tablero
-
-    // ------------------------------
-    // Esto lo dejo asi lo mando a otra funcion
-    // Crear las piezas y agregarlas a las referencias/punteros que correspondan
-    // Deberia usar un PlayerID (un entero) para identificar cuales son
-    // ------------------------------
+    for (size_t r = 0; r < N_ROW; r++) {
+        for (size_t c = 0; c < N_COL; c++) {
+            pieces[r][c] = nullptr;
+        }
+    }
 }
 
 #if 0
@@ -492,7 +490,6 @@ bool ChessBoard::posInBoard(int i, int j) {
         return true;
     return false;
 }
-
 
 #if 0
 bool ChessBoard::makeMove(Position from, Position to) {
