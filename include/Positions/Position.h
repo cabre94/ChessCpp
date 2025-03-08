@@ -68,11 +68,11 @@ private:
         if (pos.size() != 2)
             return false;
 
-        char row = pos[0]; // Letra de la columna ('a' - 'h')
-        char col = pos[1]; // Número de la fila ('1' - '8')
+        char col = pos[0]; // Letra de la columna ('a' - 'h')
+        char row = pos[1]; // Número de la fila ('1' - '8')
 
         // TODO: Puede que deba estar en otro lado y que la posicion no sepa las dimensiones
-        return (row >= 'a' && row <= 'h') && (col >= '1' && col <= '8');
+        return (col >= 'a' && col <= 'h') && (row >= '1' && row <= '8');
     }
 };
 
