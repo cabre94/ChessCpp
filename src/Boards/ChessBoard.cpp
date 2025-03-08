@@ -489,12 +489,6 @@ Piece *ChessBoard::getPieceFromIdx(const uint32_t i, const uint32_t j) const {
 }
 
 #if 0
-int ChessBoard::position2row(const Position &pos) const { return int(pos[1] - '1'); }
-
-int ChessBoard::position2column(const Position &pos) const { return int(pos[0] - 'A'); }
-#endif
-
-#if 0
 void ChessBoard::updatePiecesPositions(){
     whitePieces.clear();
     blackPieces.clear();
