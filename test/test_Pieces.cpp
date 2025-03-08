@@ -13,7 +13,7 @@
 // #include "Queen.h"
 // #include "Rook.h"
 
-TEST(chessCpp, test_Pieces) {
+TEST(Pieces, Getters) {
     static const uint32_t PLAYER_ID = 0xB0CA;
     static const chess::Position expected_pos = "A1";
 

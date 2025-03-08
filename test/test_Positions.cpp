@@ -21,7 +21,7 @@ static std::string toLower(const std::string &str) {
     return lowerStr;
 }
 
-TEST(chessCpp, test_Positions) {
+TEST(Positions, CreationAndParams) {
 
     char c[] = "A1";
     std::string str = "A1";
