@@ -11,7 +11,8 @@
 
 namespace chess {
 
-ChessBoard::ChessBoard(uint16_t nRow_, uint16_t nCol_) : nRow(nRow_), nCol(nCol_) {
+// ChessBoard::ChessBoard(uint16_t nRow_, uint16_t nCol_) : nRow(nRow_), nCol(nCol_) {
+ChessBoard::ChessBoard() {
 
     // positions = new Piece*[nRow * nCol];
 
@@ -44,6 +45,7 @@ ChessBoard::ChessBoard(uint16_t nRow_, uint16_t nCol_) : nRow(nRow_), nCol(nCol_
     // ------------------------------
 }
 
+#if 0
 void ChessBoard::createPices(const char c) {
     switch (c) {
         case 'n':
@@ -63,6 +65,7 @@ void ChessBoard::createPices(const char c) {
             exit(1);
     }
 }
+#endif
 
 void ChessBoard::initializePieces() {
 
@@ -388,16 +391,16 @@ void ChessBoard::printBoard() const {
 
     // ! Primera linea
     std::cout << " \u250C";
-    for (int i = nCol; i > 1; i--) {
+    for (int i = N_COL; i > 1; i--) {
         std::cout << "\u2500\u2500\u2500\u252C";
     }
     std::cout << "\u2500\u2500\u2500\u2510" << std::endl;
 
     // ! Ahora las piezas
-    for (uint32_t row = nRow; row >= 1; --row) {
+    for (uint32_t row = N_ROW; row >= 1; --row) {
         std::cout << row << "\u2502";
 
-        for (uint32_t j = 0; j < 8; ++j) {
+        for (uint32_t j = 0; j < N_COL; ++j) {
             piece = getPieceFromIdx(row - 1, j);
 
             if (piece == nullptr)
@@ -414,7 +417,7 @@ void ChessBoard::printBoard() const {
         // print the grid lines
         if (row > 1) {
             std::cout << " \u251C";
-            for (int i = nCol; i > 1; i--) {
+            for (int i = N_COL; i > 1; i--) {
                 std::cout << "\u2500\u2500\u2500\u253C";
             }
             std::cout << "\u2500\u2500\u2500\u2524" << std::endl;
@@ -467,8 +470,8 @@ void ChessBoard::updatePiecesPositions(){
 }
 #endif
 
-void ChessBoard::printPosAndPieces() const {
 #if 0
+void ChessBoard::printPosAndPieces() const {
     std::cout << "White pieces:" << std::endl;
 
     for (auto it = whitePieces.begin(); it != whitePieces.end(); ++it)
@@ -480,20 +483,22 @@ void ChessBoard::printPosAndPieces() const {
         std::cout << it->first << " " << it->second->getName() << " ";
 
     std::cout << std::endl << std::endl;
-#endif
 }
+#endif
 
+// TODO: Change method name
 bool ChessBoard::posInBoard(int i, int j) {
     if (i >= 0 && i < 8 && j >= 0 && j < 8)
         return true;
     return false;
 }
 
+
+#if 0
 bool ChessBoard::makeMove(Position from, Position to) {
     (void) from;
     (void) to;
-
-#if 0
+	
     if(whiteTurn)
         std::cout << "White turn..." << std::endl;
     else
@@ -569,11 +574,12 @@ bool ChessBoard::makeMove(Position from, Position to) {
 
     whiteTurn = !whiteTurn;
 
-#endif
-
+	
     return true;
 }
+#endif
 
+#if 0
 // std::set<Position> ChessBoard::getValidMoves(Position from, PieceType T){
 std::set<Position> ChessBoard::getValidMoves(Position pos) const {
     (void) pos;
@@ -603,6 +609,7 @@ std::set<Position> ChessBoard::getValidMoves(Position pos) const {
     std::set<Position> empty;
     return empty;
 }
+#endif
 
 std::set<Position> ChessBoard::getDiagonalMoves(const Position &pos) const {
     (void) pos;

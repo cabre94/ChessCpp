@@ -15,7 +15,7 @@ ChessGame::ChessGame() {
     char c;
     std::cin >> c;
 
-    boardPtr = new ChessBoard(8, 8);
+    boardPtr = new ChessBoard();
 }
 
 ChessGame::~ChessGame() { delete boardPtr; }

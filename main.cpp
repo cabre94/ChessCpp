@@ -61,7 +61,7 @@ int main(int argc, const char **argv) {
 
     // game.play();
 
-    chess::Board *board = new chess::ChessBoard(8, 8);
+    chess::Board *board = new chess::ChessBoard();
 
     chess::RealPlayer player_white(chess::WHITE);
     chess::RealPlayer player_black(chess::BLACK);
@@ -69,7 +69,7 @@ int main(int argc, const char **argv) {
     // board->addPlayerPieces(player_white.getPieces());
     // board->addPlayerPieces(player_black.getPieces());
 
-    board->createPices('n');
+    // board->createPices('n');
 
     board->printBoard();
 
