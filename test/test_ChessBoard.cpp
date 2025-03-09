@@ -49,8 +49,8 @@ static std::set<chess::Position> expectedParallelMovesEmptyBoard(uint32_t r, uin
 
     return exp_set;
 }
-[[maybe_unused]] static std::set<chess::Position> expectedDiagonalMovesEmptyBoard(uint32_t r,
-                                                                                  uint32_t c) {
+
+static std::set<chess::Position> expectedDiagonalMovesEmptyBoard(uint32_t r, uint32_t c) {
     std::set<chess::Position> exp_set;
 
     // Diagonal movement ↘ and ↖ (r+c constant)
@@ -78,6 +78,15 @@ static std::set<chess::Position> expectedParallelMovesEmptyBoard(uint32_t r, uin
     return exp_set;
 }
 
+static std::set<chess::Position> expectedAllDirectionMovesEmptyBoard(uint32_t r, uint32_t c) {
+    std::set<chess::Position> exp_set = expectedParallelMovesEmptyBoard(r, c);
+    std::set<chess::Position> exp_diagonal_moves = expectedDiagonalMovesEmptyBoard(r, c);
+
+    exp_set.insert(exp_diagonal_moves.begin(), exp_diagonal_moves.end());
+
+    return exp_set;
+}
+
 TEST(ChessBoard, getParallelMoves) {
     chess::ChessBoard board;
 
@@ -95,7 +104,7 @@ TEST(ChessBoard, getParallelMoves) {
             // Get moves from board
             moves = board.getParallelMoves(pos, chess::WHITE);
 
-            printSetPositions(pos, moves);
+            // printSetPositions(pos, moves);
             EXPECT_EQ(moves, expected_moves) << "Error en posición (" << r << ", " << c << ")";
         }
     }
@@ -118,7 +127,30 @@ TEST(ChessBoard, getDiagonalMoves) {
             // Get moves from board
             moves = board.getDiagonalMoves(pos, chess::WHITE);
 
-            printSetPositions(pos, moves);
+            // printSetPositions(pos, moves);
+            EXPECT_EQ(moves, expected_moves) << "Error en posición (" << r << ", " << c << ")";
+        }
+    }
+}
+
+TEST(ChessBoard, getAllDirectionMoves) {
+    chess::ChessBoard board;
+
+    std::set<chess::Position> moves, expected_moves;
+    chess::Position pos(0, 0);
+
+    for (uint32_t r = 0; r < chess::ChessBoard::N_ROW; r++) {
+        for (uint32_t c = 0; c < chess::ChessBoard::N_COL; c++) {
+            // Get expected set of valid moves for this position
+            expected_moves = expectedAllDirectionMovesEmptyBoard(r, c);
+
+            // Create current position
+            pos = chess::Position(r, c);
+
+            // Get moves from board
+            moves = board.getAllDirectionMoves(pos, chess::WHITE);
+
+            // printSetPositions(pos, moves);
             EXPECT_EQ(moves, expected_moves) << "Error en posición (" << r << ", " << c << ")";
         }
     }
