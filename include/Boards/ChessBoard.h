@@ -70,10 +70,11 @@ private:
     // std::set<Position> getChampionMoves(Position from);
     // std::set<Position> getMagicianMoves(Position from);
 
-    // char typeDistribution;
+public:
     static const uint32_t N_ROW = 8;
     static const uint32_t N_COL = 8;
 
+private:
     // const uint16_t nRow, nCol;
     Piece *pieces[N_ROW][N_COL]; //! No enteindo porque no puedo poner SIZE
     // Piece **positions;
