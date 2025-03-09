@@ -34,4 +34,4 @@ build/
 .vscode/
 
 *.cmake
-src/Boards/.old_ChessBoard.cpp
+tmp/
