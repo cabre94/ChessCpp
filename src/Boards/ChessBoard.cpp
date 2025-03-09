@@ -685,38 +685,6 @@ bool ChessBoard::makeMove(Position from, Position to) {
 #endif
 
 #if 0
-// std::set<Position> ChessBoard::getValidMoves(Position from, PieceType T){
-std::set<Position> ChessBoard::getValidMoves(Position pos) const {
-    (void) pos;
-
-    // switch (T){
-    //     case PAWN:
-    //         return getPawnMoves(from);
-    //     case ROOK:
-    //         return getRookMoves(from);
-    //     case KNIGHT:
-    //         return getKnightMoves(from);
-    //     case BISHOP:
-    //         return getBishopMoves(from);
-    //     case QUEEN:
-    //         return getQueenMoves(from);
-    //     case KING:
-    //         return getKingMoves(from);
-    //     case CHAMPION:
-    //         return getChampionMoves(from);
-    //     case MAGICIAN:
-    //         return getMagicianMoves(from);
-    //     default:
-    //         std::set<Position> empty;
-    //         return empty;
-    // }
-
-    std::set<Position> empty;
-    return empty;
-}
-#endif
-
-#if 0
 std::set<Position> ChessBoard::getPawnMoves(Position from) {
 	(void) from;
     std::set<Position> pawnMoves;
@@ -757,66 +725,6 @@ std::set<Position> ChessBoard::getPawnMoves(Position from) {
     return pawnMoves;
 }
 
-std::set<Position> ChessBoard::getRookMoves(Position from) {
-	(void) from;
-    std::set<Position> rookMoves;
-
-    #if 0
-
-
-    int row = string2row(from);
-    int col = string2column(from);
-
-    PieceColor c = pieces[row][col]->getColor();
-
-    // Arriba
-    for(int i=row+1; i < 8; ++i){
-        if(pieces[i][col] == nullptr)
-            rookMoves.insert(pos2string(i,col));
-        else if(pieces[i][col]->getColor() != c){
-            rookMoves.insert(pos2string(i,col));
-            break;
-        }else
-            break;
-    }
-
-    // Abajo
-    for(int i=row-1; i >= 0; --i){
-        if(pieces[i][col] == nullptr)
-            rookMoves.insert(pos2string(i,col));
-        else if(pieces[i][col]->getColor() != c){
-            rookMoves.insert(pos2string(i,col));
-            break;
-        }else
-            break;
-    }
-
-    // Derecha
-    for(int i=col+1; i < 8; ++i){
-        if(pieces[row][i] == nullptr)
-            rookMoves.insert(pos2string(row,i));
-        else if(pieces[row][i]->getColor() != c){
-            rookMoves.insert(pos2string(row,i));
-            break;
-        }else
-            break;
-    }
-
-    // Izquierda
-    for(int i=col+1; i < 8; ++i){
-        if(pieces[row][i] == nullptr)
-            rookMoves.insert(pos2string(row,i));
-        else if(pieces[row][i]->getColor() != c){
-            rookMoves.insert(pos2string(row,i));
-            break;
-        }else
-            break;
-    }
-
-    #endif
-
-    return rookMoves;
-}
 
 std::set<Position> ChessBoard::getKnightMoves(Position from) {
 	(void) from;
@@ -847,75 +755,7 @@ std::set<Position> ChessBoard::getKnightMoves(Position from) {
     return knightMoves;
 }
 
-std::set<Position> ChessBoard::getBishopMoves(Position from) {
-	(void) from;
-    std::set<Position> bishopMoves;
 
-    #if 0
-
-
-    int row = string2row(from);
-    int col = string2column(from);
-
-    PieceColor c = pieces[row][col]->getColor();
-
-    // Arriba a la derecha
-    for(int i=1; (row+i < 8) && (col+i < 8); ++i){
-        if(pieces[row+i][col+i] == nullptr)
-            bishopMoves.insert(pos2string(row+i,col+i));
-        else if(pieces[row+i][col+i]->getColor() != c){
-            bishopMoves.insert(pos2string(row+i,col+i));
-            break;
-        }else
-            break;
-    }
-
-    // Abajo a la derecha
-    for(int i=1; (row-i >= 0) && (col+i < 8); ++i){
-        if(pieces[row-i][col+i] == nullptr)
-            bishopMoves.insert(pos2string(row-i,col+i));
-        else if(pieces[row-i][col+i]->getColor() != c){
-            bishopMoves.insert(pos2string(row-i,col+i));
-            break;
-        }else
-            break;
-    }
-
-    // Abajo a la izquierda
-    for(int i=1; (row-i >= 0) && (col-i >= 0); ++i){
-        if(pieces[row-i][col-i] == nullptr)
-            bishopMoves.insert(pos2string(row-i,col-i));
-        else if(pieces[row-i][col-i]->getColor() != c){
-            bishopMoves.insert(pos2string(row-i,col-i));
-            break;
-        }else
-            break;
-    }
-
-    // Arriba a la izquierda
-    for(int i=1; (row+i < 8) && (col-i >= 0); ++i){
-        if(pieces[row+i][col-i] == nullptr)
-            bishopMoves.insert(pos2string(row+i,col-i));
-        else if(pieces[row+i][col-i]->getColor() != c){
-            bishopMoves.insert(pos2string(row+i,col-i));
-            break;
-        }else
-            break;
-    }
-
-    #endif
-
-    return bishopMoves;
-}
-
-std::set<Position> ChessBoard::getQueenMoves(Position from) {
-    std::set<Position> queenMoves = getBishopMoves(from);
-    std::set<Position> rookMoves = getRookMoves(from);
-
-    queenMoves.insert(rookMoves.begin(), rookMoves.end());
-
-    return queenMoves;
-}
 
 std::set<Position> ChessBoard::getKingMoves(Position from) {
 	(void) from;
