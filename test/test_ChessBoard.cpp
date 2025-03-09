@@ -87,6 +87,34 @@ static std::set<chess::Position> expectedAllDirectionMovesEmptyBoard(uint32_t r,
     return exp_set;
 }
 
+static std::set<chess::Position> expectedLShapeEmptyBoard(uint32_t r, uint32_t c,
+                                                          const std::vector<uint16_t> &deltas) {
+    std::set<chess::Position> exp_set;
+
+    if (deltas.size() != 2) {
+        throw std::invalid_argument(
+            "expectedLShapeEmptyBoard requiere exactamente dos valores en deltas.");
+    }
+
+    int32_t dr = static_cast<int32_t>(deltas[0]);
+    int32_t dc = static_cast<int32_t>(deltas[1]);
+
+    std::vector<std::pair<int32_t, int32_t>> directions = {
+        {dr, dc}, {dc, dr}, {-dr, dc}, {-dc, dr}, {dr, -dc}, {dc, -dr}, {-dr, -dc}, {-dc, -dr}};
+
+    for (const auto &[delta_r, delta_c] : directions) {
+        int32_t new_r = static_cast<int32_t>(r) + delta_r;
+        int32_t new_c = static_cast<int32_t>(c) + delta_c;
+
+        if (new_r >= 0 && new_r < static_cast<int32_t>(chess::ChessBoard::N_ROW) && new_c >= 0 &&
+            new_c < static_cast<int32_t>(chess::ChessBoard::N_COL)) {
+            exp_set.insert(chess::Position(new_r, new_c));
+        }
+    }
+
+    return exp_set;
+}
+
 TEST(ChessBoard, getParallelMoves) {
     chess::ChessBoard board;
 
@@ -152,6 +180,32 @@ TEST(ChessBoard, getAllDirectionMoves) {
 
             // printSetPositions(pos, moves);
             EXPECT_EQ(moves, expected_moves) << "Error en posición (" << r << ", " << c << ")";
+        }
+    }
+}
+
+TEST(ChessBoard, getLShapeMoves) {
+    chess::ChessBoard board;
+
+    std::set<chess::Position> moves, expected_moves;
+    chess::Position pos(0, 0);
+    std::vector<std::vector<uint16_t>> v_deltas = {{1, 2}, {1, 3}};
+
+    for (const auto &deltas : v_deltas) {
+        for (uint32_t r = 0; r < chess::ChessBoard::N_ROW; r++) {
+            for (uint32_t c = 0; c < chess::ChessBoard::N_COL; c++) {
+                // Get expected set of valid moves for this position
+                expected_moves = expectedLShapeEmptyBoard(r, c, deltas);
+
+                // Create current position
+                pos = chess::Position(r, c);
+
+                // Get moves from board
+                moves = board.getLShapeMoves(pos, chess::WHITE, deltas);
+
+                // printSetPositions(pos, moves);
+                EXPECT_EQ(moves, expected_moves) << "Error en posición (" << r << ", " << c << ")";
+            }
         }
     }
 }
