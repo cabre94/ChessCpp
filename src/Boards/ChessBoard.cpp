@@ -43,7 +43,7 @@ ChessBoard::ChessBoard() : Board() {
 
 ChessBoard::~ChessBoard() {
 
-    // clearBoard();
+    clearBoard();
     // delete [] positions;
 }
 
@@ -278,6 +278,18 @@ std::set<Position> ChessBoard::getAllDirectionMoves(const Position &pos,
     return moves;
 }
 
+void ChessBoard::clearBoard() {
+
+    for (uint32_t r = 0; r < N_ROW; ++r) {
+        for (uint32_t c = 0; c < N_COL; ++c) {
+            if (pieces[r][c] != nullptr) {
+                delete pieces[r][c];
+                pieces[r][c] = nullptr;
+            }
+        }
+    }
+}
+
 bool ChessBoard::validIdxs(uint32_t r, uint32_t c) const { return r < N_ROW && c < N_COL; }
 
 bool ChessBoard::validPos(const Position &pos) const { return validIdxs(pos[1], pos[0]); }
@@ -369,20 +381,6 @@ void ChessBoard::initializePieces() {
 
     // updateGameState();
 
-}
-#endif
-
-#if 0
-void ChessBoard::clearBoard() {
-
-    // for(int i=0; i < 8; ++i){
-    //     for(int j=0; j < 8; ++j){
-    //         if(pieces[i][j] != nullptr){    // ? Seria mejor un metodo que me diga si hay pieza?
-    //             delete pieces[i][j];
-    //             pieces[i][j] = nullptr;
-    //         }
-    //     }
-    // }
 }
 #endif
 

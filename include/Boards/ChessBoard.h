@@ -44,7 +44,7 @@ private:
     // void initializePiecesPawnGame();
     // void initializePiecesChampionMagician();
 
-    // void clearBoard();
+    void clearBoard();
 
     bool validIdxs(uint32_t r, uint32_t c) const;
     bool validPos(const Position &pos) const;
