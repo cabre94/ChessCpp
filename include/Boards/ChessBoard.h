@@ -39,12 +39,12 @@ public:
                                             const PlayerID player_id) const override;
 
 private:
-    // void initializePieces();
+    void clearBoard();
+
+    void initializePieces();
     // void initializePiecesButterfly();
     // void initializePiecesPawnGame();
     // void initializePiecesChampionMagician();
-
-    void clearBoard();
 
     bool validIdxs(uint32_t r, uint32_t c) const;
     bool validPos(const Position &pos) const;

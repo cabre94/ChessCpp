@@ -290,6 +290,35 @@ void ChessBoard::clearBoard() {
     }
 }
 
+void ChessBoard::initializePieces() {
+
+    // Pawns
+    for (uint32_t c = 0; c < N_COL; ++c) {
+        pieces[1][c] = new Pawn(PlayerID::WHITE, {1, c}); // White pawns
+        pieces[6][c] = new Pawn(PlayerID::BLACK, {6, c}); // Black pawns
+    }
+
+    // White pieces
+    pieces[0][0] = new Rook(PlayerID::WHITE, {0, 0});
+    pieces[0][1] = new Knight(PlayerID::WHITE, {0, 1});
+    pieces[0][2] = new Bishop(PlayerID::WHITE, {0, 2});
+    pieces[0][3] = new Queen(PlayerID::WHITE, {0, 3});
+    pieces[0][4] = new King(PlayerID::WHITE, {0, 4});
+    pieces[0][5] = new Bishop(PlayerID::WHITE, {0, 5});
+    pieces[0][6] = new Knight(PlayerID::WHITE, {0, 6});
+    pieces[0][7] = new Rook(PlayerID::WHITE, {0, 7});
+
+    // Black pieces
+    pieces[7][0] = new Rook(PlayerID::BLACK, {7, 0});
+    pieces[7][1] = new Knight(PlayerID::BLACK, {7, 1});
+    pieces[7][2] = new Bishop(PlayerID::BLACK, {7, 2});
+    pieces[7][3] = new Queen(PlayerID::BLACK, {7, 3});
+    pieces[7][4] = new King(PlayerID::BLACK, {7, 4});
+    pieces[7][5] = new Bishop(PlayerID::BLACK, {7, 5});
+    pieces[7][6] = new Knight(PlayerID::BLACK, {7, 6});
+    pieces[7][7] = new Rook(PlayerID::BLACK, {7, 7});
+}
+
 bool ChessBoard::validIdxs(uint32_t r, uint32_t c) const { return r < N_ROW && c < N_COL; }
 
 bool ChessBoard::validPos(const Position &pos) const { return validIdxs(pos[1], pos[0]); }
@@ -323,109 +352,6 @@ void ChessBoard::createPices(const char c) {
             std::cout << "invalid input" << std::endl; //! Deberia tirar una excepcion
             exit(1);
     }
-}
-#endif
-
-#if 0
-void ChessBoard::initializePieces() {
-
-    // Aca asumo que el vector para esta inicializado y tiene los punteros a vector
-
-    // Piezas blancas
-    all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "A2"));
-    all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "B2"));
-    all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "C2"));
-    all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "D2"));
-    all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "E2"));
-    all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "F2"));
-    all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "G2"));
-    all_pieces.at(WHITE)->push_back(new Pawn(WHITE, "H2"));
-
-    all_pieces.at(WHITE)->push_back(new Rook(WHITE, "A1"));
-    all_pieces.at(WHITE)->push_back(new Knight(WHITE, "B1"));
-    all_pieces.at(WHITE)->push_back(new Bishop(WHITE, "C1"));
-    all_pieces.at(WHITE)->push_back(new Queen(WHITE, "D1"));
-    all_pieces.at(WHITE)->push_back(new King(WHITE, "E1"));
-    all_pieces.at(WHITE)->push_back(new Bishop(WHITE, "F1"));
-    all_pieces.at(WHITE)->push_back(new Knight(WHITE, "G1"));
-    all_pieces.at(WHITE)->push_back(new Rook(WHITE, "H1"));
-
-    // Piezas negras
-    all_pieces.at(BLACK)->push_back(new Pawn(BLACK, "A7"));
-    all_pieces.at(BLACK)->push_back(new Pawn(BLACK, "B7"));
-    all_pieces.at(BLACK)->push_back(new Pawn(BLACK, "C7"));
-    all_pieces.at(BLACK)->push_back(new Pawn(BLACK, "D7"));
-    all_pieces.at(BLACK)->push_back(new Pawn(BLACK, "E7"));
-    all_pieces.at(BLACK)->push_back(new Pawn(BLACK, "F7"));
-    all_pieces.at(BLACK)->push_back(new Pawn(BLACK, "G7"));
-    all_pieces.at(BLACK)->push_back(new Pawn(BLACK, "H7"));
-
-    all_pieces.at(BLACK)->push_back(new Rook(BLACK, "A8"));
-    all_pieces.at(BLACK)->push_back(new Knight(BLACK, "B8"));
-    all_pieces.at(BLACK)->push_back(new Bishop(BLACK, "C8"));
-    all_pieces.at(BLACK)->push_back(new Queen(BLACK, "D8"));
-    all_pieces.at(BLACK)->push_back(new King(BLACK, "E8"));
-    all_pieces.at(BLACK)->push_back(new Bishop(BLACK, "F8"));
-    all_pieces.at(BLACK)->push_back(new Knight(BLACK, "G8"));
-    all_pieces.at(BLACK)->push_back(new Rook(BLACK, "H8"));
-
-    // whiteTurn = true;
-    // gameEnded = false;
-
-    // whiteKingPos = "E1";
-    // blackKingPos = "E8";
-
-    // updatePiecesPositions();
-
-    // updateAllValidMoves();
-
-    // updateGameState();
-
-}
-#endif
-
-#if 0
-void ChessBoard::initializePieces(){
-    for(int i=0; i < 8; ++i)
-        for(int j=0; j < 8; ++j)
-            pieces[i][j] = nullptr;
-    // Agrego los peones
-    for(int j=0; j < 8; ++j){
-        pieces[1][j] = new Pawn(WHITE);
-        pieces[6][j] = new Pawn(BLACK);
-    }
-
-    // Agrego el resto de piezas blancas
-    pieces[0][0] = new Rook(WHITE);
-    pieces[0][1] = new Knight(WHITE);
-    pieces[0][2] = new Bishop(WHITE);
-    pieces[0][3] = new Queen(WHITE);
-    pieces[0][4] = new King(WHITE);
-    pieces[0][5] = new Bishop(WHITE);
-    pieces[0][6] = new Knight(WHITE);
-    pieces[0][7] = new Rook(WHITE);
-
-    // Agrego las piezas negras
-    pieces[7][0] = new Rook(BLACK);
-    pieces[7][1] = new Knight(BLACK);
-    pieces[7][2] = new Bishop(BLACK);
-    pieces[7][3] = new Queen(BLACK);
-    pieces[7][4] = new King(BLACK);
-    pieces[7][5] = new Bishop(BLACK);
-    pieces[7][6] = new Knight(BLACK);
-    pieces[7][7] = new Rook(BLACK);
-
-    whiteTurn = true;
-    gameEnded = false;
-
-    whiteKingPos = "E1";
-    blackKingPos = "E8";
-
-    updatePiecesPositions();
-
-    updateAllValidMoves();
-
-    updateGameState();
 }
 #endif
 
