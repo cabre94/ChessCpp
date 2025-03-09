@@ -18,7 +18,6 @@ endif()
 
 # Add source files of application
 set(SOURCES
-	main.cpp
 	${CMAKE_SOURCE_DIR}/src/Boards/Board.cpp
 	${CMAKE_SOURCE_DIR}/src/Boards/ChessBoard.cpp
 	${CMAKE_SOURCE_DIR}/src/Pieces/Bishop.cpp
@@ -41,7 +40,7 @@ add_executable(chess_main)
 target_compile_options(chess_main PRIVATE ${COMPILER_WARNINGS})
 
 # source files
-target_sources(chess_main PRIVATE ${SOURCES})
+target_sources(chess_main PRIVATE main.cpp ${SOURCES})
 
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include/)
 message(STATUS "Include path: ${INCLUDE_DIR}")
