@@ -211,12 +211,12 @@ std::set<Position> ChessBoard::getFordwardMoves(const Position &pos, const Playe
 
 std::set<Position> ChessBoard::getAllDirectionMoves(const Position &pos,
                                                     const PlayerID player_id) const {
-    (void) pos;
-    (void) player_id;
+    std::set<Position> moves = getParallelMoves(pos, player_id);
+    std::set<Position> diagonal_moves = getDiagonalMoves(pos, player_id);
 
-    // TODO
-    std::set<Position> empty;
-    return empty;
+    moves.insert(diagonal_moves.begin(), diagonal_moves.end());
+
+    return moves;
 }
 
 bool ChessBoard::validIdxs(uint32_t r, uint32_t c) const { return r < N_ROW && c < N_COL; }
