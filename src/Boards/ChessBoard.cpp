@@ -188,14 +188,41 @@ std::set<Position> ChessBoard::getDiagonalMoves(const Position &pos,
     return moves;
 }
 
-std::set<Position> ChessBoard::getLShapeMoves(const Position &pos, const PlayerID player_id,
-                                              const std::vector<u_int16_t> &deltas) const {
-    (void) pos;
-    (void) deltas;
-    (void) player_id;
-    // TODO
-    std::set<Position> empty;
-    return empty;
+// std::set<chess::Position> ChessBoard::getLShapeMoves(const Position &pos, const PlayerID
+// player_id,
+//                                                      const std::vector<uint16_t> &deltas) const {
+std::set<chess::Position> ChessBoard::getLShapeMoves(const Position &pos, const PlayerID player_id,
+                                                     const std::vector<uint16_t> &deltas) const {
+    if (deltas.size() != 2) {
+        throw std::invalid_argument("getLShapeMoves requiere exactamente dos valores en deltas.");
+    }
+
+    std::set<chess::Position> moves;
+
+    int32_t rr = pos[1];
+    int32_t cc = pos[0];
+
+    int32_t drr = static_cast<int32_t>(deltas[1]);
+    int32_t dcc = static_cast<int32_t>(deltas[0]);
+
+    // Generamos las 8 posibles orientaciones del movimiento
+    std::vector<std::array<int32_t, 2>> directions = {{drr, dcc},   {dcc, drr},  {-drr, dcc},
+                                                      {-dcc, drr},  {drr, -dcc}, {dcc, -drr},
+                                                      {-drr, -dcc}, {-dcc, -drr}};
+
+    for (const auto &dir : directions) {
+        int32_t dc = dir[0], dr = dir[1];
+
+        uint32_t c = cc + dc;
+        uint32_t r = rr + dr;
+
+        if (validIdxs(r, c)) {
+            if (pieces[r][c] == nullptr || pieces[r][c]->getPlayerID() != player_id)
+                moves.insert(chess::Position(r, c));
+        }
+    }
+
+    return moves;
 }
 
 std::set<Position> ChessBoard::getFordwardMoves(const Position &pos, const PlayerID player_id,
