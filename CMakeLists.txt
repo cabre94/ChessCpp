@@ -18,6 +18,7 @@ endif()
 
 # Add source files of application
 set(SOURCES
+	${CMAKE_SOURCE_DIR}/src/ChessGame.cpp
 	${CMAKE_SOURCE_DIR}/src/Boards/Board.cpp
 	${CMAKE_SOURCE_DIR}/src/Boards/ChessBoard.cpp
 	${CMAKE_SOURCE_DIR}/src/Pieces/Bishop.cpp
