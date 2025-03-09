@@ -6,7 +6,14 @@
 #include <string>
 
 #include "Boards/ChessBoard.h"
+#include "Pieces/Piece.h"
 #include "Positions/Position.h"
+
+class TestChessBoard : public chess::ChessBoard {
+public:
+    void testInitializePieces() { initializePieces(); }
+    chess::Piece *getPiece(uint32_t r, uint32_t c) { return ChessBoard::getPiece(r, c); }
+};
 
 // #include "Champion.h"
 // #include "King.h"
@@ -282,5 +289,24 @@ TEST(ChessBoard, getAllDirectionMoves) {
             // printSetPositions(pos, moves);
             EXPECT_EQ(moves, expected_moves) << "Error en posición (" << r << ", " << c << ")";
         }
+    }
+}
+
+TEST(ChessBoard, InitializePiecesTest) {
+    TestChessBoard board;
+    board.testInitializePieces(); // initialize pieces
+
+    // White pieces
+    EXPECT_EQ(board.getPiece(0, 0)->getPlayerID(), chess::WHITE);
+    EXPECT_EQ(board.getPiece(0, 1)->getPlayerID(), chess::WHITE);
+    EXPECT_EQ(board.getPiece(0, 2)->getPlayerID(), chess::WHITE);
+    EXPECT_EQ(board.getPiece(0, 3)->getPlayerID(), chess::WHITE);
+    EXPECT_EQ(board.getPiece(0, 4)->getPlayerID(), chess::WHITE);
+    EXPECT_EQ(board.getPiece(0, 5)->getPlayerID(), chess::WHITE);
+    EXPECT_EQ(board.getPiece(0, 6)->getPlayerID(), chess::WHITE);
+    EXPECT_EQ(board.getPiece(0, 7)->getPlayerID(), chess::WHITE);
+
+    for (uint32_t c = 0; c < chess::ChessBoard::N_COL; ++c) {
+        EXPECT_EQ(board.getPiece(1, c)->getPlayerID(), chess::WHITE);
     }
 }
