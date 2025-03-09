@@ -226,14 +226,50 @@ std::set<chess::Position> ChessBoard::getLShapeMoves(const Position &pos, const 
 }
 
 std::set<Position> ChessBoard::getFordwardMoves(const Position &pos, const PlayerID player_id,
-                                                int direction, bool first) const {
-    (void) pos;
-    (void) direction;
-    (void) first;
-    (void) player_id;
-    // TODO
-    std::set<Position> empty;
-    return empty;
+                                                std::vector<int16_t> forward_dir,
+                                                bool first) const {
+
+    std::set<chess::Position> moves;
+
+    if (forward_dir.size() != 2)
+        throw std::invalid_argument("getForwardMoves forward_dir size != 2");
+
+    int32_t dr = static_cast<int32_t>(forward_dir[0]);
+    int32_t dc = static_cast<int32_t>(forward_dir[1]);
+
+    // Get row and column of current position
+    uint32_t rr = pos[1];
+    uint32_t cc = pos[0];
+
+    // Forward movement (no capture)
+    uint32_t max_steps = first ? 2 : 1;
+    for (uint32_t step = 1; step <= max_steps; ++step) {
+        uint32_t r = rr + step * dr;
+        uint32_t c = cc + step * dc;
+
+        if (!validIdxs(r, c) || pieces[r][c] != nullptr) {
+            break; // Cant move forward
+        }
+
+        moves.insert(Position(r, c));
+    }
+
+    // Diagonal Captures
+    constexpr int32_t diagonal_offsets[2] = {-1, 1}; // Relative diagonal movements
+
+    for (const int32_t &offset : diagonal_offsets) {
+        int32_t r = rr + dr;
+        int32_t c = cc + offset; // Move to the left or right
+
+        if (validIdxs(r, c) && pieces[r][c] != nullptr) {
+            if (pieces[r][c]->getPlayerID() != player_id)
+                moves.insert(Position(r, c)); // Only if there is an enemy piece
+        }
+    }
+
+    // TODO: Might have to complex logic if forward direction is on diagonal
+
+    return moves;
 }
 
 std::set<Position> ChessBoard::getAllDirectionMoves(const Position &pos,
