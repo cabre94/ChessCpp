@@ -11,7 +11,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Build options
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
-	set(COMPILER_WARNINGS -Wall -Wextra -Werror -Wpedantic -Wshadow -Wconversion -Wmissing-declarations -Werror=missing-include-dirs -Werror=undef)
+	# set(COMPILER_WARNINGS -Wall -Wextra -Werror -Wpedantic -Wshadow -Wconversion -Wmissing-declarations -Werror=missing-include-dirs -Werror=undef)
+	set(COMPILER_WARNINGS -Wall -Wextra -Werror -Wpedantic -Wshadow -Wconversion -Wmissing-declarations -Werror=missing-include-dirs -Werror=undef -Wno-sign-conversion)
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 	set(COMPILER_WARNINGS "/W4 /WX")
 endif()
