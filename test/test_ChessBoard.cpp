@@ -78,15 +78,6 @@ static std::set<chess::Position> expectedDiagonalMovesEmptyBoard(uint32_t r, uin
     return exp_set;
 }
 
-static std::set<chess::Position> expectedAllDirectionMovesEmptyBoard(uint32_t r, uint32_t c) {
-    std::set<chess::Position> exp_set = expectedParallelMovesEmptyBoard(r, c);
-    std::set<chess::Position> exp_diagonal_moves = expectedDiagonalMovesEmptyBoard(r, c);
-
-    exp_set.insert(exp_diagonal_moves.begin(), exp_diagonal_moves.end());
-
-    return exp_set;
-}
-
 static std::set<chess::Position> expectedLShapeEmptyBoard(uint32_t r, uint32_t c,
                                                           const std::vector<uint16_t> &deltas) {
     std::set<chess::Position> exp_set;
@@ -111,6 +102,59 @@ static std::set<chess::Position> expectedLShapeEmptyBoard(uint32_t r, uint32_t c
             exp_set.insert(chess::Position(new_r, new_c));
         }
     }
+
+    return exp_set;
+}
+
+static std::set<chess::Position>
+expectedForwardMovesEmptyBoard(uint32_t r, uint32_t c, const std::vector<int16_t> &forward_dir,
+                               bool first, bool consider_diagonals = false) {
+    std::set<chess::Position> exp_set;
+
+    if (forward_dir.size() != 2) {
+        throw std::invalid_argument(
+            "expectedForwardMovesEmptyBoard requiere exactamente dos valores en forward_dir.");
+    }
+
+    int32_t dr = static_cast<int32_t>(forward_dir[0]);
+    int32_t dc = static_cast<int32_t>(forward_dir[1]);
+
+    // Movimiento hacia adelante (uno o dos pasos según "first")
+    uint32_t max_steps = first ? 2 : 1;
+    for (uint32_t step = 1; step <= max_steps; ++step) {
+        int32_t new_r = static_cast<int32_t>(r) + step * dr;
+        int32_t new_c = static_cast<int32_t>(c) + step * dc;
+
+        if (new_r >= 0 && new_r < static_cast<int32_t>(chess::ChessBoard::N_ROW) && new_c >= 0 &&
+            new_c < static_cast<int32_t>(chess::ChessBoard::N_COL)) {
+            exp_set.insert(chess::Position(new_r, new_c));
+        }
+    }
+
+    if (!consider_diagonals)
+        return exp_set;
+
+    // Capturas diagonales
+    constexpr int32_t diagonal_offsets[2] = {-1, 1};
+
+    for (const auto &offset : diagonal_offsets) {
+        int32_t diagonal_r = static_cast<int32_t>(r) + dr;
+        int32_t diagonal_c = static_cast<int32_t>(c) + offset;
+
+        if (diagonal_r >= 0 && diagonal_r < static_cast<int32_t>(chess::ChessBoard::N_ROW) &&
+            diagonal_c >= 0 && diagonal_c < static_cast<int32_t>(chess::ChessBoard::N_COL)) {
+            exp_set.insert(chess::Position(diagonal_r, diagonal_c));
+        }
+    }
+
+    return exp_set;
+}
+
+static std::set<chess::Position> expectedAllDirectionMovesEmptyBoard(uint32_t r, uint32_t c) {
+    std::set<chess::Position> exp_set = expectedParallelMovesEmptyBoard(r, c);
+    std::set<chess::Position> exp_diagonal_moves = expectedDiagonalMovesEmptyBoard(r, c);
+
+    exp_set.insert(exp_diagonal_moves.begin(), exp_diagonal_moves.end());
 
     return exp_set;
 }
@@ -182,6 +226,37 @@ TEST(ChessBoard, getLShapeMoves) {
 
                 // printSetPositions(pos, moves);
                 EXPECT_EQ(moves, expected_moves) << "Error en posición (" << r << ", " << c << ")";
+            }
+        }
+    }
+}
+
+TEST(ChessBoard, getFordwardMoves) {
+    chess::ChessBoard board;
+
+    std::set<chess::Position> moves, expected_moves;
+    chess::Position pos(0, 0);
+    std::vector<std::vector<int16_t>> v_forward_dir = {{1, 0}, {-1, 0}};
+
+    // for (bool first : {false}) {
+    for (bool first : {true, false}) {
+        for (const auto &forward_dir : v_forward_dir) {
+            for (uint32_t r = 0; r < chess::ChessBoard::N_ROW; r++) {
+                for (uint32_t c = 0; c < chess::ChessBoard::N_COL; c++) {
+                    // Get expected set of valid moves for this position
+                    expected_moves = expectedForwardMovesEmptyBoard(r, c, forward_dir, first);
+
+                    // Create current position
+                    pos = chess::Position(r, c);
+
+                    // Get moves from board
+                    moves = board.getFordwardMoves(pos, chess::WHITE, forward_dir, first);
+
+                    // printSetPositions(pos, moves);
+                    // printSetPositions(pos, expected_moves);
+                    EXPECT_EQ(moves, expected_moves)
+                        << "Error en posición (" << r << ", " << c << ")";
+                }
             }
         }
     }
