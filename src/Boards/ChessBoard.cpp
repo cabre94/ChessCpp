@@ -12,9 +12,7 @@
 namespace chess {
 
 // ChessBoard::ChessBoard(uint16_t nRow_, uint16_t nCol_) : nRow(nRow_), nCol(nCol_) {
-ChessBoard::ChessBoard() {
-
-    // positions = new Piece*[nRow * nCol];
+ChessBoard::ChessBoard() : Board() {
 
 #if 0
     switch (c){
@@ -71,7 +69,8 @@ void ChessBoard::printBoard() const {
         std::cout << row << "\u2502";
 
         for (uint32_t j = 0; j < N_COL; ++j) {
-            piece = getPieceFromIdx(row - 1, j);
+            // piece = getPieceFromIdx(row - 1, j);
+            piece = pieces[row - 1][j];
 
             if (piece == nullptr)
                 std::cout << "   \u2502";
@@ -103,53 +102,180 @@ void ChessBoard::printBoard() const {
     std::cout << "\u2500\u2500\u2500\u2518" << std::endl;
 }
 
-std::set<Position> ChessBoard::getDiagonalMoves(const Position &pos,
+std::set<Position> ChessBoard::getParallelMoves(const Position &pos,
                                                 const PlayerID player_id) const {
-    (void) pos;
-    (void) player_id;
-    // TODO
+
     std::set<Position> moves;
+
+    constexpr int32_t directions[4][2] = {
+        {1, 0},  // Up
+        {-1, 0}, // Down
+        {0, 1},  // Right
+        {0, -1}  // Left
+    };
+
+    // Get row and column of position (order of indexes are inverted on Position representation)
+    uint32_t rr = pos[1];
+    uint32_t cc = pos[0];
+
+    for (const auto &dir : directions) {
+        int32_t dc = dir[0], dr = dir[1];
+
+        uint32_t c = cc + dc;
+        uint32_t r = rr + dr;
+
+        while (validIdxs(r, c)) {
+            // Check if there is a piece on position of idxs (r,c)
+            if (pieces[r][c] != nullptr) {
+                // check if the piece belongs to an opponent
+                if (pieces[r][c]->getPlayerID() != player_id) {
+                    moves.insert(Position(r, c));
+                }
+                break; // Stop searching at this direction, as a piece is found
+            }
+
+            // There is no piece on current position, so we keep moving on this direction
+            moves.insert(Position(r, c));
+
+            c += dc;
+            r += dr;
+        }
+    }
+
     return moves;
 }
 
-std::set<Position> ChessBoard::getParallelMoves(const Position &pos,
+std::set<Position> ChessBoard::getDiagonalMoves(const Position &pos,
                                                 const PlayerID player_id) const {
-    (void) pos;
-    (void) player_id;
-    // TODO
-    std::set<Position> empty;
-    return empty;
+    std::set<Position> moves;
+
+    constexpr int32_t directions[4][2] = {
+        {1, 1},  // Up - Right
+        {1, -1}, // Up - Left
+        {-1, 1}, // Down - Right
+        {-1, -1} // Down - Left
+    };
+
+    // Get row and column of position (order of indexes are inverted on Position representation)
+    uint32_t rr = pos[1];
+    uint32_t cc = pos[0];
+
+    for (const auto &dir : directions) {
+        int32_t dc = dir[0], dr = dir[1];
+
+        uint32_t c = cc + dc;
+        uint32_t r = rr + dr;
+
+        while (validIdxs(r, c)) {
+            // Check if there is a piece on position of idxs (r,c)
+            if (pieces[r][c] != nullptr) {
+                // check if the piece belongs to an opponent
+                if (pieces[r][c]->getPlayerID() != player_id) {
+                    moves.insert(Position(r, c));
+                }
+                break; // Stop searching at this direction, as a piece is found
+            }
+
+            // There is no piece on current position, so we keep moving on this direction
+            moves.insert(Position(r, c));
+
+            c += dc;
+            r += dr;
+        }
+    }
+
+    return moves;
 }
 
-std::set<Position> ChessBoard::getLShapeMoves(const Position &pos, const PlayerID player_id,
-                                              const std::vector<u_int16_t> &deltas) const {
-    (void) pos;
-    (void) deltas;
-    (void) player_id;
-    // TODO
-    std::set<Position> empty;
-    return empty;
+std::set<chess::Position> ChessBoard::getLShapeMoves(const Position &pos, const PlayerID player_id,
+                                                     const std::vector<uint16_t> &deltas) const {
+    if (deltas.size() != 2) {
+        throw std::invalid_argument("getLShapeMoves requiere exactamente dos valores en deltas.");
+    }
+
+    std::set<chess::Position> moves;
+
+    int32_t rr = pos[1];
+    int32_t cc = pos[0];
+
+    int32_t drr = static_cast<int32_t>(deltas[1]);
+    int32_t dcc = static_cast<int32_t>(deltas[0]);
+
+    // Generamos las 8 posibles orientaciones del movimiento
+    std::vector<std::array<int32_t, 2>> directions = {{drr, dcc},   {dcc, drr},  {-drr, dcc},
+                                                      {-dcc, drr},  {drr, -dcc}, {dcc, -drr},
+                                                      {-drr, -dcc}, {-dcc, -drr}};
+
+    for (const auto &dir : directions) {
+        int32_t dc = dir[0], dr = dir[1];
+
+        uint32_t c = cc + dc;
+        uint32_t r = rr + dr;
+
+        if (validIdxs(r, c)) {
+            if (pieces[r][c] == nullptr || pieces[r][c]->getPlayerID() != player_id)
+                moves.insert(chess::Position(r, c));
+        }
+    }
+
+    return moves;
 }
 
 std::set<Position> ChessBoard::getFordwardMoves(const Position &pos, const PlayerID player_id,
-                                                int direction, bool first) const {
-    (void) pos;
-    (void) direction;
-    (void) first;
-    (void) player_id;
-    // TODO
-    std::set<Position> empty;
-    return empty;
+                                                std::vector<int16_t> forward_dir,
+                                                bool first) const {
+
+    std::set<chess::Position> moves;
+
+    if (forward_dir.size() != 2)
+        throw std::invalid_argument("getForwardMoves forward_dir size != 2");
+
+    int32_t dr = static_cast<int32_t>(forward_dir[0]);
+    int32_t dc = static_cast<int32_t>(forward_dir[1]);
+
+    // Get row and column of current position
+    uint32_t rr = pos[1];
+    uint32_t cc = pos[0];
+
+    // Forward movement (no capture)
+    uint32_t max_steps = first ? 2 : 1;
+    for (uint32_t step = 1; step <= max_steps; ++step) {
+        uint32_t r = rr + step * dr;
+        uint32_t c = cc + step * dc;
+
+        if (!validIdxs(r, c) || pieces[r][c] != nullptr) {
+            break; // Cant move forward
+        }
+
+        moves.insert(Position(r, c));
+    }
+
+    // Diagonal Captures
+    constexpr int32_t diagonal_offsets[2] = {-1, 1}; // Relative diagonal movements
+
+    for (const int32_t &offset : diagonal_offsets) {
+        int32_t r = rr + dr;
+        int32_t c = cc + offset; // Move to the left or right
+
+        if (validIdxs(r, c) && pieces[r][c] != nullptr) {
+            if (pieces[r][c]->getPlayerID() != player_id)
+                moves.insert(Position(r, c)); // Only if there is an enemy piece
+        }
+    }
+
+    // TODO: Might have to complex logic if forward direction is on diagonal
+
+    return moves;
 }
 
 std::set<Position> ChessBoard::getAllDirectionMoves(const Position &pos,
                                                     const PlayerID player_id) const {
-    (void) pos;
-    (void) player_id;
+    std::set<Position> moves = getParallelMoves(pos, player_id);
+    std::set<Position> diagonal_moves = getDiagonalMoves(pos, player_id);
 
-    // TODO
-    std::set<Position> empty;
-    return empty;
+    moves.insert(diagonal_moves.begin(), diagonal_moves.end());
+
+    return moves;
 }
 
 bool ChessBoard::validIdxs(uint32_t r, uint32_t c) const { return r < N_ROW && c < N_COL; }
@@ -260,17 +386,6 @@ void ChessBoard::clearBoard() {
 }
 #endif
 
-#if 0
-void ChessBoard::printSet(std::set<Position> moveSet) {
-    (void) moveSet;
-
-    for (auto it = moveSet.begin(); it != moveSet.end(); ++it)
-        std::cout << it->str() << " ";
-    std::cout << std::endl;
-}
-#endif
-
-// TODO: Borrar
 #if 0
 void ChessBoard::initializePieces(){
     for(int i=0; i < 8; ++i)
@@ -473,524 +588,6 @@ void ChessBoard::initializePiecesChampionMagician(){
     updateAllValidMoves();
 
     updateGameState();
-}
-#endif
-
-Piece *ChessBoard::getPieceFromIdx(const uint32_t i, const uint32_t j) const {
-    (void) i;
-    (void) j;
-
-#if 0
-	Position pos = idx2Position(i, j);
-
-    for (size_t i = 0; i < all_pieces.size(); ++i) {
-        for (size_t j = 0; j < all_pieces[i]->size(); ++j) {
-            Position piece_pos = all_pieces.at(i)->at(j)->getPosition();
-
-            if (pos == piece_pos)
-                return all_pieces.at(i)->at(j);
-        }
-    }
-
-#endif
-    return nullptr;
-}
-
-#if 0
-void ChessBoard::updatePiecesPositions(){
-    whitePieces.clear();
-    blackPieces.clear();
-
-    for(int i=0; i < 8; ++i){
-        for(int j=0; j < 8; ++j){
-            if(pieces[i][j] != nullptr){
-                PieceColor c = pieces[i][j]->getColor();
-                Position str = pos2string(i,j);
-                if(c == WHITE)
-                    whitePieces[str] = pieces[i][j];
-                else
-                    blackPieces[str] = pieces[i][j];
-            }
-        }
-    }
-}
-#endif
-
-#if 0
-void ChessBoard::printPosAndPieces() const {
-    std::cout << "White pieces:" << std::endl;
-
-    for (auto it = whitePieces.begin(); it != whitePieces.end(); ++it)
-        std::cout << it->first << " " << it->second->getName() << " ";
-
-    std::cout << std::endl << "Black pieces:" << std::endl;
-
-    for (auto it = blackPieces.begin(); it != blackPieces.end(); ++it)
-        std::cout << it->first << " " << it->second->getName() << " ";
-
-    std::cout << std::endl << std::endl;
-}
-#endif
-
-#if 0
-bool ChessBoard::makeMove(Position from, Position to) {
-    (void) from;
-    (void) to;
-	
-    if(whiteTurn)
-        std::cout << "White turn..." << std::endl;
-    else
-        std::cout << "Black turn..." << std::endl;
-
-    std::cout << "Choose piece: ";
-    if(from.empty())
-        std::cin >> from;
-    else
-        std::cout << from << std::endl;
-    
-    // Chequeamos que la pieza sea del color correcto
-    int pieceExist;
-    if(whiteTurn)
-        pieceExist = whitePieces.count(from);
-    else
-        pieceExist = blackPieces.count(from);
-    
-    //! Esto deberia ser una excepcion
-    // Chequeamos que la pieza sea del color correcto
-    if(!pieceExist){
-        std::cout << "No piece in " << from << std::endl;
-        return false;
-    }
-    
-    // Tomo las coordenas viejas
-    int i = string2row(from);
-    int j = string2column(from);
-    
-
-    // Tomo los lugares validos a los que se puede mover la pieza
-    std::set<Position> validMoves = pieces[i][j]->getPossibleMoves(this, from);
-
-    if(validMoves.empty()){
-        std::cout << "No available moves: ";
-        return false;
-    }
-
-    std::cout << "Available moves: ";
-    printSet(validMoves);
-
-    std::cout << "Choose where to move it: ";
-    if(to.empty())
-        std::cin >> to;
-    else
-        std::cout << to << std::endl;
-
-    //!Esto deberia arrojar una excepcion en vez de hacerlo a mano
-    // Chequeamos si es una posiciones validas
-    int validMove = validMoves.count(to);
-    if(!validMove){
-        std::cout << "Invalid Move" << std::endl;
-        return false;
-    }
-
-    // Tomo las coordenadas nuevas
-    int ni = string2row(to);
-    int nj = string2column(to);
-
-    if(pieces[ni][nj] != nullptr)
-        delete pieces[ni][nj];
-    
-    pieces[ni][nj] = pieces[i][j];
-    pieces[i][j] = nullptr;
-
-    updatePiecesPositions();
-
-    updateAllValidMoves();
-
-    updateGameState();
-
-    // Chequear si hay algun mate
-
-    whiteTurn = !whiteTurn;
-
-	
-    return true;
-}
-#endif
-
-#if 0
-// std::set<Position> ChessBoard::getValidMoves(Position from, PieceType T){
-std::set<Position> ChessBoard::getValidMoves(Position pos) const {
-    (void) pos;
-
-    // switch (T){
-    //     case PAWN:
-    //         return getPawnMoves(from);
-    //     case ROOK:
-    //         return getRookMoves(from);
-    //     case KNIGHT:
-    //         return getKnightMoves(from);
-    //     case BISHOP:
-    //         return getBishopMoves(from);
-    //     case QUEEN:
-    //         return getQueenMoves(from);
-    //     case KING:
-    //         return getKingMoves(from);
-    //     case CHAMPION:
-    //         return getChampionMoves(from);
-    //     case MAGICIAN:
-    //         return getMagicianMoves(from);
-    //     default:
-    //         std::set<Position> empty;
-    //         return empty;
-    // }
-
-    std::set<Position> empty;
-    return empty;
-}
-#endif
-
-#if 0
-std::set<Position> ChessBoard::getPawnMoves(Position from) {
-	(void) from;
-    std::set<Position> pawnMoves;
-
-    #if 0
-
-    int row = string2row(from);
-    int col = string2column(from);
-
-    PieceColor c = pieces[row][col]->getColor();
-
-    int forward = 1;
-    bool initialPos = false;
-
-    if(c == BLACK){
-        forward *= -1;
-        if(row == 6)
-            initialPos = true;
-    }else if(row == 1)
-        initialPos = true;
-    
-    // Si esta vacio, avanza
-    if((row+forward >= 0 || row+forward < 8) && pieces[row+forward][col] == nullptr)
-        pawnMoves.insert(pos2string(row+forward,col));
-    
-    // 
-    if(initialPos && pieces[row+2*forward][col] == nullptr)
-        pawnMoves.insert(pos2string(row+2*forward,col));
-    
-    // Por ultimo, chequeo si en la diagonal hay una pieza contraria que se pueda comer
-    if(posInBoard(row+forward,col+1) && pieces[row+forward][col+1] != nullptr && pieces[row+forward][col+1]->getColor() != c)
-        pawnMoves.insert(pos2string(row+forward,col+1));
-    if(posInBoard(row+forward,col-1) && pieces[row+forward][col-1] != nullptr && pieces[row+forward][col-1]->getColor() != c)
-        pawnMoves.insert(pos2string(row+forward,col-1));
-
-    #endif
-
-    return pawnMoves;
-}
-
-std::set<Position> ChessBoard::getRookMoves(Position from) {
-	(void) from;
-    std::set<Position> rookMoves;
-
-    #if 0
-
-
-    int row = string2row(from);
-    int col = string2column(from);
-
-    PieceColor c = pieces[row][col]->getColor();
-
-    // Arriba
-    for(int i=row+1; i < 8; ++i){
-        if(pieces[i][col] == nullptr)
-            rookMoves.insert(pos2string(i,col));
-        else if(pieces[i][col]->getColor() != c){
-            rookMoves.insert(pos2string(i,col));
-            break;
-        }else
-            break;
-    }
-
-    // Abajo
-    for(int i=row-1; i >= 0; --i){
-        if(pieces[i][col] == nullptr)
-            rookMoves.insert(pos2string(i,col));
-        else if(pieces[i][col]->getColor() != c){
-            rookMoves.insert(pos2string(i,col));
-            break;
-        }else
-            break;
-    }
-
-    // Derecha
-    for(int i=col+1; i < 8; ++i){
-        if(pieces[row][i] == nullptr)
-            rookMoves.insert(pos2string(row,i));
-        else if(pieces[row][i]->getColor() != c){
-            rookMoves.insert(pos2string(row,i));
-            break;
-        }else
-            break;
-    }
-
-    // Izquierda
-    for(int i=col+1; i < 8; ++i){
-        if(pieces[row][i] == nullptr)
-            rookMoves.insert(pos2string(row,i));
-        else if(pieces[row][i]->getColor() != c){
-            rookMoves.insert(pos2string(row,i));
-            break;
-        }else
-            break;
-    }
-
-    #endif
-
-    return rookMoves;
-}
-
-std::set<Position> ChessBoard::getKnightMoves(Position from) {
-	(void) from;
-    std::set<Position> knightMoves;
-
-    #if 0
-
-    int row = string2row(from);
-    int col = string2column(from);
-
-    PieceColor c = pieces[row][col]->getColor();
-
-    for(int i=row-1; i<=row+1; i+=2){
-        for(int j=col-2; j<=col+2; j+=4){
-            if(posInBoard(i,j) && (pieces[i][j] == nullptr || pieces[i][j]->getColor() != c) )
-                knightMoves.insert(pos2string(i,j));
-        }
-    }
-    for(int i=row-2; i<=row+2; i+=4){
-        for(int j=col-1; j<=col+1; j+=2){
-            if(posInBoard(i,j) && (pieces[i][j] == nullptr || pieces[i][j]->getColor() != c) )
-                knightMoves.insert(pos2string(i,j));
-        }
-    }
-
-    #endif
-
-    return knightMoves;
-}
-
-std::set<Position> ChessBoard::getBishopMoves(Position from) {
-	(void) from;
-    std::set<Position> bishopMoves;
-
-    #if 0
-
-
-    int row = string2row(from);
-    int col = string2column(from);
-
-    PieceColor c = pieces[row][col]->getColor();
-
-    // Arriba a la derecha
-    for(int i=1; (row+i < 8) && (col+i < 8); ++i){
-        if(pieces[row+i][col+i] == nullptr)
-            bishopMoves.insert(pos2string(row+i,col+i));
-        else if(pieces[row+i][col+i]->getColor() != c){
-            bishopMoves.insert(pos2string(row+i,col+i));
-            break;
-        }else
-            break;
-    }
-
-    // Abajo a la derecha
-    for(int i=1; (row-i >= 0) && (col+i < 8); ++i){
-        if(pieces[row-i][col+i] == nullptr)
-            bishopMoves.insert(pos2string(row-i,col+i));
-        else if(pieces[row-i][col+i]->getColor() != c){
-            bishopMoves.insert(pos2string(row-i,col+i));
-            break;
-        }else
-            break;
-    }
-
-    // Abajo a la izquierda
-    for(int i=1; (row-i >= 0) && (col-i >= 0); ++i){
-        if(pieces[row-i][col-i] == nullptr)
-            bishopMoves.insert(pos2string(row-i,col-i));
-        else if(pieces[row-i][col-i]->getColor() != c){
-            bishopMoves.insert(pos2string(row-i,col-i));
-            break;
-        }else
-            break;
-    }
-
-    // Arriba a la izquierda
-    for(int i=1; (row+i < 8) && (col-i >= 0); ++i){
-        if(pieces[row+i][col-i] == nullptr)
-            bishopMoves.insert(pos2string(row+i,col-i));
-        else if(pieces[row+i][col-i]->getColor() != c){
-            bishopMoves.insert(pos2string(row+i,col-i));
-            break;
-        }else
-            break;
-    }
-
-    #endif
-
-    return bishopMoves;
-}
-
-std::set<Position> ChessBoard::getQueenMoves(Position from) {
-    std::set<Position> queenMoves = getBishopMoves(from);
-    std::set<Position> rookMoves = getRookMoves(from);
-
-    queenMoves.insert(rookMoves.begin(), rookMoves.end());
-
-    return queenMoves;
-}
-
-std::set<Position> ChessBoard::getKingMoves(Position from) {
-	(void) from;
-    std::set<Position> kingMoves;
-    std::set<Position> oppositeMoves;	// oponente TODO
-
-    #if 0
-
-
-    int row = string2row(from);
-    int col = string2column(from);
-
-    PieceColor c = pieces[row][col]->getColor();
-
-    if(c == WHITE)
-        oppositeMoves = allBlackMoves;
-    else
-        oppositeMoves = allBlackMoves;
-
-    for(int i=-1; i <= 1; ++i){
-        for(int j=-1; j <= 1; ++j){
-            if(i == 0 && j == 0)
-                continue;
-            if  (posInBoard(row+i,col+j) && ((pieces[row+i][col+j] == nullptr) || (pieces[row+i][col+j]->getColor() != c) ) && !stringInSet(oppositeMoves, pos2string(row+i,col+j)) )
-                kingMoves.insert(pos2string(row+i,col+j));
-        }
-    }
-
-    #endif
-
-    return kingMoves;
-}
-
-std::set<Position> ChessBoard::getChampionMoves(Position from) {
-	(void) from;
-    std::set<Position> championMoves;
-
-    #if 0
-
-    int row = string2row(from);
-    int col = string2column(from);
-
-    PieceColor c = pieces[row][col]->getColor();
-
-    // Movimientos de a dos
-    for(int i=-2; i <= 2; i+=2){
-        for(int j=-2; j <= 2; j+=2){
-            if(i == 0 && j == 0)
-                continue;
-            if(posInBoard(row+i,col+j) && (pieces[row+i][col+j] == nullptr || pieces[row+i][col+j]->getColor() != c))
-                championMoves.insert(pos2string(row+i,col+j));
-        }
-    }
-
-    for(int i=-1; i <= 1; ++i){
-        for(int j=-1; j <= 1; ++j){
-            if(i == j || i == -j)
-                continue;
-            if(posInBoard(row+i,col+j) && (pieces[row+i][col+j] == nullptr || pieces[row+i][col+j]->getColor() != c))
-                championMoves.insert(pos2string(row+i,col+j));
-        }
-    }
-
-    #endif
-
-    return championMoves;
-}
-
-std::set<Position> ChessBoard::getMagicianMoves(Position from) {
-	(void) from;
-    std::set<Position> magicianMoves;
-
-    #if 0
-
-    int row = string2row(from);
-    int col = string2column(from);
-
-    PieceColor c = pieces[row][col]->getColor();
-
-    for(int i=row-1; i<=row+1; i+=2){
-        for(int j=col-3; j<=col+3; j+=6){
-            if(posInBoard(i,j) && (pieces[i][j] == nullptr || pieces[i][j]->getColor() != c))
-                magicianMoves.insert(pos2string(i,j));
-        }
-    }
-    for(int i=row-3; i<=row+3; i+=6){
-        for(int j=col-1; j<=col+1; j+=2){
-            if(posInBoard(i,j) && (pieces[i][j] == nullptr || pieces[i][j]->getColor() != c) )
-                magicianMoves.insert(pos2string(i,j));
-        }
-    }
-
-    #endif
-
-    return magicianMoves;
-}
-#endif
-
-#if 0
-void ChessBoard::updateAllValidMoves(){
-    allWhiteMoves.clear();
-    allBlackMoves.clear();
-
-    for(int i=0; i < 8; ++i){
-        for(int j=0; j < 8; ++j){
-            if(pieces[i][j] != nullptr){    // ? Seria mejor un metodo que me diga si hay pieza?
-                std::set<Position> aux = pieces[i][j]->getPossibleMoves(this, pos2string(i,j));
-                if(pieces[i][j]->getColor() == WHITE)
-                    allWhiteMoves.insert(aux.begin(), aux.end());
-                else
-                    allBlackMoves.insert(aux.begin(), aux.end());
-            }
-        }
-    }
-
-}
-#endif
-
-#if 0
-void ChessBoard::updateGameState(){
-    // bool whiteking = false, whiteking;
-    whiteKingPos.clear();
-    blackKingPos.clear();
-
-    for(int i=0; i < 8; ++i){
-        for(int j=0; j < 8; ++j){
-            if(pieces[i][j] != nullptr && pieces[i][j]->getType() == KING){
-                if(pieces[i][j]->getColor() == WHITE)
-                    whiteKingPos = pos2string(i,j);
-                else
-                    blackKingPos = pos2string(i,j);
-            }
-        }
-    }
-
-    if(whiteKingPos.empty() || blackKingPos.empty())
-        gameEnded = true;
-    else if(stringInSet(allWhiteMoves, blackKingPos))
-        blackInCheck = true;
-    else if(stringInSet(allBlackMoves, whiteKingPos))
-        whiteInCheck = true;
-    
 }
 #endif
 

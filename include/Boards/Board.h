@@ -29,14 +29,15 @@ public:
     // virtual std::set<Position> getValidMoves(Position pos) const = 0; // TODO Sacar esto
 
     // Aca deberian poner los metodos que dan las posiciones validas
-    virtual std::set<Position> getParallelMoves(const Position &pos,
-                                                const PlayerID player_id) const = 0;
     virtual std::set<Position> getDiagonalMoves(const Position &pos,
+                                                const PlayerID player_id) const = 0;
+    virtual std::set<Position> getParallelMoves(const Position &pos,
                                                 const PlayerID player_id) const = 0;
     virtual std::set<Position> getLShapeMoves(const Position &pos, const PlayerID player_id,
                                               const std::vector<uint16_t> &deltas) const = 0;
     virtual std::set<Position> getFordwardMoves(const Position &pos, const PlayerID player_id,
-                                                int direction, bool first = false) const = 0;
+                                                std::vector<int16_t> forward_dir,
+                                                bool first = false) const = 0;
     virtual std::set<Position> getAllDirectionMoves(const Position &pos,
                                                     const PlayerID player_id) const = 0;
 
