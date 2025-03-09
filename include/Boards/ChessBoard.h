@@ -27,9 +27,9 @@ public:
     // TODO sacar
     // std::set<Position> getValidMoves(Position pos) const override; // TODO Sacar esto
 
-    std::set<Position> getDiagonalMoves(const Position &pos,
-                                        const PlayerID player_id) const override;
     std::set<Position> getParallelMoves(const Position &pos,
+                                        const PlayerID player_id) const override;
+    std::set<Position> getDiagonalMoves(const Position &pos,
                                         const PlayerID player_id) const override;
     std::set<Position> getLShapeMoves(const Position &pos, const PlayerID player_id,
                                       const std::vector<uint16_t> &deltas) const override;

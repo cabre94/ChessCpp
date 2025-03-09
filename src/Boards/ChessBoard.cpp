@@ -103,15 +103,6 @@ void ChessBoard::printBoard() const {
     std::cout << "\u2500\u2500\u2500\u2518" << std::endl;
 }
 
-std::set<Position> ChessBoard::getDiagonalMoves(const Position &pos,
-                                                const PlayerID player_id) const {
-    (void) pos;
-    (void) player_id;
-    // TODO
-    std::set<Position> moves;
-    return moves;
-}
-
 std::set<Position> ChessBoard::getParallelMoves(const Position &pos,
                                                 const PlayerID player_id) const {
 
@@ -122,6 +113,48 @@ std::set<Position> ChessBoard::getParallelMoves(const Position &pos,
         {-1, 0}, // Down
         {0, 1},  // Right
         {0, -1}  // Left
+    };
+
+    // Get row and column of position (order of indexes are inverted on Position representation)
+    uint32_t rr = pos[1];
+    uint32_t cc = pos[0];
+
+    for (const auto &dir : directions) {
+        int32_t dc = dir[0], dr = dir[1];
+
+        uint32_t c = cc + dc;
+        uint32_t r = rr + dr;
+
+        while (validIdxs(r, c)) {
+            // Check if there is a piece on position of idxs (r,c)
+            if (pieces[r][c] != nullptr) {
+                // check if the piece belongs to an opponent
+                if (pieces[r][c]->getPlayerID() != player_id) {
+                    moves.insert(Position(r, c));
+                }
+                break; // Stop searching at this direction, as a piece is found
+            }
+
+            // There is no piece on current position, so we keep moving on this direction
+            moves.insert(Position(r, c));
+
+            c += dc;
+            r += dr;
+        }
+    }
+
+    return moves;
+}
+
+std::set<Position> ChessBoard::getDiagonalMoves(const Position &pos,
+                                                const PlayerID player_id) const {
+    std::set<Position> moves;
+
+    constexpr int32_t directions[4][2] = {
+        {1, 1},  // Up - Right
+        {1, -1}, // Up - Left
+        {-1, 1}, // Down - Right
+        {-1, -1} // Down - Left
     };
 
     // Get row and column of position (order of indexes are inverted on Position representation)
