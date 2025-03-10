@@ -324,8 +324,19 @@ TEST(ChessBoard, InitializePiecesTest) {
     TestChessBoard board;
     board.testInitializePieces(); // initialize pieces
 
+    // Pawns
+    for (uint32_t c = 0; c < chess::ChessBoard::N_COL; ++c) {
+        EXPECT_EQ(board.getPiece(1, c)->getPlayerID(), chess::WHITE);
+        // EXPECT_EQ(board.getPiece(1, c)->getPossibleMoves(&board), getExpectedMovesOnNewBoard(1,
+        // c));
+
+        EXPECT_EQ(board.getPiece(6, c)->getPlayerID(), chess::BLACK);
+    }
+
     // White pieces
     EXPECT_EQ(board.getPiece(0, 0)->getPlayerID(), chess::WHITE);
+    EXPECT_EQ(board.getPiece(0, 0)->getPossibleMoves(&board), getExpectedMovesOnNewBoard(0, 0));
+
     EXPECT_EQ(board.getPiece(0, 1)->getPlayerID(), chess::WHITE);
     EXPECT_EQ(board.getPiece(0, 2)->getPlayerID(), chess::WHITE);
     EXPECT_EQ(board.getPiece(0, 3)->getPlayerID(), chess::WHITE);
@@ -334,7 +345,7 @@ TEST(ChessBoard, InitializePiecesTest) {
     EXPECT_EQ(board.getPiece(0, 6)->getPlayerID(), chess::WHITE);
     EXPECT_EQ(board.getPiece(0, 7)->getPlayerID(), chess::WHITE);
 
-    for (uint32_t c = 0; c < chess::ChessBoard::N_COL; ++c) {
-        EXPECT_EQ(board.getPiece(1, c)->getPlayerID(), chess::WHITE);
-    }
+    // TODO: Add black pieces and others checks
+
+    // Black pieces
 }
