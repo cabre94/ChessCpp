@@ -76,7 +76,8 @@ void ChessBoard::printBoard() const {
                 std::cout << "   \u2502";
             else {
                 std::cout << " ";
-                piece->printPiece();
+                std::cout << *piece;
+                // piece->printPiece();
                 std::cout << " ";
                 std::cout << "\u2502";
             }
