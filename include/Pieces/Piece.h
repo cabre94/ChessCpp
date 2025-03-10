@@ -18,8 +18,8 @@ enum State { CHECK, CHECKMATE, NORMAL }; // TODO
 
 class Piece {
 public:
-    Piece(PlayerID player_id_, std::string name_, Position pos_)
-        : player_id(player_id_), name(name_), pos(pos_) {}
+    Piece(PlayerID player_id_, std::string name_, std::string symbol_, Position pos_)
+        : player_id(player_id_), name(name_), symbol(symbol_), pos(pos_) {}
     virtual ~Piece() {}
 
     Piece(const Piece &) = delete;            // Copy constructor
@@ -41,7 +41,8 @@ public:
 
 protected:
     const PlayerID player_id;
-    std::string name;
+    const std::string name;
+    const std::string symbol;
     Position pos;
 };
 
