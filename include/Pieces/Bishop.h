@@ -13,7 +13,14 @@ public:
                 (player_id_ == WHITE) ? BISHOP_WHITE_SYMBOL : BISHOP_BLACK_SYMBOL, pos_) {}
     ~Bishop() {}
 
-    std::set<Position> getPossibleMoves(const Board *board) const override;
+    std::set<Position> getPossibleMoves(const Board *board) const override {
+        (void) board;
+        std::set<Position> validMoves;
+
+        // validMoves = board->getValidMoves(pos, BISHOP); // TODO
+
+        return validMoves;
+    }
 };
 
 } // namespace chess

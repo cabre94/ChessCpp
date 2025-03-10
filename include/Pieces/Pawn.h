@@ -13,7 +13,12 @@ public:
                 (player_id_ == WHITE) ? PAWN_WHITE_SYMBOL : PAWN_BLACK_SYMBOL, pos_) {}
     ~Pawn() {}
 
-    std::set<Position> getPossibleMoves(const Board *board) const override;
+    std::set<Position> getPossibleMoves(const Board *board) const override {
+        (void) board;
+        std::set<Position> validMoves;
+        // validMoves = board->getValidMoves(from, PAWN); // TODO
+        return validMoves;
+    }
 };
 
 } // namespace chess

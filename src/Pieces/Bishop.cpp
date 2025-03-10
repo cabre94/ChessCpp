@@ -4,13 +4,13 @@
 
 namespace chess {
 
-std::set<Position> Bishop::getPossibleMoves(const Board *board) const {
-    (void) board;
-    std::set<Position> validMoves;
+// std::set<Position> Bishop::getPossibleMoves(const Board *board) const {
+//     (void) board;
+//     std::set<Position> validMoves;
 
-    // validMoves = board->getValidMoves(pos, BISHOP); // TODO
+//     // validMoves = board->getValidMoves(pos, BISHOP); // TODO
 
-    return validMoves;
-}
+//     return validMoves;
+// }
 
 } // namespace chess
