@@ -157,6 +157,34 @@ expectedForwardMovesEmptyBoard(uint32_t r, uint32_t c, const std::vector<int16_t
     return exp_set;
 }
 
+static std::set<chess::Position> getExpectedMovesOnNewBoard(uint32_t r, uint32_t c) {
+    std::set<chess::Position> moves;
+
+    // Pawns
+    if (r == 1) { // White pawns
+        moves.insert({2, c});
+        moves.insert({3, c});
+    } else if (r == 6) { // Black pawns
+        moves.insert({5, c});
+        moves.insert({4, c});
+    }
+
+    // Knights
+    if ((r == 0 || r == 7) && (c == 1 || c == 6)) {
+        std::vector<chess::Position> possibleMoves = {
+            {r + 2, c + 1}, {r + 2, c - 1}, {r - 2, c + 1}, {r - 2, c - 1},
+            {r + 1, c + 2}, {r + 1, c - 2}, {r - 1, c + 2}, {r - 1, c - 2}};
+
+        for (const auto &pos : possibleMoves) {
+            if (pos[0] < chess::ChessBoard::N_COL && pos[1] < chess::ChessBoard::N_ROW) {
+                moves.insert(pos);
+            }
+        }
+    }
+
+    return moves;
+}
+
 static std::set<chess::Position> expectedAllDirectionMovesEmptyBoard(uint32_t r, uint32_t c) {
     std::set<chess::Position> exp_set = expectedParallelMovesEmptyBoard(r, c);
     std::set<chess::Position> exp_diagonal_moves = expectedDiagonalMovesEmptyBoard(r, c);
