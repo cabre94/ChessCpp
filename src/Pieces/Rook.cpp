@@ -3,13 +3,6 @@
 
 namespace chess {
 
-// void Rook::printPiece() const {
-//     if (player_id == WHITE)
-//         std::cout << "♖";
-//     else
-//         std::cout << "♜";
-// }
-
 std::set<Position> Rook::getPossibleMoves(const Board *board) const {
     (void) board;
     std::set<Position> validMoves;
