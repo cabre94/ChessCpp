@@ -8,7 +8,9 @@ namespace chess {
 
 class Bishop : public Piece {
 public:
-    Bishop(PlayerID player_id_, Position pos_) : Piece(player_id_, "BISHOP", pos_) {}
+    Bishop(PlayerID player_id_, Position pos_)
+        : Piece(player_id_, BISHOP_NAME,
+                (player_id_ == WHITE) ? BISHOP_WHITE_SYMBOL : BISHOP_BLACK_SYMBOL, pos_) {}
     ~Bishop() {}
 
     std::set<Position> getPossibleMoves(const Board *board) const override;
