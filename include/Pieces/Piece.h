@@ -34,6 +34,11 @@ public:
     virtual std::set<Position> getPossibleMoves(const Board *board) const = 0;
     virtual void printPiece() const = 0;
 
+    friend std::ostream &operator<<(std::ostream &os, const Piece &piece) {
+        os << piece.symbol;
+        return os;
+    }
+
 protected:
     const PlayerID player_id;
     std::string name;
