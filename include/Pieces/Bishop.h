@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Pieces/Piece.h"
+#include "Pieces/Utils.h"
 #include "Positions/Position.h"
 
 namespace chess {
@@ -10,7 +11,6 @@ public:
     Bishop(PlayerID player_id_, Position pos_) : Piece(player_id_, "BISHOP", pos_) {}
     ~Bishop() {}
 
-    void printPiece() const override;
     std::set<Position> getPossibleMoves(const Board *board) const override;
 };
 

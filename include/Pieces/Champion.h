@@ -9,7 +9,6 @@ public:
     Champion(PlayerID player_id_, Position pos_) : Piece(player_id_, "CHAMPION", pos_) {}
     ~Champion() {}
 
-    void printPiece() const override;
     std::set<Position> getPossibleMoves(const Board *board) const override;
 };
 

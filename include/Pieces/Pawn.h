@@ -10,7 +10,6 @@ public:
     Pawn(PlayerID player_id_, Position pos_) : Piece(player_id_, "PAWN", pos_) {}
     ~Pawn() {}
 
-    void printPiece() const override;
     std::set<Position> getPossibleMoves(const Board *board) const override;
 };
 

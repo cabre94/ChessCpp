@@ -3,15 +3,15 @@
 
 namespace chess {
 
-void Knight::printPiece() const {
-    if (player_id == WHITE)
-        std::cout << "♘";
-    else
-        std::cout << "♞";
-}
+// void Knight::printPiece() const {
+//     if (player_id == WHITE)
+//         std::cout << "♘";
+//     else
+//         std::cout << "♞";
+// }
 
 std::set<Position> Knight::getPossibleMoves(const Board *board) const {
-	(void) board;
+    (void) board;
     std::set<Position> validMoves;
     // validMoves = board->getValidMoves(pos_, KNIGHT); // TODO
     return validMoves;
